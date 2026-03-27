@@ -2,17 +2,146 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>LFCG Robotics Team</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFCG Robotics Team | Officiel</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background: #1a1a1a; color: white; }
-        .robot { font-size: 50px; }
-        .btn { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        /* Couleurs et Base */
+        :root {
+            --primary: #00d4ff;
+            --secondary: #0055ff;
+            --bg: #0a0b10;
+            --card-bg: #161b22;
+            --text: #f0f6fc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 60px 20px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .logo { font-size: 80px; margin: 0; }
+        h1 { margin: 10px 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Conteneur Principal */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Grille de Projets */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .card h3 { color: var(--primary); margin-top: 0; }
+
+        /* Bouton Stylé */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--bg);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover { opacity: 0.8; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
+            color: #8b949e;
+        }
+
+        /* Animation simple */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .live-badge {
+            background: #238636;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="robot">🤖</div>
-    <h1>Bienvenue au Club Robotique LFCG</h1>
-    <p>Site en construction par l'équipe des geeks.</p>
-    <a href="https://github.com" class="btn">Suivez notre code sur GitHub</a>
+
+<header>
+    <div class="logo">🤖</div>
+    <h1>LFCG Robotics Team</h1>
+    <p>Conception | Programmation | Électronique</p>
+</header>
+
+<div class="container">
+    <div style="text-align: center;">
+        <span class="live-badge">Saison 2024-2025</span>
+        <h2>Propulser l'innovation au lycée</h2>
+        <p>Bienvenue sur le portail officiel de notre club. Nous concevons des robots autonomes pour relever les défis de demain.</p>
+    </div>
+
+    <div class="grid">
+        <!-- Projet 1 -->
+        <div class="card">
+            <h3>🛠️ Nos Projets</h3>
+            <p>De la Coupe de France de Robotique aux projets internes, découvrez nos dernières créations mécaniques.</p>
+        </div>
+
+        <!-- Projet 2 -->
+        <div class="card">
+            <h3>💻 Le Code</h3>
+            <p>Nos robots tournent sous Arduino, Raspberry Pi et Python. Tout notre code est Open Source.</p>
+            <a href="https://github.com" class="btn" target="_blank">Voir le GitHub</a>
+        </div>
+
+        <!-- Projet 3 -->
+        <div class="card">
+            <h3>🚀 Nous Rejoindre</h3>
+            <p>Que tu sois débutant ou expert en soudure, il y a une place pour toi dans l'équipe !</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 LFCG Robotics Team - Créé par sixteleinekugel</p>
+</footer>
+
 </body>
 </html>
