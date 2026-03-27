@@ -10,321 +10,303 @@
         :root {
             --primary: #00f2ff;
             --secondary: #7000ff;
-            --accent: #ff0055;
-            --dark-bg: #030508;
-            --glass: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.1);
+            --bg: #020408;
+            --glass: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(0, 242, 255, 0.2);
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: #e0e0e0;
+            background-color: var(--bg);
+            color: #e0e6ed;
             font-family: 'Inter', sans-serif;
             margin: 0;
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        /* Hero Section */
+        /* --- Animations --- */
+        @keyframes glow { 0% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 20px var(--primary); } 100% { box-shadow: 0 0 5px var(--primary); } }
+
+        /* --- Hero Section --- */
         .hero {
-            height: 90vh;
-            background: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #030508 100%);
+            height: 100vh;
+            background: radial-gradient(circle at center, #111432 0%, #020408 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
-        }
-
-        .team-number {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary);
-            letter-spacing: 5px;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+            padding: 20px;
         }
 
         .hero h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            background: linear-gradient(to right, #fff, var(--primary));
+            font-size: clamp(2rem, 10vw, 5rem);
+            letter-spacing: 10px;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 0;
         }
 
-        .ranking-badge {
-            background: rgba(0, 242, 255, 0.1);
+        .status-bar {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 8px 20px;
+            border-radius: 30px;
             border: 1px solid var(--primary);
-            padding: 10px 25px;
-            border-radius: 50px;
-            margin-top: 20px;
-            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
             color: var(--primary);
+            background: rgba(0, 242, 255, 0.1);
         }
 
-        /* Sections */
-        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
-        h2 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--primary); margin-bottom: 40px; text-transform: uppercase; }
-        
-        /* Team Grid */
+        /* --- Sections --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        h2 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--primary); text-transform: uppercase; margin-bottom: 50px; text-align: center;}
+
+        /* --- Team Cards --- */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 20px;
         }
 
         .member-card {
             background: var(--glass);
             border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 25px;
-            transition: 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .member-card:hover {
-            border-color: var(--primary);
-            background: rgba(0, 242, 255, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .role-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--secondary);
-            font-weight: 700;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .member-card h3 { margin: 5px 0; color: #fff; }
-        .year-tag { color: #888; font-size: 0.9rem; }
-
-        /* Timeline / Monthly Summary Table */
-        .timeline-container { overflow-x: auto; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--glass);
             border-radius: 15px;
-            overflow: hidden;
-            margin-top: 20px;
+            padding: 30px;
+            transition: 0.4s;
+            backdrop-filter: blur(10px);
         }
 
-        th, td { padding: 20px; text-align: left; border-bottom: 1px solid var(--card-border); }
-        th { background: rgba(112, 0, 255, 0.2); color: var(--primary); font-family: 'Orbitron', sans-serif; }
-        tr:hover { background: rgba(255,255,255,0.02); }
+        .member-card:hover { border-color: var(--primary); transform: scale(1.02); background: rgba(255,255,255,0.08); }
+        .member-card .role { color: var(--secondary); font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        .member-card h3 { margin: 10px 0; color: #fff; }
 
-        /* Contact & Socials */
-        .footer-grid {
+        /* --- Roadmap Interactive Grid --- */
+        .roadmap-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-            margin-top: 50px;
-            padding: 50px;
-            background: var(--glass);
-            border-radius: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
 
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #fff;
-            text-decoration: none;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+        .roadmap-item {
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
             transition: 0.3s;
         }
 
-        .social-link:hover { color: var(--primary); }
-        .social-link i { font-size: 1.5rem; width: 30px; }
+        .roadmap-item:hover { background: var(--primary); color: var(--bg); font-weight: bold; }
+        .roadmap-item h4 { margin: 0; font-family: 'Orbitron', sans-serif; }
 
-        footer { text-align: center; padding: 50px; color: #555; font-size: 0.8rem; }
+        /* --- Modal (Pop-up) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+        }
 
-        .highlight { color: var(--primary); font-weight: bold; }
+        .modal-content {
+            background: #111;
+            margin: 10% auto;
+            padding: 40px;
+            border: 1px solid var(--primary);
+            width: 80%;
+            max-width: 600px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .close { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: var(--primary); }
+
+        /* --- Contact --- */
+        .contact-section {
+            background: linear-gradient(180deg, transparent, #0a0c1a);
+            text-align: center;
+            padding: 100px 20px;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 2.5rem;
+            margin: 0 20px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover { color: var(--primary); transform: translateY(-5px); }
+
+        footer { text-align: center; padding: 40px; color: #444; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <div class="team-number">TEAM #27935</div>
+        <div class="team-number">OFFICIAL PORTFOLIO // TEAM 27935</div>
         <h1>LFCG ROBOTICS</h1>
-        <p>Lycée Français Charles de Gaulle de Londres</p>
-        <div class="ranking-badge">
-            <i class="fas fa-trophy"></i> 7th PLACE | SEASON 2025-2026
+        <div class="status-bar">
+            <div class="badge"><i class="fas fa-microchip"></i> SEASON 2: 2025-2026</div>
+            <div class="badge"><i class="fas fa-trophy"></i> 7th RANKED</div>
+            <div class="badge"><i class="fas fa-location-dot"></i> LONDON, UK</div>
         </div>
+        <a href="#about" style="margin-top: 50px; color: white; text-decoration: none;"><i class="fas fa-chevron-down fa-2x"></i></a>
     </section>
 
     <div class="container">
         
-        <!-- About -->
+        <!-- Mission Detail -->
         <section id="about">
             <h2>// OUR MISSION</h2>
-            <p style="font-size: 1.2rem; max-width: 900px;">
-                As an international group of passionate students from <span class="highlight">Year 10 to Year 13</span>, we bring diverse perspectives to engineering. 
-                Now in our <span class="highlight">second season</span>, our core values remain: teamwork, continuous learning, and the joy of creation. 
-                Our goal this year? <span class="highlight">The Podium.</span>
-            </p>
+            <div class="member-card" style="font-size: 1.2rem;">
+                <p>We are an international team from Year 10 to Year 13. This year, we moved beyond basic designs to build a <span style="color: var(--primary)">high-performance robot with an original look</span>, avoiding standard competition templates.</p>
+                <p>After a tough first round where we missed the autonomy challenge, we made it our <span style="color: var(--primary)">point of honor</span> to master autonomous programming this season.</p>
+            </div>
         </section>
 
-        <!-- Team Crew -->
+        <!-- The Crew -->
         <section id="team">
             <h2>// THE CREW</h2>
             <div class="team-grid">
-                <!-- Mr Gbessi -->
                 <div class="member-card">
-                    <span class="role-tag">Founder & Mentor</span>
+                    <span class="role">Founder & Mentor</span>
                     <h3>Mr Gbessi</h3>
-                    <p class="year-tag">Physics & Chemistry Teacher</p>
-                    <p>Founded the club to bridge the gap between classroom theory and real-world engineering.</p>
+                    <p>Physics & Chemistry teacher. Founded the club to let us build what we can't in class.</p>
                 </div>
-
-                <!-- Sixte -->
                 <div class="member-card">
-                    <span class="role-tag">Project Manager & Lead Engineer</span>
-                    <h3>Sixte</h3>
-                    <p class="year-tag">Year 11</p>
-                    <p>Oversees workflow, robot programming, and mechanical design. Passionate about astrophysics and technical precision.</p>
+                    <span class="role">Project Manager & Software Lead</span>
+                    <h3>Sixte (Year 11)</h3>
+                    <p>Passionate about astrophysics. Oversees workflow, mechanical design, and system precision.</p>
                 </div>
-
-                <!-- Melanie -->
                 <div class="member-card">
-                    <span class="role-tag">Drivetrain & Manipulation</span>
-                    <h3>Mélanie</h3>
-                    <p class="year-tag">Year 13</p>
-                    <p>Expert in hardware manipulation and robot mobility systems.</p>
+                    <span class="role">Drivetrain & Manipulation</span>
+                    <h3>Mélanie (Year 13)</h3>
+                    <p>Hardware specialist focused on robot movement and interaction skills.</p>
                 </div>
-
-                <!-- Noelle -->
                 <div class="member-card">
-                    <span class="role-tag">Mechanical & Design Engineer</span>
-                    <h3>Noelle</h3>
-                    <p class="year-tag">Year 12</p>
-                    <p>Specialized in hardware technology and structural design.</p>
+                    <span class="role">Building & Design</span>
+                    <h3>Axel (Year 10)</h3>
+                    <p>Always loved robots. Translates imagination into structural design.</p>
                 </div>
-
-                <!-- Axel -->
                 <div class="member-card">
-                    <span class="role-tag">Building & Design Conception</span>
-                    <h3>Axel</h3>
-                    <p class="year-tag">Year 10</p>
-                    <p>Focused on robot construction and translating concepts into physical design.</p>
+                    <span class="role">Mechanical & Design</span>
+                    <h3>Noelle (Year 12)</h3>
+                    <p>Interested in hardware technology and structural integrity.</p>
                 </div>
-
-                <!-- Leopold -->
                 <div class="member-card">
-                    <span class="role-tag">Building & Ideation</span>
-                    <h3>Leopold</h3>
-                    <p class="year-tag">Year 12</p>
-                    <p>Contributing creative programming and building ideas from London.</p>
+                    <span class="role">Building & Ideation</span>
+                    <h3>Leopold (Year 12)</h3>
+                    <p>London-based programmer helping with construction ideas.</p>
                 </div>
-
-                <!-- Leo -->
                 <div class="member-card">
-                    <span class="role-tag">Strategic Officer & Social DJ</span>
-                    <h3>Leo</h3>
-                    <p class="year-tag">Year 10</p>
-                    <p>Managing competition strategy and team atmosphere.</p>
+                    <span class="role">Strategic Officer / DJ</span>
+                    <h3>Leo (Year 10)</h3>
+                    <p>Analyzing what's behind the screens and managing competition strategy.</p>
                 </div>
-
-                <!-- Amira -->
                 <div class="member-card">
-                    <span class="role-tag">Robotics Enthusiast</span>
-                    <h3>Amira</h3>
-                    <p class="year-tag">Year 11</p>
-                    <p>Joined to explore the innovative world of robotics and hardware.</p>
+                    <span class="role">Robotics Engineer</span>
+                    <h3>Amira (Year 11)</h3>
+                    <p>Bringing new energy and innovative perspectives to the hardware team.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Roadmap Table -->
+        <!-- Interactive Roadmap -->
         <section id="roadmap">
             <h2>// SEASON ROADMAP</h2>
-            <div class="timeline-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Objectives</th>
-                            <th>Summary</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>September</td>
-                            <td>Inventory & Strategy</td>
-                            <td>Identified strengths (Autonomy) and weaknesses (Precision). Team organized for a quick start.</td>
-                        </tr>
-                        <tr>
-                            <td>October</td>
-                            <td>Theme Analysis & Prototypes</td>
-                            <td>Robot concept selected. Initial prototypes tested; potential issues identified.</td>
-                        </tr>
-                        <tr>
-                            <td>November</td>
-                            <td>Build Phase</td>
-                            <td>Basic robot operational. Initial code successfully deployed. Autonomy section prioritized.</td>
-                        </tr>
-                        <tr>
-                            <td>December</td>
-                            <td>Optimization</td>
-                            <td>Robot completes 80% of basic tasks. Portfolio started. Competition strategy analyzed via past races.</td>
-                        </tr>
-                        <tr>
-                            <td>January</td>
-                            <td>Performance Tuning</td>
-                            <td>Improved throwing power and trajectory accuracy. Operators began drive training.</td>
-                        </tr>
-                        <tr>
-                            <td>February</td>
-                            <td>Finalizing Portfolio</td>
-                            <td>Advanced testing confirms effectiveness. Projectile power issues resolved.</td>
-                        </tr>
-                        <tr>
-                            <td>March</td>
-                            <td>Competition Ready</td>
-                            <td>Design finalized for aesthetics. Robot pushed to its limits. Full portfolio completion.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <p style="text-align: center; margin-bottom: 20px;">Click each month to see our progress</p>
+            <div class="roadmap-grid">
+                <div class="roadmap-item" onclick="openModal('sep')"><h4>SEP</h4></div>
+                <div class="roadmap-item" onclick="openModal('oct')"><h4>OCT</h4></div>
+                <div class="roadmap-item" onclick="openModal('nov')"><h4>NOV</h4></div>
+                <div class="roadmap-item" onclick="openModal('dec')"><h4>DEC</h4></div>
+                <div class="roadmap-item" onclick="openModal('jan')"><h4>JAN</h4></div>
+                <div class="roadmap-item" onclick="openModal('feb')"><h4>FEB</h4></div>
+                <div class="roadmap-item" onclick="openModal('mar')"><h4>MAR</h4></div>
             </div>
         </section>
 
-        <!-- Connect -->
-        <section id="contact">
-            <div class="footer-grid">
-                <div>
-                    <h2>CONNECT</h2>
-                    <p>Ready for the next competition. Follow our journey.</p>
-                    <a href="mailto:lfcg.robotic@gmail.com" class="social-link">
-                        <i class="fas fa-envelope"></i> lfcg.robotic@gmail.com
-                    </a>
+        <!-- Prototypes Info -->
+        <section id="ideas">
+            <h2>// DESIGN CHOICES</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <h3>The Swing Concept</h3>
+                    <p>Initially, we planned a "swing" design for the balls. We pivoted to a ramp system after realizing the swing was too complex to maintain under pressure.</p>
                 </div>
-                <div>
-                    <h2>FOLLOW US</h2>
-                    <div class="social-links-container">
-                        <a href="https://www.instagram.com" class="social-link">
-                            <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                        <a href="https://www.youtube.com" class="social-link">
-                            <i class="fab fa-youtube"></i> YouTube
-                        </a>
-                        <a href="https://github.com" class="social-link">
-                            <i class="fab fa-github"></i> GitHub Code
-                        </a>
-                    </div>
+                <div class="member-card">
+                    <h3>3D Simulation</h3>
+                    <p>Using 3D modeling, we eliminated two prototypes. One was too large, the other lacked the required projectile speed.</p>
                 </div>
             </div>
         </section>
 
     </div>
 
+    <!-- Contact & Socials -->
+    <div class="contact-section">
+        <h2>STAY CONNECTED</h2>
+        <p>Email: <a href="mailto:lfcg.robotic@gmail.com" style="color: var(--primary);">lfcg.robotic@gmail.com</a></p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com"><i class="fab fa-youtube"></i></a>
+            <a href="https://github.com"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+
+    <!-- Modal Element -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="text-align: left; margin-bottom: 10px;"></h2>
+            <p id="modalBody"></p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025-2026 LFCG Robotics Team 27935 | Designed by Sixte</p>
+        <p>&copy; 2025-2026 LFCG Robotics - Team 27935</p>
     </footer>
 
+    <script>
+        const data = {
+            sep: { title: "September: Planning", body: "Inventory check. We reviewed our past year's weaknesses (precision) and strengths (autonomy). Read the game manual and formed sub-teams." },
+            oct: { title: "October: Prototypes", body: "Analyzed the season theme. Tested prototypes. Selected our initial concept and identified potential hardware obstacles." },
+            nov: { title: "November: Construction", body: "Basic robot built. First code deployment. Special focus on the Autonomy section which was our main goal." },
+            dec: { title: "December: Strategy", body: "Studied past race videos. Minor adjustments made. Robot achieved 80% of basic tasks. Portfolio started." },
+            jan: { title: "January: Optimization", body: "Improved throwing power and trajectory accuracy. Drivers started intensive training. Portfolio 50% complete." },
+            feb: { title: "February: Final Tests", body: "Resolved projectile power issues. Advanced testing confirmed robot effectiveness. Portfolio finalized." },
+            mar: { title: "March: Competition", body: "Design finalized for aesthetics. Robot pushed to its limits. Ready to represent LFCG!" }
+        };
+
+        function openModal(id) {
+            document.getElementById('modalTitle').innerText = data[id].title;
+            document.getElementById('modalBody').innerText = data[id].body;
+            document.getElementById('infoModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('infoModal')) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>
