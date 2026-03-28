@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LFCG ROBOTICS | NEURAL INTERFACE 27935 | ELITE DIVISION</title>
+    <title>LFCGteam robotic | NEURAL INTERFACE 27935</title>
 
     <!-- 
         ============================================================
-        EXTERNAL ASSETS & FONTS
+        EXTENDED ASSETS & FONTS
         ============================================================
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
     <style>
         /* 
            ============================================================
-           CORE SYSTEM VARIABLES (ROOT)
+           1. DESIGN SYSTEM VARIABLES
            ============================================================
         */
         :root {
@@ -26,7 +26,7 @@
             --primary: #00f2ff;
             --primary-rgb: 0, 242, 255;
             --secondary: #7000ff;
-            --accent: #ff0055;
+            --accent: #ff5f56;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-1: #ffffff;
@@ -35,12 +35,11 @@
             --font-tech: 'Orbitron', sans-serif;
             --font-code: 'JetBrains Mono', monospace;
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
-            --shadow-cyan: 0 0 20px rgba(0, 242, 255, 0.3);
         }
 
         /* 
            ============================================================
-           GLOBAL CORE STYLES
+           2. GLOBAL CORE STYLES
            ============================================================
         */
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
@@ -67,7 +66,7 @@
 
         /* 
            ============================================================
-           NAVIGATION SYSTEM
+           3. NAVIGATION
            ============================================================
         */
         nav {
@@ -83,20 +82,20 @@
         }
         .logo { 
             font-family: var(--font-tech); font-weight: 900; font-size: 1.7rem; 
-            color: #fff; text-decoration: none; letter-spacing: 2px;
+            color: #fff; text-decoration: none; letter-spacing: 1px;
         }
         .logo span { color: var(--primary); }
         
-        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
         .nav-links a {
             text-decoration: none; color: var(--text-2); font-family: var(--font-tech);
-            font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s;
+            font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s;
         }
-        .nav-links a:hover { color: var(--primary); text-shadow: var(--shadow-cyan); }
+        .nav-links a:hover { color: var(--primary); }
 
         /* 
            ============================================================
-           HERO INTERFACE
+           4. HERO SECTION
            ============================================================
         */
         .hero {
@@ -107,116 +106,109 @@
         .hero-badge {
             display: inline-block; padding: 12px 30px; border-radius: 50px;
             background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary);
-            color: var(--primary); font-family: var(--font-tech); font-size: 0.75rem;
-            margin-bottom: 40px; letter-spacing: 4px; box-shadow: var(--shadow-cyan);
+            color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem;
+            margin-bottom: 40px; letter-spacing: 4px;
         }
         .hero h1 {
-            font-family: var(--font-tech); font-size: clamp(3.5rem, 11vw, 8rem);
+            font-family: var(--font-tech); font-size: clamp(3rem, 10vw, 7.5rem);
             font-weight: 900; line-height: 0.85; margin-bottom: 40px;
             background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -5px;
+            letter-spacing: -4px;
         }
 
-        .btn-group { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; }
+        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
         .social-btn {
-            padding: 20px 45px; border-radius: 12px; font-weight: bold;
-            text-decoration: none; color: white; display: flex; align-items: center; gap: 15px;
-            transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.9rem;
+            padding: 18px 40px; border-radius: 12px; font-weight: bold;
+            text-decoration: none; color: white; display: flex; align-items: center; gap: 12px;
+            transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem;
         }
         .yt-btn { background: #ff0000; box-shadow: 0 8px 25px rgba(255,0,0,0.3); }
         .ig-btn { background: linear-gradient(45deg,#f09433,#e1306c,#bc1888); box-shadow: 0 8px 25px rgba(225,48,108,0.3); }
-        .social-btn:hover { transform: translateY(-8px) scale(1.05); filter: brightness(1.1); }
+        .social-btn:hover { transform: translateY(-7px) scale(1.05); }
 
         /* 
            ============================================================
-           TELEMETRY BAR (REAL-TIME STATS)
+           5. TELEMETRY BAR
            ============================================================
         */
         .telemetry {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px; padding: 80px 10%; background: linear-gradient(to right, rgba(0, 242, 255, 0.05), transparent);
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px; padding: 70px 10%; background: rgba(0, 242, 255, 0.02);
             border-top: 1px solid var(--glass-border);
         }
         .stat-card {
             background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 50px; border-radius: 25px; text-align: center; backdrop-filter: blur(10px);
+            padding: 45px; border-radius: 25px; text-align: center;
         }
-        .stat-num { font-family: var(--font-tech); font-size: 3.5rem; color: var(--primary); display: block; margin-bottom: 10px; }
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 3px; }
+        .stat-num { font-family: var(--font-tech); font-size: 3.2rem; color: var(--primary); display: block; }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 3px; }
 
         /* 
            ============================================================
-           ENGINEERING SPECIFICATIONS
+           6. SECTIONS COMMON
            ============================================================
         */
-        section { padding: 150px 10%; position: relative; }
-        .section-tag { color: var(--secondary); font-family: var(--font-tech); font-size: 0.9rem; letter-spacing: 5px; display: block; margin-bottom: 25px; }
-        .section-title { font-family: var(--font-tech); font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 80px; letter-spacing: -2px; }
+        section { padding: 140px 10%; position: relative; }
+        .section-tag { color: var(--secondary); font-family: var(--font-tech); font-size: 0.85rem; letter-spacing: 5px; display: block; margin-bottom: 25px; }
+        .section-title { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 80px; }
         .section-title span { color: var(--primary); }
 
-        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px; }
-        .tech-card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 60px; border-radius: 40px; transition: 0.5s var(--ease);
-        }
-        .tech-card:hover { border-color: var(--primary); transform: translateY(-20px); background: rgba(255,255,255,0.06); }
-        .tech-card i { font-size: 3.5rem; color: var(--primary); margin-bottom: 40px; display: block; }
-        .tech-card h3 { font-family: var(--font-tech); font-size: 1.8rem; margin-bottom: 25px; }
-        .tech-card p { color: var(--text-2); font-size: 1.1rem; line-height: 1.9; }
-
         /* 
            ============================================================
-           TEAM DIRECTORY (FULL PORTFOLIO DATA)
+           7. TEAM CARDS
            ============================================================
         */
-        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
         .m-card {
             background: var(--glass); border: 1px solid var(--glass-border);
             padding: 50px; border-radius: 35px; transition: 0.5s var(--ease);
-            position: relative; overflow: hidden;
         }
-        .m-card:hover { border-color: var(--secondary); transform: scale(1.02); }
-        .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; font-family: var(--font-main); color: #fff; }
-        .m-bio { color: var(--text-2); font-size: 1rem; font-weight: 300; line-height: 1.8; }
+        .m-card:hover { border-color: var(--secondary); transform: translateY(-15px); background: rgba(112, 0, 255, 0.05); }
+        .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        .m-bio { color: var(--text-2); font-size: 0.95rem; line-height: 1.8; font-weight: 300; }
 
         /* 
            ============================================================
-           ROADMAP / TIMELINE (MONTHLY SUMMARY)
+           8. TIMELINE / ROADMAP
            ============================================================
         */
-        .timeline-container { position: relative; max-width: 1200px; margin: auto; padding: 80px 0; }
-        .timeline-line { position: absolute; left: 50%; top: 0; width: 3px; height: 100%; background: linear-gradient(transparent, var(--primary), transparent); transform: translateX(-50%); }
-        
-        .t-item { width: 100%; margin-bottom: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
-        .t-item:nth-child(even) { flex-direction: row-reverse; }
-        
-        .t-content { width: 45%; background: var(--glass); padding: 45px; border-radius: 30px; border: 1px solid var(--glass-border); transition: 0.4s; }
-        .t-content:hover { background: rgba(255,255,255,0.07); transform: scale(1.03); border-color: var(--primary); }
-        .t-month { font-family: var(--font-tech); color: var(--primary); font-size: 1.4rem; margin-bottom: 15px; display: block; }
-        .t-goal { color: #fff; font-weight: 800; margin-bottom: 15px; font-size: 1.2rem; }
-        .t-desc { color: var(--text-2); font-size: 0.95rem; }
-
-        .t-dot { position: absolute; left: 50%; width: 25px; height: 25px; background: var(--bg); border: 4px solid var(--primary); border-radius: 50%; transform: translateX(-50%); box-shadow: var(--shadow-cyan); z-index: 5; }
+        .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 40px 0; }
+        .timeline-box::before {
+            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
+            background: linear-gradient(transparent, var(--primary), transparent);
+        }
+        .time-point { 
+            padding: 40px; background: var(--glass); border-radius: 25px; 
+            margin-left: 80px; position: relative; border: 1px solid var(--glass-border); 
+            margin-bottom: 40px; transition: 0.4s;
+        }
+        .time-point::before { 
+            content: ''; position: absolute; left: -61px; top: 50px; 
+            width: 22px; height: 22px; background: var(--bg); 
+            border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); 
+        }
+        .time-date { font-family: var(--font-tech); color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
+        .time-point:hover { transform: translateX(15px); border-color: var(--primary); }
 
         /* 
            ============================================================
-           MISSION FEED (SECURITY PROTOCOL #TEAMMEMBER)
+           9. MISSION FEED (COMM CENTER)
            ============================================================
         */
         .feed-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
         @media (max-width: 1100px) { .feed-layout { grid-template-columns: 1fr; } }
 
-        .feed-box { 
+        .feed-window { 
             background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 35px; padding: 45px; height: 700px; display: flex; flex-direction: column;
+            border-radius: 35px; padding: 45px; height: 650px; display: flex; flex-direction: column;
             backdrop-filter: blur(15px);
         }
         
         #message-display { 
             flex-grow: 1; overflow-y: auto; padding-right: 20px;
-            filter: blur(15px); pointer-events: none; transition: 0.8s var(--ease);
+            filter: blur(18px); pointer-events: none; transition: 0.8s var(--ease);
         }
         
         .entry { 
@@ -224,50 +216,44 @@
             margin-bottom: 20px; border-left: 4px solid var(--primary); font-family: var(--font-code);
         }
         .entry-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; color: var(--primary); }
-        .entry-body { color: #e0e6ed; font-size: 1rem; }
 
-        .auth-overlay {
-            margin-bottom: 30px; padding: 30px; background: rgba(255, 95, 86, 0.05);
-            border-radius: 20px; border: 1px dashed #ff5f56;
+        .auth-zone {
+            margin-bottom: 30px; padding: 35px; background: rgba(255, 95, 86, 0.05);
+            border-radius: 20px; border: 1px dashed var(--accent); text-align: center;
         }
         .pass-input {
-            width: 70%; padding: 18px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
-            border-radius: 12px; color: #fff; font-family: var(--font-tech); font-size: 0.9rem;
+            width: 65%; padding: 18px; background: #000; border: 1px solid var(--glass-border);
+            border-radius: 12px; color: #fff; font-family: var(--font-tech); margin-right: 10px;
         }
         .unlock-btn {
-            width: 25%; padding: 18px; background: var(--primary); border: none; border-radius: 12px;
+            padding: 18px 30px; background: var(--primary); border: none; border-radius: 12px;
             font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s;
         }
+        .unlock-btn:hover { box-shadow: 0 0 20px var(--primary); transform: scale(1.05); }
 
-        .input-group { margin-bottom: 30px; }
-        .input-group label { display: block; font-family: var(--font-tech); font-size: 0.8rem; color: var(--primary); margin-bottom: 12px; letter-spacing: 2px; }
-        .input-group input, .input-group textarea {
-            width: 100%; padding: 20px; background: rgba(255,255,255,0.04);
-            border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; font-size: 1rem;
+        .post-box { padding: 40px; background: var(--glass); border-radius: 35px; border: 1px solid var(--glass-border); }
+        .input-grp { margin-bottom: 25px; }
+        .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.75rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
+        .input-grp input, .input-grp textarea {
+            width: 100%; padding: 18px; background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem;
         }
-        .post-btn {
-            width: 100%; padding: 25px; background: var(--secondary); color: #fff;
-            border: none; border-radius: 15px; font-family: var(--font-tech); font-weight: 900;
+        .broadcast-btn {
+            width: 100%; padding: 22px; background: var(--secondary); color: #fff;
+            border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900;
             cursor: pointer; transition: 0.4s; letter-spacing: 3px;
         }
-        .post-btn:hover { box-shadow: 0 0 30px rgba(112, 0, 255, 0.4); transform: translateY(-5px); }
 
         /* 
            ============================================================
-           GOOGLE MAPS INTEGRATION
+           10. MAP & FOOTER
            ============================================================
         */
-        .map-wrapper { border-radius: 35px; overflow: hidden; border: 1px solid var(--glass-border); height: 400px; margin-top: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-
-        /* 
-           ============================================================
-           FOOTER
-           ============================================================
-        */
+        .map-frame { border-radius: 35px; overflow: hidden; border: 1px solid var(--glass-border); height: 450px; margin-top: 50px; }
         footer { padding: 120px 10% 60px; border-top: 1px solid var(--glass-border); text-align: center; }
-        .f-logo { font-family: var(--font-tech); font-size: 2.5rem; color: #fff; text-decoration: none; margin-bottom: 50px; display: block; }
+        .f-logo { font-family: var(--font-tech); font-size: 2.2rem; color: #fff; text-decoration: none; margin-bottom: 40px; display: block; }
         .f-logo span { color: var(--primary); }
-        .copy { color: #334155; font-size: 0.9rem; margin-top: 100px; letter-spacing: 2px; font-family: var(--font-tech); }
+        .copy { color: #334155; font-size: 0.85rem; margin-top: 80px; letter-spacing: 2px; }
 
     </style>
 </head>
@@ -275,411 +261,218 @@
 
     <canvas id="particle-canvas"></canvas>
 
-    <!-- 
-        ============================================================
-        TOP NAVIGATION
-        ============================================================
-    -->
+    <!-- NAVIGATION -->
     <nav id="navbar">
-        <a href="#" class="logo">LFCG<span>ROBOTICS</span></a>
+        <a href="#" class="logo">LFCGteam<span> robotic</span></a>
         <ul class="nav-links">
-            <li><a href="#about">About</a></li>
+            <li><a href="#about">Specs</a></li>
             <li><a href="#team">Engineers</a></li>
-            <li><a href="#roadmap">Timeline</a></li>
+            <li><a href="#timeline">Season</a></li>
             <li><a href="#contact">Comm Center</a></li>
         </ul>
-        <div class="nav-extra">
-            <a href="#contact" class="social-btn yt-btn" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: none;">SYSTEM LIVE</a>
-        </div>
+        <a href="#contact" class="social-btn yt-btn" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: none;">LIVE FEED</a>
     </nav>
 
-    <!-- 
-        ============================================================
-        HERO INTERFACE
-        ============================================================
-    -->
+    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="hero-inner" data-aos="zoom-out" data-aos-duration="1500">
-            <span class="hero-badge">LONDON // TEAM 27935 // 2025-2026 SEASON</span>
+        <div class="hero-inner" data-aos="zoom-out">
+            <span class="hero-badge">LONDON // TEAM 27935 // ELITE DIVISION</span>
             <h1>NEURAL <br><span>INTERFACE</span></h1>
-            <p style="font-size: 1.4rem; color: var(--text-dim); margin-bottom: 60px; max-width: 900px; margin-inline: auto; font-weight: 300;">
-                Official Digital Hub of Team 27935. Based at Lycée Français Charles de Gaulle. 
-                Pioneering the fusion of autonomous algorithms and high-precision mechanical design.
+            <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto; font-weight: 300;">
+                Welcome to the LFCGteam robotic official hub. Engineering the next generation of autonomous precision at Lycée Français Charles de Gaulle.
             </p>
-            
             <div class="btn-group">
                 <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn">
-                    <i class="fab fa-youtube"></i> YouTube Channel
+                    <i class="fab fa-youtube"></i> YouTube
                 </a>
                 <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn">
-                    <i class="fab fa-instagram"></i> Instagram Feed
+                    <i class="fab fa-instagram"></i> Instagram
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 
-        ============================================================
-        REAL-TIME TELEMETRY
-        ============================================================
-    -->
+    <!-- TELEMETRY -->
     <div class="telemetry">
-        <div class="stat-card" data-aos="fade-up"><span class="stat-num">27935</span><span class="stat-label">Team Identity</span></div>
+        <div class="stat-card" data-aos="fade-up"><span class="stat-num">27935</span><span class="stat-label">Team ID</span></div>
         <div class="stat-card" data-aos="fade-up" data-aos-delay="100"><span class="stat-num">95%</span><span class="stat-label">Shot Accuracy</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><span class="stat-num">02</span><span class="stat-label">Active Seasons</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">Global Goal</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><span class="stat-num">02</span><span class="stat-label">Active Season</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">2026 Goal</span></div>
     </div>
 
-    <!-- 
-        ============================================================
-        TECHNICAL SPECIFICATIONS
-        ============================================================
-    -->
+    <!-- ENGINEERING -->
     <section id="about">
         <span class="section-tag" data-aos="fade-right">// SYSTEM ARCHITECTURE</span>
-        <h2 class="section-title" data-aos="fade-right">Deep <span>Specifications</span></h2>
-        
-        <div class="tech-grid">
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fas fa-brain"></i>
-                <h3>Neural Software</h3>
-                <p>Advanced Java-based architecture utilizing PID control loops and OpenCV vision processing. Our code ensures 100% autonomous reliability and millisecond driver-to-bot latency.</p>
+        <h2 class="section-title" data-aos="fade-right">Technical <span>Specs</span></h2>
+        <div class="member-grid">
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Neural Software</span>
+                <p class="m-bio">Advanced Java loops using PID algorithms and OpenCV vision processing for zero-fault autonomous execution.</p>
             </div>
-            <div class="tech-card" data-aos="fade-up" data-aos-delay="150">
-                <i class="fas fa-cogs"></i>
-                <h3>Bespoke Chassis</h3>
-                <p>Custom-fabricated alloy structure designed for modularity. Features a unique 15-degree ramp propulsion system engineered for high-velocity scoring cycles and durability.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="100">
+                <span class="m-role">Mechanical Build</span>
+                <p class="m-bio">Custom alloy chassis featuring a 15-degree precision ramp propulsion system designed for high-velocity cycles.</p>
             </div>
-            <div class="tech-card" data-aos="fade-up" data-aos-delay="300">
-                <i class="fas fa-bolt"></i>
-                <h3>Power Management</h3>
-                <p>Integrated 12V high-output distribution network. Optimized for Mecanum wheel torque and long-range battery endurance during peak competition rounds.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="200">
+                <span class="m-role">Power Systems</span>
+                <p class="m-bio">Integrated 12V high-output network optimized for Mecanum wheel torque and battery endurance.</p>
             </div>
         </div>
     </section>
 
-    <!-- 
-        ============================================================
-        TEAM CORE (FULL PORTFOLIO MEMBERS)
-        ============================================================
-    -->
-    <section id="team" style="background: rgba(112, 0, 255, 0.01);">
+    <!-- TEAM -->
+    <section id="team" style="background: rgba(112, 0, 255, 0.015);">
         <span class="section-tag" data-aos="fade-up">// THE CREW</span>
         <h2 class="section-title" data-aos="fade-up">Engineering <span>Elite</span></h2>
-        
         <div class="member-grid">
-            <!-- Leadership -->
-            <div class="m-card" data-aos="fade-up" style="border: 2px solid var(--primary);">
-                <span class="m-role">Founder & Lead Mentor</span>
+            <div class="m-card" data-aos="fade-up" style="border: 1px solid var(--primary);">
+                <span class="m-role">Founder & Mentor</span>
                 <h3 class="m-name">Mr. Gbessi</h3>
-                <p class="m-bio">Physics and Chemistry expert. He established the club to offer students a professional environment to master robotics, hardware design, and physics-based engineering from scratch.</p>
+                <p class="m-bio">Physics & Chemistry expert. He founded the club to provide a professional environment for mastering real-world industrial engineering.</p>
             </div>
-
-            <div class="m-card" data-aos="fade-up" data-aos-delay="100" style="border: 2px solid var(--secondary);">
+            <div class="m-card" data-aos="fade-up" data-aos-delay="100" style="border: 1px solid var(--secondary);">
                 <span class="m-role">Project Manager / Lead Dev</span>
                 <h3 class="m-name">Sixte (Y11)</h3>
-                <p class="m-bio">Architect of the global development lifecycle. Sixte leads the programming architecture, mechanical concepting, and team workflow, ensuring all sub-systems remain on track.</p>
+                <p class="m-bio">Architect of the global development lifecycle. Sixte leads programming, mechanical design, and system integration workflow.</p>
             </div>
-
-            <!-- Members -->
-            <div class="m-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Mechanical Lead</span>
                 <h3 class="m-name">Mélanie (Y13)</h3>
-                <p class="m-bio">Specializing in drivetrain dynamics and ball manipulation hardware. Melanie ensures our physical subsystems perform with high-grade repeatability under pressure.</p>
+                <p class="m-bio">Specializing in drivetrain dynamics and hardware manipulation to ensure peak physical performance on the field.</p>
             </div>
-
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Building & Design</span>
+                <span class="m-role">Structural Design</span>
                 <h3 class="m-name">Axel (Y10)</h3>
-                <p class="m-bio">Structural assembly expert. Axel focuses on chassis integrity and aesthetic industrial design, translating complex CAD models into functional reality.</p>
+                <p class="m-bio">Axel focuses on chassis integrity and translating complex CAD models into high-precision functional reality.</p>
             </div>
-
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Algorithm Specialist</span>
+                <span class="m-role">Logic loops Specialist</span>
                 <h3 class="m-name">Leopold (Y12)</h3>
-                <p class="m-bio">Contributing to logic loops and sensor feedback systems. Leopold brings lifelong coding experience to refine robot behavior and strategic autonomous paths.</p>
+                <p class="m-bio">Bringing lifelong coding experience to refine robot behavior and strategic autonomous navigation paths.</p>
             </div>
-
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Hardware Engineering</span>
+                <span class="m-role">Hardware Lead</span>
                 <h3 class="m-name">Noelle (Y12)</h3>
-                <p class="m-bio">Technical lead for hardware components. Noelle manages mechanical durability, part stress testing, and component optimization for the 2026 season.</p>
-            </div>
-
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Strategic Intelligence</span>
-                <h3 class="m-name">Leo (Y10)</h3>
-                <p class="m-bio">The team's "Strategic DJ" and scout. Leo analyzes game rules and competitor behaviors to discover the most efficient paths to victory and team exposure.</p>
-            </div>
-
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Assembly Systems</span>
-                <h3 class="m-name">Amira (Y11)</h3>
-                <p class="m-bio">Hardware assembly specialist. Amira supports the mechanical team in high-precision assembly and ensures all physical connections meet safety standards.</p>
+                <p class="m-bio">Manages mechanical durability and component optimization to withstand intense competition pressure.</p>
             </div>
         </div>
     </section>
 
-    <!-- 
-        ============================================================
-        SEASON ROADMAP (MONTHLY DATA)
-        ============================================================
-    -->
-    <section id="roadmap">
+    <!-- ROADMAP -->
+    <section id="timeline">
         <span class="section-tag" data-aos="fade-up">// PIPELINE</span>
         <h2 class="section-title" data-aos="fade-up">Season <span>Roadmap</span></h2>
-        
-        <div class="timeline-container">
-            <div class="timeline-line"></div>
-            
-            <div class="t-item" data-aos="fade-right">
-                <div class="t-content">
-                    <span class="t-month">SEPTEMBER</span>
-                    <div class="t-goal">Audit & Initialization</div>
-                    <p class="t-desc">Full inventory of previous year's stock. Analysis of game manual. Formation of sub-teams and core strategy meeting.</p>
-                </div>
-                <div class="t-dot"></div>
+        <div class="timeline-box">
+            <div class="time-point" data-aos="fade-left">
+                <span class="time-date">SEPTEMBER</span>
+                <p class="m-bio">Post-season audit, inventory management, and game manual analysis. Sub-team formation.</p>
             </div>
-
-            <div class="t-item" data-aos="fade-left">
-                <div class="t-content">
-                    <span class="t-month">OCTOBER</span>
-                    <div class="t-goal">Concept Development</div>
-                    <p class="t-desc">Theme analysis and prototype brainstorming. Selection of the final ramp propulsion concept after 3D simulation tests.</p>
-                </div>
-                <div class="t-dot"></div>
+            <div class="time-point" data-aos="fade-left" data-aos-delay="100">
+                <span class="time-date">OCTOBER - NOVEMBER</span>
+                <p class="m-bio">Prototyping phase: selecting the ramp concept and building the primary drivetrain chassis.</p>
             </div>
-
-            <div class="t-item" data-aos="fade-right">
-                <div class="t-content">
-                    <span class="t-month">NOVEMBER</span>
-                    <div class="t-goal">Chassis Build</div>
-                    <p class="t-desc">Construction of the primary drivetrain. Initial code deployment. Start of the technical portfolio documentation.</p>
-                </div>
-                <div class="t-dot"></div>
-            </div>
-
-            <div class="t-item" data-aos="fade-left">
-                <div class="t-content">
-                    <span class="t-month">DECEMBER</span>
-                    <div class="t-goal">System Optimization</div>
-                    <p class="t-desc">Refining autonomous routes. Reviewing match videos for competitive edge. First 80% task completion achievement.</p>
-                </div>
-                <div class="t-dot"></div>
-            </div>
-
-            <div class="t-item" data-aos="fade-right">
-                <div class="t-content">
-                    <span class="t-month">JANUARY - FEBRUARY</span>
-                    <div class="t-goal">Performance Tuning</div>
-                    <p class="t-desc">Resolving battery life issues. Improving projectile power and trajectory accuracy. Intensive driver training sessions.</p>
-                </div>
-                <div class="t-dot"></div>
-            </div>
-
-            <div class="t-item" data-aos="fade-left">
-                <div class="t-content">
-                    <span class="t-month">MARCH</span>
-                    <div class="t-goal">Deployment Ready</div>
-                    <p class="t-desc">Final robot testing to the limits. Aesthetic finalization. Full portfolio completion and competition entry.</p>
-                </div>
-                <div class="t-dot"></div>
+            <div class="time-point" data-aos="fade-left" data-aos-delay="200">
+                <span class="time-date">JANUARY - MARCH</span>
+                <p class="m-bio">Optimization: perfecting autonomous routines and finalizing the technical portfolio for entry.</p>
             </div>
         </div>
     </section>
 
-    <!-- 
-        ============================================================
-        MISSION FEED & LOCATION (SECURE ACCESS)
-        ============================================================
-    -->
+    <!-- COMM CENTER (MISSION FEED) -->
     <section id="contact">
         <span class="section-tag" data-aos="fade-right">// NEURAL FEED</span>
         <h2 class="section-title">Comm <span>Center</span></h2>
         
         <div class="feed-layout">
-            <!-- Left Side: LIVE FEED -->
-            <div class="feed-box" data-aos="fade-right">
+            <div class="feed-window" data-aos="fade-right">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 30px; align-items:center;">
-                    <h3 style="font-family: var(--font-tech); color: var(--primary);">LIVE_TRANSMISSIONS</h3>
-                    <span id="lock-indicator" style="color: #ff5f56; font-family: var(--font-code); font-size: 0.8rem;"><i class="fas fa-lock"></i> ENCRYPTED</span>
+                    <h3 style="font-family: var(--font-tech); color: var(--primary);">LIVE_FEED</h3>
+                    <span id="lock-indicator" style="color: var(--accent); font-family: var(--font-code); font-size: 0.8rem;"><i class="fas fa-lock"></i> ENCRYPTED</span>
                 </div>
 
-                <div id="password-screen" class="auth-overlay">
-                    <p style="margin-bottom:15px; color:#fff; font-family:var(--font-code);">[SECURITY] Enter #teammember key to decrypt...</p>
-                    <div style="display:flex; gap:10px;">
-                        <input type="password" id="input-key" class="pass-input" placeholder="Encryption Key...">
+                <div id="auth-box" class="auth-zone">
+                    <p style="margin-bottom:15px; color:#fff; font-size:0.8rem;">[SECURITY] ENTER #teammember TO DECRYPT</p>
+                    <div style="display:flex; justify-content:center;">
+                        <input type="password" id="input-key" class="pass-input" placeholder="Key...">
                         <button onclick="unlock()" class="unlock-btn">DECRYPT</button>
                     </div>
                 </div>
 
                 <div id="message-display">
-                    <!-- Data flows here -->
+                    <!-- Messages will render here -->
                 </div>
             </div>
 
-            <!-- Right Side: BROADCAST & MAP -->
-            <div data-aos="fade-left">
-                <div class="feed-box" style="height: auto; margin-bottom: 30px;">
-                    <h3 style="font-family: var(--font-tech); margin-bottom: 25px;">BROADCAST <span>UPDATE</span></h3>
-                    <div class="input-group">
-                        <label>IDENTIFIER (NAME)</label>
-                        <input type="text" id="post-name" placeholder="Agent Identifier...">
-                    </div>
-                    <div class="input-group">
-                        <label>MESSAGE STREAM</label>
-                        <textarea id="post-msg" rows="4" placeholder="Transmit your status update..."></textarea>
-                    </div>
-                    <button onclick="publish()" class="post-btn">POST TO FEED <i class="fas fa-satellite-dish"></i></button>
+            <div class="post-box" data-aos="fade-left">
+                <h3 style="font-family: var(--font-tech); margin-bottom: 25px;">BROADCAST <span>UPDATE</span></h3>
+                <div class="input-grp">
+                    <label>IDENTIFIER</label>
+                    <input type="text" id="post-name" placeholder="Name...">
                 </div>
-
-                <div class="map-wrapper">
-                    <iframe 
-                        src="https://www.google.com
-                                                <!-- FIN DE L'IFRAME MAP -->
-                    </iframe>
+                <div class="input-grp">
+                    <label>MESSAGE STREAM</label>
+                    <textarea id="post-msg" rows="4" placeholder="Transmit status..."></textarea>
                 </div>
-                <div class="map-caption" style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; border: 1px solid var(--glass-border);">
-                    <p class="term-ln">> location_protocol: South_Kensington</p>
-                    <p style="color: var(--text-dim); font-size: 0.9rem;">Lycée Français Charles de Gaulle, 35 Cromwell Rd, London SW7 2DG</p>
+                <button onclick="publish()" class="broadcast-btn">POST TO FEED <i class="fas fa-satellite-dish"></i></button>
+                
+                <div class="map-frame">
+                    <iframe src="https://www.google.com" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 
-        ============================================================
-        TECHNICAL DOCUMENTATION SECTION (DEEP TECH)
-        ============================================================
-    -->
-    <section id="docs" style="background: rgba(0, 242, 255, 0.01);">
-        <span class="section-tag" data-aos="fade-up">// ARCHIVE_01</span>
-        <h2 class="section-title" data-aos="fade-up">Design <span>Evolution</span></h2>
-        
-        <div class="tech-grid">
-            <div class="glass-card" data-aos="fade-right">
-                <div class="hero-badge" style="margin-bottom:15px;">CONCEPT A</div>
-                <h3>The Motorized Wheel</h3>
-                <p>Initial design utilized a high-speed orbital wheel. Simulation results showed 40% drift in ball trajectory. 
-                <strong>Status:</strong> Decommissioned due to instability.</p>
-            </div>
-            <div class="glass-card" data-aos="fade-up">
-                <div class="hero-badge" style="margin-bottom:15px; border-color: var(--secondary); color: var(--secondary);">CONCEPT B</div>
-                <h3>The Pendulum Swing</h3>
-                <p>A geared pivot mechanism. While mechanically sound, the building footprint exceeded the 18-inch competition limit.
-                <strong>Status:</strong> Archived for future seasons.</p>
-            </div>
-            <div class="glass-card" data-aos="fade-left">
-                <div class="hero-badge" style="margin-bottom:15px; border-color: #27c93f; color: #27c93f;">CONCEPT C</div>
-                <h3>Precision Ramp (Final)</h3>
-                <p>Our active build. Uses a synchronized rotating rod and a custom 15-degree ramp. 95% repeatable accuracy.
-                <strong>Status:</strong> Active Deployment.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 
-        ============================================================
-        FOOTER SYSTEM
-        ============================================================
-    -->
     <footer>
-        <a href="#" class="f-logo" data-aos="fade-up">LFCG<span>ROBOTICS</span></a>
-        
-        <div class="btn-group" style="margin-bottom: 60px;" data-aos="fade-up">
-            <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn">
-                <i class="fab fa-youtube"></i> YouTube
-            </a>
-            <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn">
-                <i class="fab fa-instagram"></i> Instagram
-            </a>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; margin-bottom: 80px;">
-            <div>
-                <h4 style="font-family: var(--font-tech); color: var(--primary); margin-bottom: 20px;">NAVIGATION</h4>
-                <ul style="list-style: none; color: var(--text-dim); font-size: 0.9rem;">
-                    <li style="margin-bottom: 10px;"><a href="#home" style="color: inherit; text-decoration: none;">Neural Interface</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#about" style="color: inherit; text-decoration: none;">Specifications</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#team" style="color: inherit; text-decoration: none;">Team Roster</a></li>
-                    <li><a href="#contact" style="color: inherit; text-decoration: none;">Comm Center</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="font-family: var(--font-tech); color: var(--primary); margin-bottom: 20px;">LEGAL</h4>
-                <ul style="list-style: none; color: var(--text-dim); font-size: 0.9rem;">
-                    <li style="margin-bottom: 10px;">Privacy Protocol</li>
-                    <li style="margin-bottom: 10px;">Data Encryption</li>
-                    <li>Competition Rules</li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="font-family: var(--font-tech); color: var(--primary); margin-bottom: 20px;">MISSION</h4>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">Representing Lycée Français Charles de Gaulle in the FIRST Tech Challenge 2025-2026. Designed for elite performance and strategic innovation.</p>
-            </div>
-        </div>
-
-        <p class="copy">© 2026 LFCG ROBOTICS DIVISION // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
+        <a href="#" class="f-logo">LFCGteam<span> robotic</span></a>
+        <p class="copy">© 2026 LFCGteam robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
     </footer>
 
-    <!-- 
-        ============================================================
-        CORE JAVASCRIPT ENGINE (150+ LINES)
-        ============================================================
-    -->
+    <!-- SCRIPTS -->
     <script src="https://unpkg.com"></script>
     <script>
-        // --- 1. INITIALIZATION ---
-        const TEAM_KEY = "#teammember";
+        // --- 1. CORE INIT ---
+        const MASTER_KEY = "#teammember";
         
-        document.addEventListener('DOMContentLoaded', () => {
-            AOS.init({ duration: 1200, once: true, easing: 'ease-in-out' });
+        window.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 1200, once: true });
             initParticles();
             renderFeed();
-            console.log("System Status: Online");
         });
 
-        // --- 2. SECURITY PROTOCOL (PASSWORD) ---
+        // --- 2. PASSWORD SYSTEM (FIXED) ---
         function unlock() {
-            const input = document.getElementById('input-key').value;
+            const inputVal = document.getElementById('input-key').value;
             const display = document.getElementById('message-display');
             const indicator = document.getElementById('lock-indicator');
-            const screen = document.getElementById('password-screen');
+            const authBox = document.getElementById('auth-box');
 
-            if(input === TEAM_KEY) {
+            if(inputVal.trim() === MASTER_KEY) {
                 display.style.filter = "none";
                 display.style.pointerEvents = "all";
                 indicator.style.color = "#27c93f";
                 indicator.innerHTML = '<i class="fas fa-lock-open"></i> DECRYPTED';
-                screen.style.display = "none";
-                
-                // Effet sonore visuel (console)
-                console.warn("ACCESS GRANTED: Feed Decrypted.");
+                authBox.style.display = "none";
             } else {
-                alert("CRITICAL ERROR: Unauthorized Access Attempt. Invalid Encryption Key.");
+                alert("ACCESS DENIED: Invalid Key.");
                 document.getElementById('input-key').value = "";
             }
         }
 
-        // --- 3. MISSION FEED SYSTEM ---
+        // --- 3. FEED SYSTEM ---
         function publish() {
             const name = document.getElementById('post-name').value;
             const msg = document.getElementById('post-msg').value;
 
             if(!name || !msg) {
-                alert("ERROR: Metadata missing. Please provide Identifier and Message Stream.");
+                alert("Metadata missing.");
                 return;
             }
 
-            const timestamp = new Date().toLocaleString('en-GB', { hour12: false });
-            const payload = { name: name.toUpperCase(), message: msg, time: timestamp };
+            const payload = { name: name.toUpperCase(), message: msg, time: new Date().toLocaleTimeString() };
+            let data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
+            data.unshift(payload);
+            localStorage.setItem('lfcg_feed', JSON.stringify(data));
 
-            // Storage Handling
-            let feedData = JSON.parse(localStorage.getItem('lfcg_vault') || "[]");
-            feedData.unshift(payload);
-            localStorage.setItem('lfcg_vault', JSON.stringify(feedData));
-
-            // UI Feedback
             document.getElementById('post-name').value = "";
             document.getElementById('post-msg').value = "";
             renderFeed();
@@ -687,31 +480,25 @@
 
         function renderFeed() {
             const container = document.getElementById('message-display');
-            const data = JSON.parse(localStorage.getItem('lfcg_vault') || "[]");
+            const data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
             
             if(data.length === 0) {
-                container.innerHTML = `
-                    <div class="entry" style="text-align:center; opacity:0.5;">
-                        <p>> NO DATA STREAMS DETECTED. WAITING FOR BROADCAST...</p>
-                    </div>
-                `;
+                container.innerHTML = '<p style="color:#444; font-family:var(--font-code); text-align:center; padding-top:50px;">NO DATA DETECTED.</p>';
                 return;
             }
 
             container.innerHTML = data.map(item => `
                 <div class="entry">
                     <div class="entry-header">
-                        <span>> AGENT: ${item.name}</span>
+                        <span>> ${item.name}</span>
                         <span>[${item.time}]</span>
                     </div>
-                    <div class="entry-body">
-                        ${item.message}
-                    </div>
+                    <div class="entry-body">${item.message}</div>
                 </div>
             `).join('');
         }
 
-        // --- 4. PARTICLE ENGINE (CANVAS) ---
+        // --- 4. PARTICLES ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -719,14 +506,13 @@
         function initParticles() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < 120; i++) {
+            for (let i = 0; i < 100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.6,
-                    vy: (Math.random() - 0.5) * 0.6,
-                    size: Math.random() * 2.5
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2
                 });
             }
             animate();
@@ -736,29 +522,19 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#00f2ff';
             particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
+                p.x += p.vx; p.y += p.vy;
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
             });
             requestAnimationFrame(animate);
         }
 
-        // --- 5. UI UTILITIES ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 100) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
     </script>
 </body>
 </html>
-
