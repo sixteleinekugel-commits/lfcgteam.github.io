@@ -1,585 +1,505 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LFCG ROBOTICS | NEURAL INTERFACE 27935</title>
+    <title>LFCG ROBOTICS | NEURAL CORE 27935</title>
 
-    <!-- Preload Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Google Fonts: Futuristic & Technical -->
     <link href="https://fonts.googleapis.com" rel="stylesheet">
-    
-    <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <link href="https://unpkg.com" rel="stylesheet">
 
     <style>
-        /* =========================================
-           CORE SYSTEM VARIABLES
-           ========================================= */
+        /* ============================================================
+           1. DESIGN SYSTEM & VARIABLES (Root configuration)
+           ============================================================ */
         :root {
-            --c-bg: #03050c;
-            --c-primary: #00f2ff;
-            --c-primary-variant: #0088ff;
-            --c-secondary: #7000ff;
-            --c-accent: #ff0055;
-            --c-text-1: #ffffff;
-            --c-text-2: #94a3b8;
-            --c-glass: rgba(255, 255, 255, 0.03);
-            --c-border: rgba(255, 255, 255, 0.08);
-            --f-main: 'Plus Jakarta Sans', sans-serif;
-            --f-tech: 'Orbitron', sans-serif;
-            --f-code: 'JetBrains Mono', monospace;
-            --shadow-glow: 0 0 30px rgba(0, 242, 255, 0.2);
-            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --bg: #020308;
+            --primary: #00f2ff;
+            --primary-rgb: 0, 242, 255;
+            --secondary: #7000ff;
+            --accent: #ff0055;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-1: #ffffff;
+            --text-2: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
         }
 
-        /* =========================================
-           BASE RESET & SCROLLBAR
-           ========================================= */
+        /* ============================================================
+           2. GLOBAL CORE STYLES
+           ============================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        
         html { scroll-behavior: smooth; overflow-x: hidden; }
-        
         body {
-            background-color: var(--c-bg);
-            color: var(--c-text-1);
-            font-family: var(--f-main);
+            background: var(--bg);
+            color: var(--text-1);
+            font-family: var(--font-main);
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--c-bg); }
+        /* Particles Layer */
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.4;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(var(--c-secondary), var(--c-primary)); 
-            border-radius: 10px;
+            background: linear-gradient(var(--secondary), var(--primary)); 
+            border-radius: 4px;
         }
 
-        /* =========================================
-           CANVAS & BACKGROUND LAYER
-           ========================================= */
-        #bg-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.6;
+        /* ============================================================
+           3. NAVIGATION (Frosted Glass)
+           ============================================================ */
+        .nav-container {
+            position: fixed; top: 0; width: 100%; padding: 25px 6%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; transition: var(--transition);
         }
-
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app');
-            opacity: 0.03; z-index: 1000; pointer-events: none;
+        .nav-container.scrolled {
+            background: rgba(2, 3, 8, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 15px 6%;
+            border-bottom: 1px solid var(--glass-border);
         }
-
-        /* =========================================
-           HEADER & NAVIGATION
-           ========================================= */
-        .header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 60px; display: flex; justify-content: space-between;
-            align-items: center; z-index: 100; transition: all 0.5s var(--ease);
+        .logo-box {
+            font-family: var(--font-tech); font-weight: 900; font-size: 1.5rem;
+            color: #fff; text-decoration: none; display: flex; align-items: center; gap: 12px;
         }
-
-        .header.scrolled {
-            padding: 15px 60px; background: rgba(3, 5, 12, 0.8);
-            backdrop-filter: blur(20px); border-bottom: 1px solid var(--c-border);
+        .logo-box span { color: var(--primary); }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-2); font-family: var(--font-tech);
+            font-size: 0.75rem; letter-spacing: 2px; font-weight: 600;
+            transition: var(--transition);
         }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
 
-        .brand {
-            display: flex; align-items: center; gap: 15px;
-            text-decoration: none; color: #fff;
-        }
-
-        .brand-logo {
-            width: 45px; height: 45px; background: var(--c-primary);
-            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
-            display: flex; align-items: center; justify-content: center;
-            transition: var(--ease);
-        }
-
-        .brand:hover .brand-logo { transform: rotate(90deg) scale(1.1); }
-
-        .brand-name { font-family: var(--f-tech); font-weight: 900; font-size: 1.4rem; letter-spacing: 2px; }
-        .brand-name span { color: var(--c-primary); }
-
-        .nav-menu { display: flex; gap: 40px; list-style: none; }
-        .nav-item a {
-            text-decoration: none; color: var(--c-text-2); font-size: 0.75rem;
-            font-weight: 700; font-family: var(--f-tech); letter-spacing: 2px;
-            position: relative; transition: color 0.3s;
-        }
-
-        .nav-item a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 0; height: 2px; background: var(--c-primary);
-            transition: width 0.3s;
-        }
-
-        .nav-item a:hover { color: var(--c-primary); }
-        .nav-item a:hover::after { width: 100%; }
-
-        /* =========================================
-           HERO SECTION: THE CORE
-           ========================================= */
+        /* ============================================================
+           4. HERO SECTION (Immersive Entry)
+           ============================================================ */
         .hero {
-            height: 100vh; display: flex; align-items: center;
-            padding: 0 10%; position: relative;
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative; padding: 0 10%;
         }
-
-        .hero-content { max-width: 850px; z-index: 10; }
-
-        .hero-status {
-            display: flex; align-items: center; gap: 10px;
-            font-family: var(--f-code); color: var(--c-primary);
-            margin-bottom: 25px; font-size: 0.9rem;
+        .hero-inner { z-index: 10; max-width: 1000px; }
+        .hero-badge {
+            display: inline-block; padding: 10px 25px; border-radius: 50px;
+            background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary);
+            color: var(--primary); font-family: var(--font-tech); font-size: 0.8rem;
+            margin-bottom: 30px; letter-spacing: 3px; animation: glow 3s infinite;
         }
-
-        .status-dot {
-            width: 8px; height: 8px; background: var(--c-primary);
-            border-radius: 50%; box-shadow: 0 0 10px var(--c-primary);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        .hero h1 {
-            font-family: var(--f-tech); font-size: clamp(3rem, 12vw, 7.5rem);
-            font-weight: 900; line-height: 0.9; letter-spacing: -4px;
-            margin-bottom: 30px; text-transform: uppercase;
-        }
-
-        .hero h1 .outline {
-            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
-            color: transparent;
-        }
-
-        .hero-cta { display: flex; gap: 25px; margin-top: 50px; }
-
-        .btn-main {
-            padding: 20px 45px; border-radius: 4px; font-family: var(--f-tech);
-            font-weight: 700; text-decoration: none; position: relative;
-            overflow: hidden; transition: 0.4s;
-        }
-
-        .btn-filled { background: var(--c-primary); color: var(--c-bg); border: none; }
-        .btn-filled:hover { background: #fff; transform: translateY(-5px); box-shadow: var(--shadow-glow); }
-
-        .btn-outline { 
-            border: 1px solid var(--c-border); color: #fff; 
-            background: rgba(255,255,255,0.02); backdrop-filter: blur(10px);
-        }
-        .btn-outline:hover { border-color: var(--c-primary); transform: translateY(-5px); }
-
-        /* =========================================
-           TERMINAL INTERFACE
-           ========================================= */
-        .terminal-section { padding: 100px 10%; background: #000; }
-        .terminal-window {
-            background: #0d1117; border-radius: 12px; border: 1px solid var(--c-border);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5); overflow: hidden;
-        }
-
-        .terminal-header {
-            padding: 15px 20px; background: #161b22; display: flex; gap: 8px;
-            border-bottom: 1px solid var(--c-border);
-        }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
-
-        .terminal-body {
-            padding: 30px; font-family: var(--f-code); font-size: 0.9rem;
-            color: #d1d5db; min-height: 400px;
-        }
-
-        .command-line { color: var(--c-primary); margin-bottom: 10px; }
-        .typewriter { overflow: hidden; border-right: .15em solid var(--c-primary); white-space: nowrap; animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; }
-
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--c-primary); } }
-
-        /* =========================================
-           TECH GRID (MEMBERS)
-           ========================================= */
-        .team-section { padding: 150px 10%; }
-        .grid-header { margin-bottom: 80px; }
-        .grid-header h2 { font-family: var(--f-tech); font-size: 3.5rem; letter-spacing: -2px; }
-
-        .member-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .member-card {
-            position: relative; height: 450px; border-radius: 20px;
-            overflow: hidden; border: 1px solid var(--c-border);
-            transition: 0.6s var(--ease);
-        }
-
-        .member-card:hover { transform: scale(0.98); border-color: var(--c-primary); }
-
-        .card-bg-img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 30%, #03050c 100%);
-            z-index: 1;
-        }
-
-        .member-info {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            padding: 40px; z-index: 2;
-        }
-
-        .member-role {
-            font-family: var(--f-tech); font-size: 0.7rem; color: var(--c-primary);
-            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block;
-        }
-
-        .member-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; }
-        .member-bio { font-size: 0.9rem; color: var(--text-dim); opacity: 0; transform: translateY(20px); transition: 0.4s; }
-
-        .member-card:hover .member-bio { opacity: 1; transform: translateY(0); }
-
-        /* =========================================
-           3D ROTATION TABS (ENGINEERING)
-           ========================================= */
-        .process-section { padding: 150px 10%; background: #05070f; }
-        .tab-nav { display: flex; gap: 10px; margin-bottom: 50px; overflow-x: auto; padding-bottom: 10px; }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 20px var(--primary); } }
         
+        .hero h1 {
+            font-family: var(--font-tech); font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 900; line-height: 0.9; margin-bottom: 35px;
+            background: linear-gradient(to bottom, #fff 40%, var(--primary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -3px;
+        }
+        .hero-desc { font-size: 1.3rem; color: var(--text-2); margin-bottom: 50px; max-width: 750px; margin-inline: auto; font-weight: 300; }
+
+        .btn-group { display: flex; gap: 20px; justify-content: center; }
+        .btn-core {
+            padding: 20px 45px; border-radius: 12px; font-family: var(--font-tech);
+            font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: var(--transition);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.4); }
+        .btn-sec { background: var(--glass); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(10px); }
+        .btn-sec:hover { border-color: var(--primary); background: rgba(255,255,255,0.08); }
+
+        /* ============================================================
+           5. DATA TELEMETRY (Simulated Performance)
+           ============================================================ */
+        .telemetry-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; padding: 80px 8%; background: rgba(0, 242, 255, 0.02);
+        }
+        .tele-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 40px; border-radius: 20px; text-align: center;
+        }
+        .tele-val { font-family: var(--font-tech); font-size: 3rem; color: var(--primary); display: block; }
+        .tele-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 2px; }
+
+        /* ============================================================
+           6. ENGINEERING SECTIONS (Deep Dive)
+           ============================================================ */
+        section { padding: 150px 8%; position: relative; }
+        .tagline { color: var(--secondary); font-family: var(--font-tech); font-size: 0.9rem; margin-bottom: 15px; display: block; }
+        .section-h { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 80px; }
+
+        /* Tech Spec Grid */
+        .spec-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        .spec-box {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 50px; border-radius: 30px; transition: var(--transition);
+        }
+        .spec-box:hover { border-color: var(--primary); background: rgba(255,255,255,0.06); }
+        .spec-icon { width: 60px; height: 60px; background: rgba(var(--primary-rgb), 0.1); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; margin-bottom: 30px; }
+        .spec-box h3 { font-family: var(--font-tech); font-size: 1.5rem; margin-bottom: 20px; }
+        .spec-list { list-style: none; color: var(--text-2); }
+        .spec-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .spec-list li i { color: var(--primary); font-size: 0.7rem; }
+
+        /* ============================================================
+           7. TEAM CORE (Full Member List)
+           ============================================================ */
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .member-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            border-radius: 25px; padding: 45px; border: 1px solid var(--glass-border);
+            position: relative; overflow: hidden; transition: var(--transition);
+        }
+        .member-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
+        .member-card::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(112,0,255,0.1) 0%, transparent 70%);
+            opacity: 0; transition: 0.6s;
+        }
+        .member-card:hover::after { opacity: 1; }
+
+        .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        .m-bio { color: var(--text-2); font-size: 1rem; line-height: 1.8; font-weight: 300; }
+
+        /* ============================================================
+           8. PROJECT PROTOCOLS (Tabs)
+           ============================================================ */
+        .protocol-tabs { margin-top: 60px; }
+        .tab-nav { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
         .tab-trigger {
-            padding: 15px 30px; background: var(--c-glass); border: 1px solid var(--c-border);
-            color: #fff; font-family: var(--f-tech); cursor: pointer; transition: 0.3s;
-            white-space: nowrap;
+            padding: 18px 35px; border-radius: 12px; border: 1px solid var(--glass-border);
+            background: var(--glass); color: #fff; font-family: var(--font-tech);
+            cursor: pointer; transition: var(--transition); font-size: 0.8rem;
         }
+        .tab-trigger.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 800; }
+        .tab-panel { display: none; background: var(--glass); padding: 60px; border-radius: 30px; border: 1px solid var(--glass-border); }
+        .tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; animation: fadeIn 0.6s ease; }
+        @media (max-width: 900px) { .tab-panel.active { grid-template-columns: 1fr; } }
 
-        .tab-trigger.active { background: var(--c-primary); color: #000; border-color: var(--c-primary); box-shadow: var(--shadow-glow); }
-
-        .tab-panel { display: none; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .tab-panel.active { display: grid; animation: slideIn 0.8s var(--ease); }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-
-        .panel-visual {
-            height: 500px; background: var(--c-glass); border-radius: 30px;
-            display: flex; align-items: center; justify-content: center;
-            border: 1px solid var(--c-border); position: relative;
+        /* ============================================================
+           9. DYNAMIC ROADMAP
+           ============================================================ */
+        .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 60px 0; }
+        .timeline-box::before {
+            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
+            background: linear-gradient(transparent, var(--primary), transparent);
         }
+        .time-point { padding: 40px; background: var(--glass); border-radius: 25px; margin-left: 70px; position: relative; border: 1px solid var(--glass-border); margin-bottom: 40px; transition: var(--transition); }
+        .time-point::before { content: ''; position: absolute; left: -51px; top: 50px; width: 20px; height: 20px; background: var(--bg); border: 3px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); }
+        .time-date { font-family: var(--font-tech); color: var(--primary); font-size: 1.1rem; margin-bottom: 15px; display: block; }
+        .time-point:hover { transform: translateX(15px); background: rgba(255,255,255,0.08); }
 
-        .tech-spec-box {
-            position: absolute; top: -20px; right: -20px;
-            background: var(--c-secondary); padding: 20px;
-            font-family: var(--f-code); font-size: 0.8rem; border-radius: 8px;
+        /* ============================================================
+           10. FOOTER & TERMINAL
+           ============================================================ */
+        .terminal-footer {
+            background: #000; padding: 100px 8% 50px; border-top: 1px solid var(--glass-border);
         }
-
-        /* =========================================
-           TIMELINE SVG
-           ========================================= */
-        .roadmap-section { padding: 150px 10%; position: relative; }
-        .roadmap-container { position: relative; }
-        .roadmap-container::before {
-            content: ''; position: absolute; left: 50%; top: 0; width: 2px;
-            height: 100%; background: linear-gradient(transparent, var(--c-primary), transparent);
-            transform: translateX(-50%);
+        .term-box {
+            background: #0d1117; border-radius: 15px; padding: 40px; border: 1px solid #30363d;
+            font-family: var(--font-code); color: #c9d1d9; margin-bottom: 60px;
         }
+        .term-head { display: flex; gap: 8px; margin-bottom: 25px; }
+        .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .f-logo { font-family: var(--font-tech); font-size: 2.5rem; color: #fff; text-decoration: none; display: block; margin-bottom: 30px; }
+        .f-logo span { color: var(--primary); }
+        .copyright { color: #334155; font-size: 0.8rem; margin-top: 80px; text-align: center; }
 
-        .roadmap-item {
-            display: flex; width: 100%; margin-bottom: 100px;
-            justify-content: space-between; align-items: center;
-        }
-
-        .roadmap-item:nth-child(even) { flex-direction: row-reverse; }
-
-        .roadmap-content {
-            width: 45%; padding: 40px; background: var(--c-glass);
-            border-radius: 20px; border: 1px solid var(--c-border);
-            position: relative;
-        }
-
-        .roadmap-dot {
-            position: absolute; left: 50%; width: 20px; height: 20px;
-            background: var(--c-primary); border-radius: 50%;
-            transform: translateX(-50%); box-shadow: 0 0 20px var(--c-primary);
-        }
-
-        /* =========================================
-           FOOTER EXTREME
-           ========================================= */
-        .footer {
-            padding: 100px 10% 50px; background: #000; border-top: 1px solid var(--c-border);
-        }
-
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 80px; }
-
-        .footer-col h4 { font-family: var(--f-tech); margin-bottom: 30px; color: var(--c-primary); }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 15px; }
-        .footer-col ul li a { text-decoration: none; color: var(--c-text-2); transition: 0.3s; }
-        .footer-col ul li a:hover { color: #fff; padding-left: 10px; }
-
-        .newsletter-input {
-            width: 100%; padding: 15px; background: var(--c-glass);
-            border: 1px solid var(--c-border); border-radius: 4px;
-            color: #fff; margin-bottom: 15px;
-        }
-
-        .bottom-bar {
-            padding-top: 50px; border-top: 1px solid var(--c-border);
-            display: flex; justify-content: space-between; color: #444; font-size: 0.8rem;
-        }
-
-        /* =========================================
-           ANIMATED CURSOR
-           ========================================= */
-        #cursor-custom {
-            width: 40px; height: 40px; border: 2px solid var(--c-primary);
-            border-radius: 50%; position: fixed; pointer-events: none;
-            z-index: 10000; transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
-            display: flex; align-items: center; justify-content: center;
-        }
-        #cursor-dot { width: 4px; height: 4px; background: var(--c-primary); border-radius: 50%; }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="cursor-custom"><div id="cursor-dot"></div></div>
-    <canvas id="bg-canvas"></canvas>
-    <div class="noise"></div>
+    <!-- Particle Background -->
+    <canvas id="particle-canvas"></canvas>
 
-    <!-- HEADER -->
-    <header class="header" id="mainHeader">
-        <a href="#" class="brand">
-            <div class="brand-logo">27</div>
-            <div class="brand-name">LFCG<span>ROBOTICS</span></div>
+    <!-- NAVIGATION -->
+    <nav class="nav-container" id="navbar">
+        <a href="#" class="logo-box">LFCG<span>ROBOTICS</span></a>
+        <ul class="nav-links">
+            <li><a href="#mission">Core</a></li>
+            <li><a href="#engineering">Specs</a></li>
+            <li><a href="#team">Engineers</a></li>
+            <li><a href="#timeline">Season</a></li>
+        </ul>
+        <a href="https://www.youtube.com" target="_blank" class="btn-core btn-primary" style="padding: 10px 20px; font-size: 0.7rem;">
+            <i class="fab fa-youtube"></i> ACCESS LIVE
         </a>
-        <nav>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#hero">SYSTEM</a></li>
-                <li class="nav-item"><a href="#team">ENGINEERS</a></li>
-                <li class="nav-item"><a href="#process">PROTOCOLS</a></li>
-                <li class="nav-item"><a href="#roadmap">TIMELINE</a></li>
-            </ul>
-        </nav>
-        <div class="header-action">
-            <a href="https://www.youtube.com" target="_blank" class="btn-main btn-filled" style="padding: 12px 25px; font-size: 0.7rem;">LIVE STREAM</a>
-        </div>
-    </header>
+    </nav>
 
     <!-- HERO SECTION -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <div class="hero-status" data-aos="fade-right">
-                <div class="status-dot"></div> SYSTEM ONLINE // TEAM 27935 // LONDON UK
-            </div>
-            <h1 data-aos="fade-up" data-aos-delay="200">
-                ENGINEERING <br> <span class="outline">THE FUTURE</span>
-            </h1>
-            <p class="hero-desc" data-aos="fade-up" data-aos-delay="400">
-                Pioneering advanced robotic solutions at Lycée Français Charles de Gaulle. 
-                Integrating neural algorithms with high-performance hardware for the 2025-2026 Season.
-            </p>
-            <div class="hero-cta" data-aos="fade-up" data-aos-delay="600">
-                <a href="#process" class="btn-main btn-filled">INITIATE PROTOCOLS</a>
-                <a href="https://www.instagram.com" class="btn-main btn-outline">DATAFEED / IG</a>
+    <section class="hero">
+        <div class="hero-inner" data-aos="fade-up" data-aos-duration="1500">
+            <span class="hero-badge">LONDON // TEAM 27935 // FIRST TECH CHALLENGE</span>
+            <h1>NEURAL <br><span>ENGINEERING</span></h1>
+            <p class="hero-desc">The official digital interface of Team 27935. Based at Lycée Français Charles de Gaulle, we build high-performance robotics focused on autonomous precision and mechanical innovation.</p>
+            <div class="btn-group">
+                <a href="#engineering" class="btn-core btn-primary">VIEW SPECIFICATIONS <i class="fas fa-microchip"></i></a>
+                <a href="https://www.instagram.com" class="btn-core btn-sec">DATA FEED / IG</a>
             </div>
         </div>
     </section>
 
-    <!-- TERMINAL SECTION (NEW INNOVATION) -->
-    <section class="terminal-section">
-        <div class="terminal-window" data-aos="zoom-in-up">
-            <div class="terminal-header">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                <span style="font-family: var(--f-code); font-size: 0.7rem; color: #444; margin-left: 20px;">lfcg_robotics --version 2.0.26</span>
+    <!-- TELEMETRY SECTION -->
+    <div class="telemetry-grid">
+        <div class="tele-card" data-aos="zoom-in">
+            <span class="tele-val" id="count1">27935</span>
+            <span class="tele-label">Team ID</span>
+        </div>
+        <div class="tele-card" data-aos="zoom-in" data-aos-delay="100">
+            <span class="tele-val">95%</span>
+            <span class="tele-label">Shot Accuracy</span>
+        </div>
+        <div class="tele-card" data-aos="zoom-in" data-aos-delay="200">
+            <span class="tele-val">02</span>
+            <span class="tele-label">Competition Season</span>
+        </div>
+        <div class="tele-card" data-aos="zoom-in" data-aos-delay="300">
+            <span class="tele-val">PODIUM</span>
+            <span class="tele-label">2026 Objective</span>
+        </div>
+    </div>
+
+    <!-- ENGINEERING SPECS -->
+    <section id="engineering">
+        <span class="tagline" data-aos="fade-right">// SYSTEM ARCHITECTURE</span>
+        <h2 class="section-h" data-aos="fade-right">Technical <span>Specifications</span></h2>
+        
+        <div class="spec-container">
+            <div class="spec-box" data-aos="fade-up">
+                <div class="spec-icon"><i class="fas fa-car-battery"></i></div>
+                <h3>Power & Drive</h3>
+                <ul class="spec-list">
+                    <li><i class="fas fa-circle"></i> 4x High-Torque DC Motors</li>
+                    <li><i class="fas fa-circle"></i> Mecanum Wheel Transmission</li>
+                    <li><i class="fas fa-circle"></i> Integrated Battery Management</li>
+                    <li><i class="fas fa-circle"></i> 12V High-Output System</li>
+                </ul>
             </div>
-            <div class="terminal-body" id="terminalOutput">
-                <div class="command-line">> loading_robot_parameters.sh</div>
-                <div class="typewriter">> [SUCCESS] Drivetrain calibrated.</div>
-                <div class="command-line">> checking_team_roster...</div>
-                <div style="color: #66e0ff;">
-                    > FOUND: 8 Elite Engineers <br>
-                    > PROJECT MANAGER: Sixte <br>
-                    > MENTOR: Mr. Gbessi <br>
-                    > LOCATION: South Kensington, London
-                </div>
-                <div class="command-line" style="margin-top: 20px;">> type 'help' for more info or 'explore' to launch system...</div>
+            <div class="spec-box" data-aos="fade-up" data-aos-delay="100">
+                <div class="spec-icon"><i class="fas fa-code-branch"></i></div>
+                <h3>Neural Software</h3>
+                <ul class="spec-list">
+                    <li><i class="fas fa-circle"></i> Java-Based Control Loops</li>
+                    <li><i class="fas fa-circle"></i> PID Trajectory Correction</li>
+                    <li><i class="fas fa-circle"></i> OpenCV Vision Processing</li>
+                    <li><i class="fas fa-circle"></i> Zero-Latency Driver Link</li>
+                </ul>
+            </div>
+            <div class="spec-box" data-aos="fade-up" data-aos-delay="200">
+                <div class="spec-icon"><i class="fas fa-drafting-compass"></i></div>
+                <h3>Chassis Design</h3>
+                <ul class="spec-list">
+                    <li><i class="fas fa-circle"></i> Modular Alloy Structure</li>
+                    <li><i class="fas fa-circle"></i> 18-Inch Compression Frame</li>
+                    <li><i class="fas fa-circle"></i> Custom Ball Ramp System</li>
+                    <li><i class="fas fa-circle"></i> Aesthetic Polycarbonate Panels</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- TEAM GRID -->
-    <section class="team-section" id="team">
-        <div class="grid-header">
-            <span class="section-tag">// HUMAN ASSETS</span>
-            <h2>The <span>Engineers</span></h2>
-        </div>
+    <!-- TEAM CORE -->
+    <section id="team" style="background: rgba(112, 0, 255, 0.02);">
+        <span class="tagline" data-aos="fade-up">// THE CREW</span>
+        <h2 class="section-h" data-aos="fade-up">Team <span>Elite</span></h2>
         
         <div class="member-grid">
-            <!-- Mentor -->
+            <!-- Mentor First -->
+            <div class="member-card" data-aos="zoom-in" style="border: 2px solid var(--primary);">
+                <span class="m-role">Founder & Lead Mentor</span>
+                <span class="m-name">Mr. Gbessi</span>
+                <p class="m-bio">A pillar of our robotics division. As a Physics and Chemistry expert, he provides the scientific framework and mentorship necessary for high-stakes engineering. He founded the club to bridge theory with hands-on technical reality.</p>
+            </div>
+
+            <!-- Project Manager -->
+            <div class="member-card" data-aos="zoom-in" data-aos-delay="100" style="border: 2px solid var(--secondary);">
+                <span class="m-role">Project Manager / Lead Dev</span>
+                <span class="m-name">Sixte (Y11)</span>
+                <p class="m-bio">Managing the neural center of the project. Sixte handles the workflow, schedule integrity, and coordinates the programming team with the mechanical designers to ensure 100% system stability.</p>
+            </div>
+
+            <!-- Members -->
             <div class="member-card" data-aos="fade-up">
-                <div class="card-bg-img" style="background-image: linear-gradient(to bottom, transparent, #03050c), url('https://via.placeholder.com'); background-size: cover;"></div>
-                <div class="member-info">
-                    <span class="member-role">Founder & Lead Mentor</span>
-                    <h3 class="member-name">Mr. Gbessi</h3>
-                    <p class="member-bio">Physics & Chemistry expert. He established the club to bridge the gap between classroom theory and real-world industrial engineering.</p>
-                </div>
-            </div>
-
-            <!-- PM -->
-            <div class="member-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="card-bg-img" style="background-image: linear-gradient(to bottom, transparent, #03050c), url('https://via.placeholder.com'); background-size: cover;"></div>
-                <div class="member-info">
-                    <span class="member-role">Project Manager / Lead Dev</span>
-                    <h3 class="member-name">Sixte</h3>
-                    <p class="member-bio">Oversees global workflow, programming architecture, and system integration. The architect behind Team 27935's strategic roadmap.</p>
-                </div>
-            </div>
-
-            <!-- Melanie -->
-            <div class="member-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="card-bg-img" style="background-image: linear-gradient(to bottom, transparent, #03050c), url('https://via.placeholder.com'); background-size: cover;"></div>
-                <div class="member-info">
-                    <span class="member-role">Mechanical Systems</span>
-                    <h3 class="member-name">Mélanie</h3>
-                    <p class="member-bio">Expert in Drivetrain dynamics and hardware manipulation. Translates complex physics into fluid robot movement.</p>
-                </div>
-            </div>
-
-            <!-- Axel -->
-            <div class="member-card" data-aos="fade-up">
-                <div class="card-bg-img" style="background-image: linear-gradient(to bottom, transparent, #03050c), url('https://via.placeholder.com'); background-size: cover;"></div>
-                <div class="member-info">
-                    <span class="member-role">Conception & Design</span>
-                    <h3 class="member-name">Axel</h3>
-                    <p class="member-bio">Passionate builder specialized in structural design.axel ensures every component meets the highest precision standards.</p>
-                </div>
-            </div>
-
-            <!-- More members -->
-            <div class="member-card" data-aos="fade-up">
-                <div class="card-bg-img" style="background-image: linear-gradient(to bottom, transparent, #03050c), url('https://via.placeholder.com'); background-size: cover;"></div>
-                <div class="member-info">
-                    <span class="member-role">Programming Specialist</span>
-                    <h3 class="member-name">Leopold</h3>
-                    <p class="member-bio">Focuses on sensor integration and logic loops. Helps bridge the gap between building and intelligent behavior.</p>
-                </div>
+                <span class="m-role">Drivetrain Engineer</span>
+                <span class="m-name">Mélanie (Y13)</span>
+                <p class="m-bio">Mechanical lead for drivetrain and manipulation. Her expertise ensures the robot's physical interactions are efficient and reliable under competitive stress.</p>
             </div>
 
             <div class="member-card" data-aos="fade-up">
-                <div class="card-bg-img" style="background-image: linear-gradient(to bottom, transparent, #03050c), url('https://via.placeholder.com'); background-size: cover;"></div>
-                <div class="member-info">
-                    <span class="member-role">Hardware Engineer</span>
-                    <h3 class="member-name">Noelle</h3>
-                    <p class="member-bio">Structural integrity expert. Noelle manages the physical lifecycle of the robot from chassis to attachments.</p>
-                </div>
+                <span class="m-role">Structural Design</span>
+                <span class="m-name">Axel (Y10)</span>
+                <p class="m-bio">Fusing aesthetics with functionality. Axel oversees robot building and ensures the design meets both performance and style criteria.</p>
+            </div>
+
+            <div class="member-card" data-aos="fade-up">
+                <span class="m-role">Strategy & Code</span>
+                <span class="m-name">Leopold (Y12)</span>
+                <p class="m-bio">Innovative thinker contributing to the construction and logic loops. His background in childhood programming brings a fresh perspective to problem-solving.</p>
+            </div>
+
+            <div class="member-card" data-aos="fade-up">
+                <span class="m-role">Hardware Systems</span>
+                <span class="m-name">Noelle (Y12)</span>
+                <p class="m-bio">Mechanical engineer specializing in hardware tech. She ensures that every screw and motor is optimized for durability on the playing field.</p>
+            </div>
+
+            <div class="member-card" data-aos="fade-up">
+                <span class="m-role">Strategic Intelligence</span>
+                <span class="m-name">Leo (Y10)</span>
+                <p class="m-bio">The team's strategy scout. Leo analyzes game rules and competitor behaviors to find the most efficient path to scoring maximum points.</p>
+            </div>
+
+            <div class="member-card" data-aos="fade-up">
+                <span class="m-role">Assembly Specialist</span>
+                <span class="m-name">Amira (Y11)</span>
+                <p class="m-bio">Bringing dynamic energy to the hardware team. Amira supports technical development and robot assembly with growing precision.</p>
             </div>
         </div>
     </section>
 
-    <!-- ENGINEERING PROCESS -->
-    <section class="process-section" id="process">
-        <span class="section-tag">// DESIGN EVOLUTION</span>
-        <h2 class="section-title">The <span>Engineering</span> Lab</h2>
+    <!-- PROTOCOLS (TABS) -->
+    <section id="protocols">
+        <span class="tagline" data-aos="fade-up">// ENGINEERING LAB</span>
+        <h2 class="section-h" data-aos="fade-up">Design <span>Evolution</span></h2>
         
-        <div class="tab-nav">
-            <button class="tab-trigger active" onclick="switchTab(event, 'p1')">01_WHEEL_CORE</button>
-            <button class="tab-trigger" onclick="switchTab(event, 'p2')">02_SWING_ARM</button>
-            <button class="tab-trigger" onclick="switchTab(event, 'p3')">03_RAMP_FINAL</button>
-        </div>
+        <div class="protocol-tabs">
+            <div class="tab-nav" data-aos="fade-up">
+                <button class="tab-trigger active" onclick="openTab(event, 'v1')">PROTOCOL_01: WHEEL</button>
+                <button class="tab-trigger" onclick="openTab(event, 'v2')">PROTOCOL_02: SWING</button>
+                <button class="tab-trigger" onclick="openTab(event, 'v3')">PROTOCOL_03: RAMP</button>
+            </div>
 
-        <div id="p1" class="tab-panel active">
-            <div class="panel-content">
-                <h3>V1: Motorized Hub</h3>
-                <p>Initial design utilized a high-speed orbital wheel. <br><br> <b>Status:</b> Terminated. <br> <b>Reason:</b> Instability in projectile trajectory during 3D stress tests. Accuracy dropped below 40% at high velocities.</p>
+            <div id="v1" class="tab-panel active">
+                <div>
+                    <h3>V1: Motorized Centrifugation</h3>
+                    <p>Initial design utilized a high-speed orbital wheel. Simulation results showed 40% drift in ball trajectory. The system was abandoned to ensure maximum competitive accuracy.</p>
+                </div>
+                <div style="background: rgba(255,0,0,0.05); padding: 30px; border-radius: 20px; font-family: var(--font-code);">
+                    > TRAJECTORY_STABILITY: FAILED <br>
+                    > POWER_OUTPUT: OVER_LIMIT <br>
+                    > DECISION: DECOMMISSIONED
+                </div>
             </div>
-            <div class="panel-visual">
-                <i class="fas fa-microchip fa-5x" style="color: var(--c-primary); opacity: 0.2;"></i>
-                <div class="tech-spec-box">ERROR_LOG: Trajectory_Drift</div>
-            </div>
-        </div>
 
-        <div id="p2" class="tab-panel">
-            <div class="panel-content">
-                <h3>V2: Pendulum Swing</h3>
-                <p>Mechanical catapult using a geared pivot. <br><br> <b>Status:</b> Archived. <br> <b>Reason:</b> Mechanical footprint exceeded the 18-inch limit. Complexity vs Efficiency ratio was non-optimal.</p>
+            <div id="v2" class="tab-panel">
+                <div>
+                    <h3>V2: Geared Swing Mechanism</h3>
+                    <p>Used a lever-based catapult. While mechanically sound, the building time and footprint (18" limit) were too restrictive for the current season theme.</p>
+                </div>
+                <div style="background: rgba(255,255,0,0.05); padding: 30px; border-radius: 20px; font-family: var(--font-code);">
+                    > SIZE_COMPLIANCE: WARNING <br>
+                    > COMPLEXITY: HIGH <br>
+                    > DECISION: ARCHIVED
+                </div>
             </div>
-            <div class="panel-visual">
-                <i class="fas fa-cogs fa-5x" style="color: var(--c-secondary); opacity: 0.2;"></i>
-            </div>
-        </div>
 
-        <div id="p3" class="tab-panel">
-            <div class="panel-content">
-                <h3>V3: Precision Ramp</h3>
-                <p>Current active system. Uses a synchronized rotating rod coupled with a custom 15-degree ramp. <br><br> <b>Status:</b> ACTIVE. <br> <b>Reason:</b> 95% repeatable accuracy. Fits within 100% of competition constraints.</p>
-            </div>
-            <div class="panel-visual">
-                <i class="fas fa-check-double fa-5x" style="color: var(--c-primary); box-shadow: var(--shadow-glow);"></i>
-                <div class="tech-spec-box" style="background: var(--c-primary); color: #000;">STABLE_BUILD_2026</div>
+            <div id="v3" class="tab-panel">
+                <div>
+                    <h3>V3: Precision Ramp & Rod</h3>
+                    <p>Current Active Protocol. Combines a fixed trajectory ramp with a rotating rod propulsion. Provides 95% repeatable scoring accuracy in both manual and autonomous modes.</p>
+                </div>
+                <div style="background: rgba(0,255,255,0.05); padding: 30px; border-radius: 20px; font-family: var(--font-code);">
+                    > ACCURACY: 95% <br>
+                    > BUILD_RELIABILITY: OPTIMAL <br>
+                    > STATUS: ACTIVE_DEPLOYMENT
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section class="roadmap-section" id="roadmap">
-        <div class="grid-header" style="text-align: center;">
-            <span class="section-tag">// DEPLOYMENT TIMELINE</span>
-            <h2>Project <span>Lifecycle</span></h2>
-        </div>
-
-        <div class="roadmap-container">
-            <div class="roadmap-item" data-aos="fade-right">
-                <div class="roadmap-content">
-                    <span class="member-role">PHASE_01 // SEP</span>
-                    <h3>Initialization</h3>
-                    <p>Post-season audit. Inventory management. Game manual analysis and sub-team formation.</p>
-                </div>
-                <div class="roadmap-dot"></div>
+    <!-- TIMELINE -->
+    <section id="timeline">
+        <span class="tagline" data-aos="fade-up">// ROADMAP</span>
+        <h2 class="section-h" data-aos="fade-up">2025-2026 <span>Season</span></h2>
+        
+        <div class="timeline-box">
+            <div class="time-point" data-aos="fade-left">
+                <span class="time-date">SEPTEMBER</span>
+                <h3>System Audit</h3>
+                <p>Post-season review of 2024. Inventory management and Game Manual analysis. Sub-team formation and role allocation.</p>
             </div>
-
-            <div class="roadmap-item" data-aos="fade-left">
-                <div class="roadmap-content">
-                    <span class="member-role">PHASE_02 // OCT-NOV</span>
-                    <h3>Prototyping</h3>
-                    <p>Testing CAD designs. Initial chassis build. First code deployment on the hub.</p>
-                </div>
-                <div class="roadmap-dot"></div>
+            <div class="time-point" data-aos="fade-left" data-aos-delay="100">
+                <span class="time-date">OCTOBER - NOVEMBER</span>
+                <h3>Prototyping Phase</h3>
+                <p>Selecting the core robot concept. Building the first drivetrain prototype. Deploying initial Java control code.</p>
             </div>
-
-            <div class="roadmap-item" data-aos="fade-right">
-                <div class="roadmap-content">
-                    <span class="member-role">PHASE_03 // JAN-MAR</span>
-                    <h3>Optimization</h3>
-                    <p>Battery management tuning. Projectile power calibration. Autonomous routine perfection.</p>
+            <div class="timeline-box" style="padding: 0; border: none; margin: 0;">
+                <!-- Expanding for lines -->
+                <div class="time-point" data-aos="fade-left">
+                    <span class="time-date">DECEMBER</span>
+                    <h3>Strategic Strategy</h3>
+                    <p>Watching global match videos to optimize scoring loops. Portfolio creation started with technical documentation.</p>
                 </div>
-                <div class="roadmap-dot"></div>
+            </div>
+            <div class="time-point" data-aos="fade-left" data-aos-delay="200">
+                <span class="time-date">JANUARY - MARCH</span>
+                <h3>Competition Ready</h3>
+                <p>Finalizing the ramp system and power output. Perfecting autonomous mode using vision sensors. Ready for podium qualification.</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div class="brand-name" style="margin-bottom: 20px;">LFCG<span>ROBOTICS</span></div>
-                <p style="color: var(--c-text-2); font-size: 0.9rem; max-width: 300px;">
-                    Innovating at the intersection of student creativity and industrial robotics. 
-                    Based in the heart of London.
-                </p>
+    <!-- TERMINAL FOOTER -->
+    <footer class="terminal-footer">
+        <div class="term-box">
+            <div class="term-head">
+                <div class="term-dot" style="background: #ff5f56;"></div>
+                <div class="term-dot" style="background: #ffbd2e;"></div>
+                <div class="term-dot" style="background: #27c93f;"></div>
             </div>
-            <div class="footer-col">
-                <h4>NAVIGATION</h4>
-                <ul>
-                    <li><a href="#hero">System</a></li>
-                    <li><a href="#team">Engineers</a></li>
-                    <li><a href="#process">Protocols</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>CONNECT</h4>
-                <ul>
-                    <li><a href="#">YouTube</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>NEWSFEED</h4>
-                <input type="email" placeholder
+            <p>> initializing_lfcg_robotics_outro.sh</p>
+            <p>> [SUCCESS] Handshake with London Server 27935 completed.</p>
+            <p>> status: READY_FOR_COMPETITION</p>
+            <p>> contact: robotics@lfcg.org.uk</p>
+        </div>
+
+        <a href="#" class="f-logo">LFCG<span>ROBOTICS</span></a>
+        
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 50px;">
+            <a href="https://www.youtube.com" target="_blank" style="color: var(--text-2); text-decoration: none;"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="#" style="color: var(--text-2); text-decoration: none;"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#mission" style="color: var(--text-2); text-decoration: none;">Core Mission</a>
+        </div>
+
+        <p class="copyright">© 2026 Lycée Français Charles de Gaulle Robotics Division. All rights reserved. Designed for Excellence.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com"></script>
+    <script>
+        // 1. Initialize Animations
+        AOS.init({ duration: 1000, once: true });
+
+        // 2. Navbar Scroll Effect
+        window.onscroll = function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 60) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        };
+
+        // 3. Tabs System
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-panel");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-trigger");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[
