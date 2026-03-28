@@ -8,16 +8,19 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <style>
 :root {
-    --primary: #00f2ff;
-    --secondary: #7000ff;
-    --bg: #010204;
-    --card: rgba(255,255,255,0.05);
-    --border: rgba(0,242,255,0.2);
+    --primary:#00f2ff;
+    --secondary:#7000ff;
+    --bg:#010204;
+    --card:rgba(255,255,255,0.05);
+    --border:rgba(0,242,255,0.2);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior:smooth; }
 
 body {
     margin:0;
@@ -45,20 +48,37 @@ body {
     -webkit-text-fill-color:transparent;
 }
 
-.hero p {
-    max-width:600px;
-    color:#aaa;
+.subtitle {
+    color:var(--primary);
+    letter-spacing:3px;
+    margin-bottom:10px;
 }
 
-.btn {
-    margin-top:30px;
-    padding:12px 25px;
-    border-radius:10px;
-    background:var(--primary);
-    color:#000;
-    font-weight:bold;
-    text-decoration:none;
+.team-number {
+    color:#777;
+    margin-bottom:20px;
 }
+
+/* SOCIAL */
+.socials {
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+.socials a {
+    padding:10px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.yt { background:#ff0000; }
+.ig { background:linear-gradient(45deg,#f09433,#e1306c,#bc1888); }
 
 /* CONTAINER */
 .container {
@@ -74,13 +94,14 @@ h2 {
     margin-bottom:40px;
 }
 
-/* CARDS */
+/* GRID */
 .grid {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
 }
 
+/* CARD */
 .card {
     background:var(--card);
     border:1px solid var(--border);
@@ -97,7 +118,13 @@ h2 {
 
 .card b { color:var(--primary); }
 
-/* TECH BOX */
+/* LEADERSHIP */
+.leader {
+    border:1px solid var(--secondary);
+    background:rgba(112,0,255,0.08);
+}
+
+/* TECH */
 .tech {
     background:var(--card);
     border-left:4px solid var(--secondary);
@@ -118,11 +145,18 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
+    <div class="subtitle">INNOVATION & TEAMWORK</div>
     <h1>LFCG ROBOTICS</h1>
-    <p>
-        Building a high-performance robot through innovation, resilience and teamwork.
-    </p>
-    <a href="#robot" class="btn">DISCOVER OUR ROBOT</a>
+    <div class="team-number">TEAM 27935 // FTC 2025-2026</div>
+
+    <div class="socials">
+        <a href="https://www.youtube.com/@LFCGteam" target="_blank" class="yt">
+            <i class="fab fa-youtube"></i> YouTube
+        </a>
+        <a href="https://www.instagram.com" target="_blank" class="ig">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+    </div>
 </section>
 
 <div class="container">
@@ -131,129 +165,84 @@ footer {
 <section>
     <h2>// OUR MISSION</h2>
     <p style="text-align:center; max-width:800px; margin:auto; color:#aaa;">
-        We are a team of students from Year 10 to Year 13 participating in FTC for the second year.
-        Our goal is to build a reliable, high-performance robot while continuously learning and improving.
-        After finishing 7th last year, we are now aiming for the podium.
+        Team 27935 is composed of students from Year 10 to Year 13.
+        After our first season, we aim to reach the podium by building a reliable,
+        innovative and efficient robot while strengthening our teamwork and technical skills.
     </p>
 </section>
 
-<!-- ROBOT -->
-<section id="robot" style="margin-top:80px;">
-    <h2>// OUR ROBOT</h2>
-    <div class="tech">
-        <h3 style="color:var(--primary);">IGGY 🐸</h3>
-        <p>
-            Our robot, Iggy, combines performance and identity. Inspired by a frog,
-            it represents both our creativity and our French identity.
-        </p>
-        <ul>
-            <li>Ramp-based shooting system</li>
-            <li>Optimized trajectory for precision</li>
-            <li>Single controller driving</li>
-            <li>Autonomous phase implemented</li>
-        </ul>
-    </div>
-</section>
-
-<!-- DESIGN -->
+<!-- LEADERSHIP -->
 <section style="margin-top:80px;">
-    <h2>// DESIGN EVOLUTION</h2>
+    <h2>// CORE LEADERSHIP</h2>
     <div class="grid">
-        <div class="card"><b>Swing</b><p>Too complex and unreliable</p></div>
-        <div class="card"><b>Wheel</b><p>Lacked speed and control</p></div>
-        <div class="card"><b>Ramp</b><p>Chosen for precision and efficiency</p></div>
-    </div>
-</section>
 
-<!-- CHALLENGES -->
-<section style="margin-top:80px;">
-    <h2>// CHALLENGES & SOLUTIONS</h2>
-    <div class="grid">
-        <div class="card">
-            <b>Battery Failure</b>
-            <p>Difficult to identify due to multiple batteries</p>
+        <div class="card leader">
+            <b>Mr Gbessi — Mentor & Founder</b>
+            <p>
+                Physics and Chemistry teacher, Mr Gbessi founded the robotics club to give students
+                a hands-on engineering experience. He supports the team technically and strategically,
+                helping us overcome challenges and continuously improve.
+            </p>
         </div>
-        <div class="card">
-            <b>Ball Grip</b>
-            <p>Improved using shaft-based wheels</p>
-        </div>
-        <div class="card">
-            <b>Joystick Bug</b>
-            <p>Fixed by replacing controller</p>
-        </div>
-        <div class="card">
-            <b>Ball Alignment</b>
-            <p>Added guiding rod for precision</p>
-        </div>
-    </div>
-</section>
 
-<!-- PROGRAMMING -->
-<section style="margin-top:80px;">
-    <h2>// PROGRAMMING</h2>
-    <div class="tech">
-        <ul>
-            <li>Block coding → Java transition</li>
-            <li>Autonomous mode development</li>
-            <li>Use of OnBot Java</li>
-            <li>Single controller optimization</li>
-        </ul>
-    </div>
-</section>
+        <div class="card leader">
+            <b>Sixte — Project Manager & Lead Developer</b>
+            <p>
+                Sixte manages the entire project, ensuring deadlines are respected and the robot
+                functions as a complete system. He leads programming, contributes to mechanical design,
+                and coordinates all technical aspects of the robot.
+            </p>
+        </div>
 
-<!-- STRATEGY -->
-<section style="margin-top:80px;">
-    <h2>// GAME STRATEGY</h2>
-    <div class="grid">
-        <div class="card"><b>Autonomous</b><p>Score 2 balls</p></div>
-        <div class="card"><b>Main Phase</b><p>Collect 15 balls</p></div>
-        <div class="card"><b>End Game</b><p>Position in key zone</p></div>
-    </div>
-</section>
-
-<!-- TIMELINE -->
-<section style="margin-top:80px;">
-    <h2>// SEASON TIMELINE</h2>
-    <div class="grid">
-        <div class="card"><b>Sep</b><p>Inventory & planning</p></div>
-        <div class="card"><b>Oct</b><p>Prototypes</p></div>
-        <div class="card"><b>Nov</b><p>Build + code</p></div>
-        <div class="card"><b>Dec</b><p>Testing & strategy</p></div>
-        <div class="card"><b>Jan</b><p>Optimization</p></div>
-        <div class="card"><b>Feb</b><p>Final fixes</p></div>
-        <div class="card"><b>Mar</b><p>Final robot ready</p></div>
     </div>
 </section>
 
 <!-- TEAM -->
 <section style="margin-top:80px;">
-    <h2>// TEAM</h2>
+    <h2>// OUR TEAM</h2>
     <div class="grid">
-        <div class="card"><b>Mélanie</b><p>Drivetrain Engineer</p></div>
-        <div class="card"><b>Noelle</b><p>Mechanical Engineer</p></div>
-        <div class="card"><b>Leopold</b><p>Builder</p></div>
-        <div class="card"><b>Amira</b><p>Hardware</p></div>
-        <div class="card"><b>Axel</b><p>Design</p></div>
-        <div class="card"><b>Leo</b><p>Strategy</p></div>
+
+        <div class="card"><b>Mélanie</b><p>Drivetrain & manipulation engineer. Ensures mobility and precision.</p></div>
+
+        <div class="card"><b>Noelle</b><p>Mechanical engineer focused on structure and reliability.</p></div>
+
+        <div class="card"><b>Leopold</b><p>Builder and idea contributor with strong robotics background.</p></div>
+
+        <div class="card"><b>Amira</b><p>Hardware team member bringing new perspectives.</p></div>
+
+        <div class="card"><b>Axel</b><p>Design and construction, passionate about robotics.</p></div>
+
+        <div class="card"><b>Leo</b><p>Strategic officer analyzing performance and gameplay.</p></div>
+
     </div>
 </section>
 
-<!-- OUTREACH -->
+<!-- ROBOT -->
 <section style="margin-top:80px;">
-    <h2>// OUTREACH</h2>
+    <h2>// OUR ROBOT</h2>
     <div class="tech">
         <p>
-            Supported by Lycée Français Charles de Gaulle.
-            We are developing new partnerships and promoting robotics
-            through school events and future initiatives.
+            Our robot "Iggy" was designed to maximize efficiency and precision.
+            Its ramp system ensures controlled and accurate shooting, while its
+            structure allows fast and reliable gameplay.
         </p>
+    </div>
+</section>
+
+<!-- STRATEGY -->
+<section style="margin-top:80px;">
+    <h2>// STRATEGY</h2>
+    <div class="grid">
+        <div class="card"><b>Autonomous</b><p>Score 2 balls</p></div>
+        <div class="card"><b>Main Phase</b><p>Collect 15 balls</p></div>
+        <div class="card"><b>End Game</b><p>Position in scoring zone</p></div>
     </div>
 </section>
 
 </div>
 
 <footer>
-    LFCG ROBOTICS // TEAM 27935  
+    LFCG ROBOTICS — TEAM 27935  
 </footer>
 
 </body>
