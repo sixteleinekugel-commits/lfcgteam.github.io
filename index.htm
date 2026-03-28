@@ -16,6 +16,11 @@
     <link href="https://unpkg.com" rel="stylesheet">
 
     <style>
+        /* 
+           ============================================================
+           1. DESIGN SYSTEM VARIABLES
+           ============================================================
+        */
         :root {
             --bg: #010204;
             --primary: #00f2ff;
@@ -32,80 +37,211 @@
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
+        /* 
+           ============================================================
+           2. GLOBAL CORE STYLES
+           ============================================================
+        */
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
-        body { background: var(--bg); color: var(--text-1); font-family: var(--font-main); overflow-x: hidden; line-height: 1.7; }
+        body {
+            background: var(--bg);
+            color: var(--text-1);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
 
-        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.4; }
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.4;
+        }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--secondary), var(--primary)); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(var(--secondary), var(--primary)); 
+            border-radius: 5px;
+        }
 
-        /* NAVIGATION */
-        nav { position: fixed; top: 0; width: 100%; padding: 30px 8%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: 0.6s var(--ease); }
-        nav.scrolled { background: rgba(1, 2, 4, 0.95); backdrop-filter: blur(25px); padding: 15px 8%; border-bottom: 1px solid var(--glass-border); }
-        .logo { font-family: var(--font-tech); font-weight: 900; font-size: 1.7rem; color: #fff; text-decoration: none; letter-spacing: 1px; }
+        /* 
+           ============================================================
+           3. NAVIGATION
+           ============================================================
+        */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 30px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; transition: 0.6s var(--ease);
+        }
+        nav.scrolled {
+            background: rgba(1, 2, 4, 0.95);
+            backdrop-filter: blur(25px);
+            padding: 15px 8%;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .logo { 
+            font-family: var(--font-tech); font-weight: 900; font-size: 1.7rem; 
+            color: #fff; text-decoration: none; letter-spacing: 1px;
+        }
         .logo span { color: var(--primary); }
+        
         .nav-links { display: flex; gap: 35px; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text-2); font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-2); font-family: var(--font-tech);
+            font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s;
+        }
         .nav-links a:hover { color: var(--primary); }
 
-        /* HERO */
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 10%; position: relative; }
+        /* 
+           ============================================================
+           4. HERO SECTION
+           ============================================================
+        */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 0 10%; position: relative;
+        }
         .hero-inner { z-index: 10; max-width: 1100px; }
-        .hero-badge { display: inline-block; padding: 12px 30px; border-radius: 50px; background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary); color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; margin-bottom: 40px; letter-spacing: 4px; }
-        .hero h1 { font-family: var(--font-tech); font-size: clamp(3rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.85; margin-bottom: 40px; background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -4px; text-transform: uppercase; }
+        .hero-badge {
+            display: inline-block; padding: 12px 30px; border-radius: 50px;
+            background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary);
+            color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem;
+            margin-bottom: 40px; letter-spacing: 4px;
+        }
+        .hero h1 {
+            font-family: var(--font-tech); font-size: clamp(3rem, 10vw, 7.5rem);
+            font-weight: 900; line-height: 0.85; margin-bottom: 40px;
+            background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -4px;
+        }
 
         .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        .social-btn { padding: 18px 40px; border-radius: 12px; font-weight: bold; text-decoration: none; color: white; display: flex; align-items: center; gap: 12px; transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem; }
+        .social-btn {
+            padding: 18px 40px; border-radius: 12px; font-weight: bold;
+            text-decoration: none; color: white; display: flex; align-items: center; gap: 12px;
+            transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem;
+        }
         .yt-btn { background: #ff0000; box-shadow: 0 8px 25px rgba(255,0,0,0.3); }
         .ig-btn { background: linear-gradient(45deg,#f09433,#e1306c,#bc1888); box-shadow: 0 8px 25px rgba(225,48,108,0.3); }
         .social-btn:hover { transform: translateY(-7px) scale(1.05); }
 
-        /* TELEMETRY */
-        .telemetry { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; padding: 70px 10%; background: rgba(0, 242, 255, 0.02); border-top: 1px solid var(--glass-border); }
-        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 45px; border-radius: 25px; text-align: center; }
+        /* 
+           ============================================================
+           5. TELEMETRY BAR
+           ============================================================
+        */
+        .telemetry {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px; padding: 70px 10%; background: rgba(0, 242, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
+        }
+        .stat-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 45px; border-radius: 25px; text-align: center;
+        }
         .stat-num { font-family: var(--font-tech); font-size: 3.2rem; color: var(--primary); display: block; }
         .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 3px; }
 
-        /* SECTIONS */
+        /* 
+           ============================================================
+           6. SECTIONS COMMON
+           ============================================================
+        */
         section { padding: 140px 10%; position: relative; }
         .section-tag { color: var(--secondary); font-family: var(--font-tech); font-size: 0.85rem; letter-spacing: 5px; display: block; margin-bottom: 25px; }
         .section-title { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 80px; }
         .section-title span { color: var(--primary); }
 
-        /* TEAM CARDS */
+        /* 
+           ============================================================
+           7. TEAM CARDS
+           ============================================================
+        */
         .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
-        .m-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 50px; border-radius: 35px; transition: 0.5s var(--ease); }
+        .m-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 50px; border-radius: 35px; transition: 0.5s var(--ease);
+        }
         .m-card:hover { border-color: var(--secondary); transform: translateY(-15px); background: rgba(112, 0, 255, 0.05); }
         .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; }
         .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
         .m-bio { color: var(--text-2); font-size: 0.95rem; line-height: 1.8; font-weight: 300; }
 
-        /* ROADMAP */
+        /* 
+           ============================================================
+           8. TIMELINE / ROADMAP
+           ============================================================
+        */
         .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 40px 0; }
-        .timeline-box::before { content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%; background: linear-gradient(transparent, var(--primary), transparent); }
-        .time-point { padding: 40px; background: var(--glass); border-radius: 25px; margin-left: 80px; position: relative; border: 1px solid var(--glass-border); margin-bottom: 40px; transition: 0.4s; }
-        .time-point::before { content: ''; position: absolute; left: -61px; top: 50px; width: 22px; height: 22px; background: var(--bg); border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); }
+        .timeline-box::before {
+            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
+            background: linear-gradient(transparent, var(--primary), transparent);
+        }
+        .time-point { 
+            padding: 40px; background: var(--glass); border-radius: 25px; 
+            margin-left: 80px; position: relative; border: 1px solid var(--glass-border); 
+            margin-bottom: 40px; transition: 0.4s;
+        }
+        .time-point::before { 
+            content: ''; position: absolute; left: -61px; top: 50px; 
+            width: 22px; height: 22px; background: var(--bg); 
+            border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); 
+        }
         .time-date { font-family: var(--font-tech); color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
 
-        /* MISSION FEED */
+        /* 
+           ============================================================
+           9. MISSION FEED (COMM CENTER)
+           ============================================================
+        */
         .feed-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
         @media (max-width: 1100px) { .feed-layout { grid-template-columns: 1fr; } }
-        .feed-window { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; padding: 45px; height: 650px; display: flex; flex-direction: column; backdrop-filter: blur(15px); }
-        #message-display { flex-grow: 1; overflow-y: auto; padding-right: 20px; filter: blur(18px); pointer-events: none; transition: 0.8s var(--ease); }
-        .entry { background: rgba(255,255,255,0.04); padding: 25px; border-radius: 18px; margin-bottom: 20px; border-left: 4px solid var(--primary); font-family: var(--font-code); }
+
+        .feed-window { 
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 35px; padding: 45px; height: 650px; display: flex; flex-direction: column;
+            backdrop-filter: blur(15px);
+        }
+        
+        #message-display { 
+            flex-grow: 1; overflow-y: auto; padding-right: 20px;
+            filter: blur(18px); pointer-events: none; transition: 0.8s var(--ease);
+        }
+        
+        .entry { 
+            background: rgba(255,255,255,0.04); padding: 25px; border-radius: 18px; 
+            margin-bottom: 20px; border-left: 4px solid var(--primary); font-family: var(--font-code);
+        }
         .entry-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; color: var(--primary); }
-        .auth-zone { margin-bottom: 30px; padding: 35px; background: rgba(255, 95, 86, 0.05); border-radius: 20px; border: 1px dashed var(--accent); text-align: center; }
-        .pass-input { width: 65%; padding: 18px; background: #000; border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-family: var(--font-tech); margin-right: 10px; }
-        .unlock-btn { padding: 18px 30px; background: var(--primary); border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .entry-body { color: #e0e6ed; font-size: 1rem; }
+
+        .auth-zone {
+            margin-bottom: 30px; padding: 35px; background: rgba(255, 95, 86, 0.05);
+            border-radius: 20px; border: 1px dashed var(--accent); text-align: center;
+        }
+        .pass-input {
+            width: 65%; padding: 18px; background: #000; border: 1px solid var(--glass-border);
+            border-radius: 12px; color: #fff; font-family: var(--font-tech); margin-right: 10px;
+        }
+        .unlock-btn {
+            padding: 18px 30px; background: var(--primary); border: none; border-radius: 12px;
+            font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s;
+        }
 
         .post-box { padding: 40px; background: var(--glass); border-radius: 35px; border: 1px solid var(--glass-border); }
         .input-grp { margin-bottom: 25px; }
         .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.75rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
-        .input-grp input, .input-grp textarea { width: 100%; padding: 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem; }
-        .broadcast-btn { width: 100%; padding: 22px; background: var(--secondary); color: #fff; border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.4s; letter-spacing: 3px; }
+        .input-grp input, .input-grp textarea {
+            width: 100%; padding: 18px; background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem;
+        }
+        .broadcast-btn {
+            width: 100%; padding: 22px; background: var(--secondary); color: #fff;
+            border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900;
+            cursor: pointer; transition: 0.4s; letter-spacing: 3px;
+        }
 
         .map-frame { border-radius: 35px; overflow: hidden; border: 1px solid var(--glass-border); height: 450px; margin-top: 50px; }
         footer { padding: 120px 10% 60px; border-top: 1px solid var(--glass-border); text-align: center; }
@@ -130,9 +266,9 @@
         <a href="#contact" class="social-btn yt-btn" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: none;">LIVE FEED</a>
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section class="hero" id="home">
-        <div class="hero-inner" data-aos="zoom-out">
+        <div class="hero-inner" data-aos="zoom-out" data-aos-duration="1500">
             <span class="hero-badge">LONDON // TEAM 27935 // ELITE DIVISION</span>
             <h1>CODING <br><span>THE FUTURE</span></h1>
             <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto; font-weight: 300;">
@@ -159,7 +295,7 @@
 
     <!-- SPECS -->
     <section id="about">
-        <span class="section-tag" data-aos="fade-right">// ARCHITECTURE</span>
+        <span class="section-tag" data-aos="fade-right">// SYSTEM ARCHITECTURE</span>
         <h2 class="section-title">Technical <span>Specs</span></h2>
         <div class="member-grid">
             <div class="m-card" data-aos="fade-up">
@@ -177,7 +313,7 @@
         </div>
     </section>
 
-    <!-- TEAM -->
+    <!-- TEAM (MEMBRES COMPLETS) -->
     <section id="team" style="background: rgba(112, 0, 255, 0.015);">
         <span class="section-tag" data-aos="fade-up">// THE CREW</span>
         <h2 class="section-title">Engineering <span>Elite</span></h2>
@@ -255,6 +391,7 @@
                     <h3 style="font-family:var(--font-tech); color:var(--primary);">LIVE_FEED</h3>
                     <span id="lock-indicator" style="color:var(--accent); font-family:var(--font-code); font-size:0.8rem;"><i class="fas fa-lock"></i> ENCRYPTED</span>
                 </div>
+                <!-- AUTH BOX -->
                 <div id="auth-box" class="auth-zone">
                     <p style="margin-bottom:15px; color:#fff; font-size:0.8rem;">[SECURITY] ENTER #teammember TO DECRYPT</p>
                     <div style="display:flex; justify-content:center;">
@@ -281,16 +418,18 @@
         <p class="copy">© 2026 LFCGteam robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
     </footer>
 
-    <!-- SCRIPTS -->
+    <!-- SCRIPTS (LOGIQUE DECRYPTAGE CORRIGÉE) -->
     <script src="https://unpkg.com"></script>
     <script>
         const MASTER_KEY = "#teammember";
+        
         window.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 1200, once: true });
             initParticles();
             renderFeed();
         });
 
+        // FONCTION DECRYPTAGE
         function unlock() {
             const inputVal = document.getElementById('input-key').value;
             const display = document.getElementById('message-display');
@@ -305,17 +444,25 @@
                 authBox.style.display = "none";
             } else {
                 alert("ACCESS DENIED: Invalid Key.");
+                document.getElementById('input-key').value = "";
             }
         }
 
+        // FONCTION PUBLICATION
         function publish() {
             const name = document.getElementById('post-name').value;
             const msg = document.getElementById('post-msg').value;
-            if(!name || !msg) return;
+
+            if(!name || !msg) {
+                alert("Please fill all fields.");
+                return;
+            }
+
             const payload = { name: name.toUpperCase(), message: msg, time: new Date().toLocaleTimeString() };
             let data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
             data.unshift(payload);
             localStorage.setItem('lfcg_feed', JSON.stringify(data));
+
             document.getElementById('post-name').value = "";
             document.getElementById('post-msg').value = "";
             renderFeed();
@@ -324,29 +471,43 @@
         function renderFeed() {
             const container = document.getElementById('message-display');
             const data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
+            
             if(data.length === 0) {
                 container.innerHTML = '<p style="color:#444; font-family:var(--font-code); text-align:center; padding-top:50px;">NO DATA DETECTED.</p>';
                 return;
             }
+
             container.innerHTML = data.map(item => `
                 <div class="entry">
-                    <div class="entry-header"><span>> ${item.name}</span><span>[${item.time}]</span></div>
+                    <div class="entry-header">
+                        <span>> ${item.name}</span>
+                        <span>[${item.time}]</span>
+                    </div>
                     <div class="entry-body">${item.message}</div>
                 </div>
             `).join('');
         }
 
+        // PARTICULES
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
+
         function initParticles() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             for (let i = 0; i < 100; i++) {
-                particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, size: Math.random() * 2 });
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2
+                });
             }
             animate();
         }
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#00f2ff';
@@ -358,6 +519,7 @@
             });
             requestAnimationFrame(animate);
         }
+
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 100) nav.classList.add('scrolled');
