@@ -193,61 +193,20 @@
 
         /* 
            ============================================================
-           9. MISSION FEED (COMM CENTER)
+           9. CONTACT FORM (GMAIL)
            ============================================================
         */
-        .feed-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
-        @media (max-width: 1100px) { .feed-layout { grid-template-columns: 1fr; } }
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: flex-start; }
+        @media (max-width: 1000px) { .contact-container { grid-template-columns: 1fr; } }
 
-        .feed-window { 
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 35px; padding: 45px; height: 650px; display: flex; flex-direction: column;
-            backdrop-filter: blur(15px);
-        }
-        
-        #message-display { 
-            flex-grow: 1; overflow-y: auto; padding-right: 20px;
-            filter: blur(18px); pointer-events: none; transition: 0.8s var(--ease);
-        }
-        
-        .entry { 
-            background: rgba(255,255,255,0.04); padding: 25px; border-radius: 18px; 
-            margin-bottom: 20px; border-left: 4px solid var(--primary); font-family: var(--font-code);
-        }
-        .entry-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; color: var(--primary); }
-        .entry-body { color: #e0e6ed; font-size: 1rem; }
-
-        .auth-zone {
-            margin-bottom: 30px; padding: 35px; background: rgba(255, 95, 86, 0.05);
-            border-radius: 20px; border: 1px dashed var(--accent); text-align: center;
-        }
-        .pass-input {
-            width: 65%; padding: 18px; background: #000; border: 1px solid var(--glass-border);
-            border-radius: 12px; color: #fff; font-family: var(--font-tech); margin-right: 10px;
-        }
-        .unlock-btn {
-            padding: 18px 30px; background: var(--primary); border: none; border-radius: 12px;
-            font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s;
-        }
-
-        .post-box { padding: 40px; background: var(--glass); border-radius: 35px; border: 1px solid var(--glass-border); }
+        .form-box { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; padding: 50px; }
         .input-grp { margin-bottom: 25px; }
-        .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.75rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
-        .input-grp input, .input-grp textarea {
-            width: 100%; padding: 18px; background: rgba(255,255,255,0.04);
-            border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem;
-        }
-        .broadcast-btn {
-            width: 100%; padding: 22px; background: var(--secondary); color: #fff;
-            border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900;
-            cursor: pointer; transition: 0.4s; letter-spacing: 3px;
-        }
+        .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.7rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
+        .input-grp input, .input-grp textarea { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; font-family: var(--font-main); }
+        .submit-btn { width: 100%; padding: 20px; background: var(--primary); color: #000; border: none; border-radius: 10px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s; letter-spacing: 2px; }
+        .submit-btn:hover { box-shadow: 0 0 20px var(--primary); transform: translateY(-3px); }
 
-        .map-frame { border-radius: 35px; overflow: hidden; border: 1px solid var(--glass-border); height: 450px; margin-top: 50px; }
-        footer { padding: 120px 10% 60px; border-top: 1px solid var(--glass-border); text-align: center; }
-        .f-logo { font-family: var(--font-tech); font-size: 2.2rem; color: #fff; text-decoration: none; margin-bottom: 40px; display: block; }
-        .f-logo span { color: var(--primary); }
-        .copy { color: #334155; font-size: 0.85rem; margin-top: 80px; letter-spacing: 2px; }
+        footer { padding: 100px 10% 50px; border-top: 1px solid var(--glass-border); text-align: center; }
     </style>
 </head>
 <body>
@@ -261,26 +220,21 @@
             <li><a href="#about">Specs</a></li>
             <li><a href="#team">Engineers</a></li>
             <li><a href="#timeline">Season</a></li>
-            <li><a href="#contact">Comm Center</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
-        <a href="#contact" class="social-btn yt-btn" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: none;">LIVE FEED</a>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="hero-inner" data-aos="zoom-out" data-aos-duration="1500">
-            <span class="hero-badge">LONDON // TEAM 27935 // ELITE DIVISION</span>
+        <div class="hero-inner" data-aos="zoom-out">
+            <span class="hero-badge">LONDON // TEAM 27935 // 2025-2026</span>
             <h1>CODING <br><span>THE FUTURE</span></h1>
-            <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto; font-weight: 300;">
+            <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto;">
                 Welcome to the LFCGteam robotic official hub. Engineering the next generation of autonomous precision at Lycée Français Charles de Gaulle.
             </p>
             <div class="btn-group">
-                <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn">
-                    <i class="fab fa-youtube"></i> YouTube
-                </a>
-                <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
+                <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
         </div>
     </section>
@@ -289,13 +243,13 @@
     <div class="telemetry">
         <div class="stat-card" data-aos="fade-up"><span class="stat-num">27935</span><span class="stat-label">Team ID</span></div>
         <div class="stat-card" data-aos="fade-up" data-aos-delay="100"><span class="stat-num">95%</span><span class="stat-label">Shot Accuracy</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><span class="stat-num">02</span><span class="stat-label">Active Season</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">2026 Goal</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><span class="stat-num">02</span><span class="stat-label">Season</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">Goal</span></div>
     </div>
 
     <!-- SPECS -->
     <section id="about">
-        <span class="section-tag" data-aos="fade-right">// SYSTEM ARCHITECTURE</span>
+        <span class="section-tag">// ARCHITECTURE</span>
         <h2 class="section-title">Technical <span>Specs</span></h2>
         <div class="member-grid">
             <div class="m-card" data-aos="fade-up">
@@ -313,100 +267,89 @@
         </div>
     </section>
 
-    <!-- TEAM (MEMBRES COMPLETS) -->
+    <!-- TEAM (FULL MEMBERS) -->
     <section id="team" style="background: rgba(112, 0, 255, 0.015);">
-        <span class="section-tag" data-aos="fade-up">// THE CREW</span>
+        <span class="section-tag">// THE CREW</span>
         <h2 class="section-title">Engineering <span>Elite</span></h2>
         <div class="member-grid">
             <div class="m-card" data-aos="fade-up" style="border: 1px solid var(--primary);">
                 <span class="m-role">Founder & Mentor</span>
                 <h3 class="m-name">Mr. Gbessi</h3>
-                <p class="m-bio">Physics & Chemistry teacher. He founded the club to provide a professional environment for mastering real-world industrial engineering and hardware technology.</p>
+                <p class="m-bio">Physics teacher. Founded the club to bridge theory with hands-on industrial engineering.</p>
             </div>
             <div class="m-card" data-aos="fade-up" data-aos-delay="100" style="border: 1px solid var(--secondary);">
                 <span class="m-role">Project Manager / Lead Dev</span>
                 <h3 class="m-name">Sixte (Y11)</h3>
-                <p class="m-bio">Architect of the global development lifecycle. Sixte leads programming, mechanical design, and system integration workflow, bringing creative ideas to life through precision.</p>
+                <p class="m-bio">Architect of the workflow. Leads programming, mechanical design, and system integration.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Mechanical Lead</span>
                 <h3 class="m-name">Mélanie (Y13)</h3>
-                <p class="m-bio">Drivetrain and manipulation engineer. Passionate about robotics, she ensures peak physical performance and consistent hardware reliability on the field.</p>
+                <p class="m-bio">Drivetrain and manipulation engineer. Passionate about robot building and performance.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Structural Design</span>
                 <h3 class="m-name">Axel (Y10)</h3>
-                <p class="m-bio">Expert in robot building and design conception. Axel translates aesthetic ideas into high-precision functional reality.</p>
+                <p class="m-bio">Expert in robot building and design conception. Translates ideas into functional reality.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Software Logic</span>
+                <span class="m-role">Logic loops Specialist</span>
                 <h3 class="m-name">Leopold (Y12)</h3>
-                <p class="m-bio">Bringing lifelong coding experience to refine robot behavior, brainstorm innovative ideas, and optimize autonomous navigation paths.</p>
+                <p class="m-bio">Bringing coding experience to refine robot behavior and strategic autonomous paths.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Mechanical Engineer</span>
+                <span class="m-role">Hardware Lead</span>
                 <h3 class="m-name">Noelle (Y12)</h3>
-                <p class="m-bio">Specializing in hardware technology and design engineering. She manages mechanical durability and component optimization.</p>
+                <p class="m-bio">Mechanical engineer managing mechanical durability and component optimization.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Strategic Officer</span>
+                <span class="m-role">Strategic DJ</span>
                 <h3 class="m-name">Leo (Y10)</h3>
-                <p class="m-bio">Scout and tech analyst. Leo optimizes game-winning strategies and manages the team's social presence and technological discovery.</p>
+                <p class="m-bio">Strategic officer analyzing technological discovery and optimizing team social DJ presence.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Hardware Assembly</span>
                 <h3 class="m-name">Amira (Y11)</h3>
-                <p class="m-bio">A rising talent in robotics, Amira contributes to the assembly and technical development of the hardware systems.</p>
+                <p class="m-bio">Contributing to the assembly and technical development of the hardware systems.</p>
             </div>
         </div>
     </section>
 
     <!-- ROADMAP -->
     <section id="timeline">
-        <span class="section-tag" data-aos="fade-up">// PIPELINE</span>
+        <span class="section-tag">// PIPELINE</span>
         <h2 class="section-title">Season <span>Roadmap</span></h2>
         <div class="timeline-box">
             <div class="time-point" data-aos="fade-left">
                 <span class="time-date">SEPTEMBER</span>
-                <p class="m-bio">Post-season audit, identifying strengths/weaknesses, inventory management, and game manual analysis.</p>
+                <p class="m-bio">Inventory, previous year review, and game manual analysis.</p>
             </div>
             <div class="time-point" data-aos="fade-left" data-aos-delay="100">
                 <span class="time-date">OCTOBER - NOVEMBER</span>
-                <p class="m-bio">Prototyping phase: selecting the ramp concept and building the primary drivetrain chassis. Portfolio initialization.</p>
+                <p class="m-bio">Prototyping: selecting the ramp concept and building the chassis.</p>
             </div>
             <div class="time-point" data-aos="fade-left" data-aos-delay="200">
                 <span class="time-date">JANUARY - MARCH</span>
-                <p class="m-bio">Optimization: perfecting autonomous routines, projectile power, and finalizing the technical portfolio.</p>
+                <p class="m-bio">Optimization: perfecting autonomous routines and the technical portfolio.</p>
             </div>
         </div>
     </section>
 
-    <!-- COMM CENTER -->
+    <!-- CONTACT -->
     <section id="contact">
-        <span class="section-tag" data-aos="fade-right">// NEURAL FEED</span>
-        <h2 class="section-title">Comm <span>Center</span></h2>
-        <div class="feed-layout">
-            <div class="feed-window" data-aos="fade-right">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-                    <h3 style="font-family:var(--font-tech); color:var(--primary);">LIVE_FEED</h3>
-                    <span id="lock-indicator" style="color:var(--accent); font-family:var(--font-code); font-size:0.8rem;"><i class="fas fa-lock"></i> ENCRYPTED</span>
-                </div>
-                <!-- AUTH BOX -->
-                <div id="auth-box" class="auth-zone">
-                    <p style="margin-bottom:15px; color:#fff; font-size:0.8rem;">[SECURITY] ENTER #teammember TO DECRYPT</p>
-                    <div style="display:flex; justify-content:center;">
-                        <input type="password" id="input-key" class="pass-input" placeholder="Key...">
-                        <button onclick="unlock()" class="unlock-btn">DECRYPT</button>
-                    </div>
-                </div>
-                <div id="message-display"></div>
+        <span class="section-tag">// CONNECT</span>
+        <h2 class="section-title">Get in <span>Touch</span></h2>
+        <div class="contact-container">
+            <div class="form-box" data-aos="fade-right">
+                <form action="https://formspree.io" method="POST">
+                    <div class="input-grp"><label>IDENTIFIER</label><input type="text" name="name" placeholder="Name..." required></div>
+                    <div class="input-grp"><label>EMAIL</label><input type="email" name="email" placeholder="email@example.com" required></div>
+                    <div class="input-grp"><label>MESSAGE</label><textarea name="message" rows="5" placeholder="Your message..." required></textarea></div>
+                    <button type="submit" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></button>
+                </form>
             </div>
-            <div class="post-box" data-aos="fade-left">
-                <h3 style="font-family:var(--font-tech); margin-bottom:25px;">BROADCAST <span>UPDATE</span></h3>
-                <div class="input-grp"><label>IDENTIFIER</label><input type="text" id="post-name" placeholder="Name..."></div>
-                <div class="input-grp"><label>MESSAGE STREAM</label><textarea id="post-msg" rows="4" placeholder="Transmit status..."></textarea></div>
-                <button onclick="publish()" class="broadcast-btn">POST TO FEED <i class="fas fa-satellite-dish"></i></button>
-                <div class="map-frame">
+            <div style="height: 100%;" data-aos="fade-left">
+                <div style="border-radius:35px; overflow:hidden; border:1px solid var(--glass-border); height: 100%; min-height: 400px;">
                     <iframe src="https://www.google.com" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
@@ -415,116 +358,28 @@
 
     <footer>
         <a href="#" class="f-logo">LFCGteam<span> robotic</span></a>
-        <p class="copy">© 2026 LFCGteam robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
+        <p style="color:var(--text-2);">© 2026 LFCGteam robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
     </footer>
 
-    <!-- SCRIPTS (LOGIQUE DECRYPTAGE CORRIGÉE) -->
     <script src="https://unpkg.com"></script>
     <script>
-        const MASTER_KEY = "#teammember";
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            AOS.init({ duration: 1200, once: true });
-            initParticles();
-            renderFeed();
-        });
-
-        // FONCTION DECRYPTAGE
-        function unlock() {
-            const inputVal = document.getElementById('input-key').value;
-            const display = document.getElementById('message-display');
-            const indicator = document.getElementById('lock-indicator');
-            const authBox = document.getElementById('auth-box');
-
-            if(inputVal.trim() === MASTER_KEY) {
-                display.style.filter = "none";
-                display.style.pointerEvents = "all";
-                indicator.style.color = "#27c93f";
-                indicator.innerHTML = '<i class="fas fa-lock-open"></i> DECRYPTED';
-                authBox.style.display = "none";
-            } else {
-                alert("ACCESS DENIED: Invalid Key.");
-                document.getElementById('input-key').value = "";
-            }
-        }
-
-        // FONCTION PUBLICATION
-        function publish() {
-            const name = document.getElementById('post-name').value;
-            const msg = document.getElementById('post-msg').value;
-
-            if(!name || !msg) {
-                alert("Please fill all fields.");
-                return;
-            }
-
-            const payload = { name: name.toUpperCase(), message: msg, time: new Date().toLocaleTimeString() };
-            let data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
-            data.unshift(payload);
-            localStorage.setItem('lfcg_feed', JSON.stringify(data));
-
-            document.getElementById('post-name').value = "";
-            document.getElementById('post-msg').value = "";
-            renderFeed();
-        }
-
-        function renderFeed() {
-            const container = document.getElementById('message-display');
-            const data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
-            
-            if(data.length === 0) {
-                container.innerHTML = '<p style="color:#444; font-family:var(--font-code); text-align:center; padding-top:50px;">NO DATA DETECTED.</p>';
-                return;
-            }
-
-            container.innerHTML = data.map(item => `
-                <div class="entry">
-                    <div class="entry-header">
-                        <span>> ${item.name}</span>
-                        <span>[${item.time}]</span>
-                    </div>
-                    <div class="entry-body">${item.message}</div>
-                </div>
-            `).join('');
-        }
-
-        // PARTICULES
+        AOS.init({ duration: 1200, once: true });
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function initParticles() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            for (let i = 0; i < 100; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 2
-                });
-            }
-            animate();
+        let pts = [];
+        function initCanvas() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            pts = []; for(let i=0; i<100; i++) pts.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, sx:Math.random()-0.5, sy:Math.random()-0.5});
         }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00f2ff';
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-            });
-            requestAnimationFrame(animate);
+        function draw() {
+            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = '#00f2ff';
+            pts.forEach(p => {
+                p.x+=p.sx; p.y+=p.sy; if(p.x<0||p.x>canvas.width) p.sx*=-1; if(p.y<0||p.y>canvas.height) p.sy*=-1;
+                ctx.fillRect(p.x, p.y, 2, 2);
+            }); requestAnimationFrame(draw);
         }
-
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 100) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        });
+        initCanvas(); draw();
+        window.onscroll = () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); };
     </script>
 </body>
 </html>
