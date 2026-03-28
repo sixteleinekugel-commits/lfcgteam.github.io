@@ -5,29 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LFCG ROBOTICS | NEURAL CORE 27935</title>
 
-    <!-- Google Fonts: Futuristic & Technical -->
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com" rel="stylesheet">
+    
+    <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <link href="https://unpkg.com" rel="stylesheet">
 
     <style>
         /* ============================================================
-           1. DESIGN SYSTEM & VARIABLES (Root configuration)
+           1. CORE SYSTEM VARIABLES
            ============================================================ */
         :root {
-            --bg: #020308;
+            --bg: #010204;
             --primary: #00f2ff;
             --primary-rgb: 0, 242, 255;
             --secondary: #7000ff;
             --accent: #ff0055;
             --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-1: #ffffff;
             --text-2: #94a3b8;
             --font-main: 'Plus Jakarta Sans', sans-serif;
             --font-tech: 'Orbitron', sans-serif;
             --font-code: 'JetBrains Mono', monospace;
-            --transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         /* ============================================================
@@ -43,13 +46,12 @@
             line-height: 1.6;
         }
 
-        /* Particles Layer */
+        /* Background Canvas Layer */
         #particle-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.4;
+            z-index: -1; pointer-events: none; opacity: 0.5;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { 
@@ -58,448 +60,392 @@
         }
 
         /* ============================================================
-           3. NAVIGATION (Frosted Glass)
+           3. NAVIGATION
            ============================================================ */
-        .nav-container {
+        nav {
             position: fixed; top: 0; width: 100%; padding: 25px 6%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; transition: var(--transition);
+            z-index: 1000; transition: 0.5s var(--ease);
         }
-        .nav-container.scrolled {
-            background: rgba(2, 3, 8, 0.85);
+        nav.scrolled {
+            background: rgba(1, 2, 4, 0.9);
             backdrop-filter: blur(20px);
             padding: 15px 6%;
             border-bottom: 1px solid var(--glass-border);
         }
-        .logo-box {
-            font-family: var(--font-tech); font-weight: 900; font-size: 1.5rem;
-            color: #fff; text-decoration: none; display: flex; align-items: center; gap: 12px;
-        }
-        .logo-box span { color: var(--primary); }
-        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .logo { font-family: var(--font-tech); font-weight: 900; font-size: 1.5rem; color: #fff; text-decoration: none; }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
         .nav-links a {
             text-decoration: none; color: var(--text-2); font-family: var(--font-tech);
-            font-size: 0.75rem; letter-spacing: 2px; font-weight: 600;
-            transition: var(--transition);
+            font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s;
         }
-        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .nav-links a:hover { color: var(--primary); }
 
         /* ============================================================
-           4. HERO SECTION (Immersive Entry)
+           4. HERO SECTION
            ============================================================ */
         .hero {
             height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; position: relative; padding: 0 10%;
+            text-align: center; padding: 0 10%; position: relative;
         }
         .hero-inner { z-index: 10; max-width: 1000px; }
         .hero-badge {
             display: inline-block; padding: 10px 25px; border-radius: 50px;
             background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary);
-            color: var(--primary); font-family: var(--font-tech); font-size: 0.8rem;
-            margin-bottom: 30px; letter-spacing: 3px; animation: glow 3s infinite;
+            color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem;
+            margin-bottom: 30px; letter-spacing: 3px;
         }
-        @keyframes glow { 0%, 100% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 20px var(--primary); } }
-        
         .hero h1 {
-            font-family: var(--font-tech); font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: 900; line-height: 0.9; margin-bottom: 35px;
+            font-family: var(--font-tech); font-size: clamp(3.5rem, 10vw, 7.5rem);
+            font-weight: 900; line-height: 0.85; margin-bottom: 35px;
             background: linear-gradient(to bottom, #fff 40%, var(--primary) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -3px;
+            letter-spacing: -4px;
         }
-        .hero-desc { font-size: 1.3rem; color: var(--text-2); margin-bottom: 50px; max-width: 750px; margin-inline: auto; font-weight: 300; }
 
-        .btn-group { display: flex; gap: 20px; justify-content: center; }
-        .btn-core {
-            padding: 20px 45px; border-radius: 12px; font-family: var(--font-tech);
-            font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: var(--transition);
-            display: flex; align-items: center; gap: 12px;
+        /* Buttons Socials (Original Styles) */
+        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .social-btn {
+            padding: 16px 35px; border-radius: 10px; font-weight: bold;
+            text-decoration: none; color: white; display: flex; align-items: center; gap: 12px;
+            transition: 0.3s var(--ease);
         }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.4); }
-        .btn-sec { background: var(--glass); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(10px); }
-        .btn-sec:hover { border-color: var(--primary); background: rgba(255,255,255,0.08); }
+        .yt-btn { background: #ff0000; box-shadow: 0 5px 20px rgba(255,0,0,0.3); }
+        .ig-btn { background: linear-gradient(45deg,#f09433,#e1306c,#bc1888); box-shadow: 0 5px 20px rgba(225,48,108,0.3); }
+        .social-btn:hover { transform: translateY(-5px) scale(1.05); }
 
         /* ============================================================
-           5. DATA TELEMETRY (Simulated Performance)
+           5. TELEMETRY BAR
            ============================================================ */
-        .telemetry-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; padding: 80px 8%; background: rgba(0, 242, 255, 0.02);
+        .telemetry {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; padding: 60px 10%; background: rgba(0, 242, 255, 0.02);
         }
-        .tele-card {
+        .stat-card {
             background: var(--glass); border: 1px solid var(--glass-border);
             padding: 40px; border-radius: 20px; text-align: center;
         }
-        .tele-val { font-family: var(--font-tech); font-size: 3rem; color: var(--primary); display: block; }
-        .tele-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 2px; }
+        .stat-num { font-family: var(--font-tech); font-size: 3rem; color: var(--primary); display: block; }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 2px; }
 
         /* ============================================================
-           6. ENGINEERING SECTIONS (Deep Dive)
+           6. ENGINEERING SECTIONS
            ============================================================ */
-        section { padding: 150px 8%; position: relative; }
-        .tagline { color: var(--secondary); font-family: var(--font-tech); font-size: 0.9rem; margin-bottom: 15px; display: block; }
-        .section-h { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 80px; }
+        section { padding: 140px 10%; position: relative; }
+        .section-tag { color: var(--secondary); font-family: var(--font-tech); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 20px; }
+        .section-title { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 70px; }
+        .section-title span { color: var(--primary); }
 
-        /* Tech Spec Grid */
-        .spec-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
-        .spec-box {
+        /* Technical Cards */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        .tech-card {
             background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 50px; border-radius: 30px; transition: var(--transition);
+            padding: 50px; border-radius: 30px; transition: 0.4s;
         }
-        .spec-box:hover { border-color: var(--primary); background: rgba(255,255,255,0.06); }
-        .spec-icon { width: 60px; height: 60px; background: rgba(var(--primary-rgb), 0.1); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; margin-bottom: 30px; }
-        .spec-box h3 { font-family: var(--font-tech); font-size: 1.5rem; margin-bottom: 20px; }
-        .spec-list { list-style: none; color: var(--text-2); }
-        .spec-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .spec-list li i { color: var(--primary); font-size: 0.7rem; }
+        .tech-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.06); transform: translateY(-10px); }
+        .tech-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 30px; }
+        .tech-card h3 { font-family: var(--font-tech); margin-bottom: 20px; }
 
         /* ============================================================
-           7. TEAM CORE (Full Member List)
+           7. TEAM CORE
            ============================================================ */
-        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .member-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
-            border-radius: 25px; padding: 45px; border: 1px solid var(--glass-border);
-            position: relative; overflow: hidden; transition: var(--transition);
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 40px; border-radius: 24px; transition: 0.4s;
         }
-        .member-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
-        .member-card::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(112,0,255,0.1) 0%, transparent 70%);
-            opacity: 0; transition: 0.6s;
-        }
-        .member-card:hover::after { opacity: 1; }
-
-        .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
-        .m-bio { color: var(--text-2); font-size: 1rem; line-height: 1.8; font-weight: 300; }
+        .member-card:hover { border-color: var(--secondary); background: rgba(112, 0, 255, 0.05); }
+        .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        .m-name { font-size: 1.6rem; font-weight: 800; margin-bottom: 15px; }
 
         /* ============================================================
-           8. PROJECT PROTOCOLS (Tabs)
+           8. INNOVATIVE FEATURE: COMMAND TERMINAL
            ============================================================ */
-        .protocol-tabs { margin-top: 60px; }
-        .tab-nav { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        .tab-trigger {
-            padding: 18px 35px; border-radius: 12px; border: 1px solid var(--glass-border);
-            background: var(--glass); color: #fff; font-family: var(--font-tech);
-            cursor: pointer; transition: var(--transition); font-size: 0.8rem;
+        .terminal-box {
+            background: #0d1117; border-radius: 15px; border: 1px solid #30363d;
+            font-family: var(--font-code); padding: 30px; margin-top: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .tab-trigger.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 800; }
-        .tab-panel { display: none; background: var(--glass); padding: 60px; border-radius: 30px; border: 1px solid var(--glass-border); }
-        .tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; animation: fadeIn 0.6s ease; }
-        @media (max-width: 900px) { .tab-panel.active { grid-template-columns: 1fr; } }
+        .terminal-line { color: var(--primary); margin-bottom: 8px; }
+        .terminal-text { color: #c9d1d9; }
 
         /* ============================================================
-           9. DYNAMIC ROADMAP
+           9. CONTACT SECTION (New Form)
            ============================================================ */
-        .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 60px 0; }
-        .timeline-box::before {
-            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
-            background: linear-gradient(transparent, var(--primary), transparent);
+        .contact-container {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
         }
-        .time-point { padding: 40px; background: var(--glass); border-radius: 25px; margin-left: 70px; position: relative; border: 1px solid var(--glass-border); margin-bottom: 40px; transition: var(--transition); }
-        .time-point::before { content: ''; position: absolute; left: -51px; top: 50px; width: 20px; height: 20px; background: var(--bg); border: 3px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); }
-        .time-date { font-family: var(--font-tech); color: var(--primary); font-size: 1.1rem; margin-bottom: 15px; display: block; }
-        .time-point:hover { transform: translateX(15px); background: rgba(255,255,255,0.08); }
+        @media (max-width: 900px) { .contact-container { grid-template-columns: 1fr; } }
+        
+        .contact-info h2 { font-family: var(--font-tech); font-size: 3rem; margin-bottom: 20px; }
+        .contact-info p { color: var(--text-2); font-size: 1.1rem; margin-bottom: 30px; }
+        
+        .contact-form {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 50px; border-radius: 30px; backdrop-filter: blur(10px);
+        }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 10px; color: var(--primary); }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 15px; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border); border-radius: 8px; color: #fff;
+            font-family: var(--font-main); transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); background: rgba(255,255,255,0.1); }
+        
+        .submit-btn {
+            width: 100%; padding: 20px; background: var(--primary); color: #000;
+            border: none; border-radius: 8px; font-family: var(--font-tech); font-weight: 900;
+            cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+        }
+        .submit-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.4); }
 
         /* ============================================================
-           10. FOOTER & TERMINAL
+           10. FOOTER
            ============================================================ */
-        .terminal-footer {
-            background: #000; padding: 100px 8% 50px; border-top: 1px solid var(--glass-border);
-        }
-        .term-box {
-            background: #0d1117; border-radius: 15px; padding: 40px; border: 1px solid #30363d;
-            font-family: var(--font-code); color: #c9d1d9; margin-bottom: 60px;
-        }
-        .term-head { display: flex; gap: 8px; margin-bottom: 25px; }
-        .term-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .f-logo { font-family: var(--font-tech); font-size: 2.5rem; color: #fff; text-decoration: none; display: block; margin-bottom: 30px; }
-        .f-logo span { color: var(--primary); }
-        .copyright { color: #334155; font-size: 0.8rem; margin-top: 80px; text-align: center; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        footer { padding: 100px 10% 50px; border-top: 1px solid var(--glass-border); text-align: center; }
+        .footer-logo { font-family: var(--font-tech); font-size: 2rem; margin-bottom: 40px; display: block; text-decoration: none; color: #fff; }
+        .footer-logo span { color: var(--primary); }
+        .copyright { color: #444; font-size: 0.8rem; margin-top: 60px; }
     </style>
 </head>
 <body>
 
-    <!-- Particle Background -->
     <canvas id="particle-canvas"></canvas>
 
     <!-- NAVIGATION -->
-    <nav class="nav-container" id="navbar">
-        <a href="#" class="logo-box">LFCG<span>ROBOTICS</span></a>
+    <nav id="navbar">
+        <a href="#" class="logo">LFCG<span>ROBOTICS</span></a>
         <ul class="nav-links">
-            <li><a href="#mission">Core</a></li>
-            <li><a href="#engineering">Specs</a></li>
-            <li><a href="#team">Engineers</a></li>
-            <li><a href="#timeline">Season</a></li>
+            <li><a href="#about">Core</a></li>
+            <li><a href="#tech">Specs</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
-        <a href="https://www.youtube.com" target="_blank" class="btn-core btn-primary" style="padding: 10px 20px; font-size: 0.7rem;">
-            <i class="fab fa-youtube"></i> ACCESS LIVE
-        </a>
+        <div class="nav-action">
+            <a href="#contact" class="social-btn yt-btn" style="padding: 10px 20px; font-size: 0.7rem;">JOIN THE CLUB</a>
+        </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-inner" data-aos="fade-up" data-aos-duration="1500">
-            <span class="hero-badge">LONDON // TEAM 27935 // FIRST TECH CHALLENGE</span>
-            <h1>NEURAL <br><span>ENGINEERING</span></h1>
-            <p class="hero-desc">The official digital interface of Team 27935. Based at Lycée Français Charles de Gaulle, we build high-performance robotics focused on autonomous precision and mechanical innovation.</p>
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-inner" data-aos="zoom-out" data-aos-duration="1500">
+            <span class="hero-badge">LONDON // TEAM 27935 // 2025-2026</span>
+            <h1>ROBOTIC <br><span>EVOLUTION</span></h1>
+            <p style="font-size: 1.3rem; color: var(--text-2); margin-bottom: 50px; max-width: 800px; margin-inline: auto;">
+                Official Digital Interface of Team 27935. Pushing the boundaries of autonomous code and mechanical precision at Lycée Français Charles de Gaulle.
+            </p>
+            
             <div class="btn-group">
-                <a href="#engineering" class="btn-core btn-primary">VIEW SPECIFICATIONS <i class="fas fa-microchip"></i></a>
-                <a href="https://www.instagram.com" class="btn-core btn-sec">DATA FEED / IG</a>
+                <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn">
+                    <i class="fab fa-youtube"></i> YouTube Channel
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn">
+                    <i class="fab fa-instagram"></i> Instagram Feed
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- TELEMETRY SECTION -->
-    <div class="telemetry-grid">
-        <div class="tele-card" data-aos="zoom-in">
-            <span class="tele-val" id="count1">27935</span>
-            <span class="tele-label">Team ID</span>
+    <!-- TELEMETRY -->
+    <div class="telemetry">
+        <div class="stat-card" data-aos="fade-up">
+            <span class="stat-num">27935</span>
+            <span class="stat-label">Official Team ID</span>
         </div>
-        <div class="tele-card" data-aos="zoom-in" data-aos-delay="100">
-            <span class="tele-val">95%</span>
-            <span class="tele-label">Shot Accuracy</span>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+            <span class="stat-num">95%</span>
+            <span class="stat-label">Precision Rate</span>
         </div>
-        <div class="tele-card" data-aos="zoom-in" data-aos-delay="200">
-            <span class="tele-val">02</span>
-            <span class="tele-label">Competition Season</span>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+            <span class="stat-num">02</span>
+            <span class="stat-label">Season Count</span>
         </div>
-        <div class="tele-card" data-aos="zoom-in" data-aos-delay="300">
-            <span class="tele-val">PODIUM</span>
-            <span class="tele-label">2026 Objective</span>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+            <span class="stat-num">ELITE</span>
+            <span class="stat-label">Team Status</span>
         </div>
     </div>
 
-    <!-- ENGINEERING SPECS -->
-    <section id="engineering">
-        <span class="tagline" data-aos="fade-right">// SYSTEM ARCHITECTURE</span>
-        <h2 class="section-h" data-aos="fade-right">Technical <span>Specifications</span></h2>
+    <!-- TECHNICAL SPECS -->
+    <section id="tech">
+        <span class="section-tag">// ARCHITECTURE</span>
+        <h2 class="section-title">Deep <span>Specifications</span></h2>
         
-        <div class="spec-container">
-            <div class="spec-box" data-aos="fade-up">
-                <div class="spec-icon"><i class="fas fa-car-battery"></i></div>
-                <h3>Power & Drive</h3>
-                <ul class="spec-list">
-                    <li><i class="fas fa-circle"></i> 4x High-Torque DC Motors</li>
-                    <li><i class="fas fa-circle"></i> Mecanum Wheel Transmission</li>
-                    <li><i class="fas fa-circle"></i> Integrated Battery Management</li>
-                    <li><i class="fas fa-circle"></i> 12V High-Output System</li>
-                </ul>
-            </div>
-            <div class="spec-box" data-aos="fade-up" data-aos-delay="100">
-                <div class="spec-icon"><i class="fas fa-code-branch"></i></div>
+        <div class="tech-grid">
+            <div class="tech-card" data-aos="fade-up">
+                <i class="fas fa-microchip"></i>
                 <h3>Neural Software</h3>
-                <ul class="spec-list">
-                    <li><i class="fas fa-circle"></i> Java-Based Control Loops</li>
-                    <li><i class="fas fa-circle"></i> PID Trajectory Correction</li>
-                    <li><i class="fas fa-circle"></i> OpenCV Vision Processing</li>
-                    <li><i class="fas fa-circle"></i> Zero-Latency Driver Link</li>
-                </ul>
+                <p>Advanced Java-based control loops with integrated PID algorithms for autonomous trajectory correction and real-time sensor processing.</p>
             </div>
-            <div class="spec-box" data-aos="fade-up" data-aos-delay="200">
-                <div class="spec-icon"><i class="fas fa-drafting-compass"></i></div>
-                <h3>Chassis Design</h3>
-                <ul class="spec-list">
-                    <li><i class="fas fa-circle"></i> Modular Alloy Structure</li>
-                    <li><i class="fas fa-circle"></i> 18-Inch Compression Frame</li>
-                    <li><i class="fas fa-circle"></i> Custom Ball Ramp System</li>
-                    <li><i class="fas fa-circle"></i> Aesthetic Polycarbonate Panels</li>
-                </ul>
+            <div class="tech-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-cogs"></i>
+                <h3>Mechanical Build</h3>
+                <p>Custom-engineered alloy chassis featuring a synchronized ramp propulsion system for high-velocity and repeatable projectile accuracy.</p>
+            </div>
+            <div class="tech-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-bolt"></i>
+                <h3>Power Systems</h3>
+                <p>12V High-Torque distribution network optimized for Mecanum wheel traction and extreme battery longevity during competition rounds.</p>
             </div>
         </div>
     </section>
 
-    <!-- TEAM CORE -->
+    <!-- TEAM -->
     <section id="team" style="background: rgba(112, 0, 255, 0.02);">
-        <span class="tagline" data-aos="fade-up">// THE CREW</span>
-        <h2 class="section-h" data-aos="fade-up">Team <span>Elite</span></h2>
+        <span class="section-tag">// THE ENGINEERS</span>
+        <h2 class="section-title">Core <span>Leadership</span></h2>
         
         <div class="member-grid">
-            <!-- Mentor First -->
-            <div class="member-card" data-aos="zoom-in" style="border: 2px solid var(--primary);">
-                <span class="m-role">Founder & Lead Mentor</span>
+            <!-- Mentor -->
+            <div class="member-card" data-aos="fade-up" style="border: 2px solid var(--primary);">
+                <span class="m-role">Founder & Mentor</span>
                 <span class="m-name">Mr. Gbessi</span>
-                <p class="m-bio">A pillar of our robotics division. As a Physics and Chemistry expert, he provides the scientific framework and mentorship necessary for high-stakes engineering. He founded the club to bridge theory with hands-on technical reality.</p>
+                <p class="m-bio">Physics and Chemistry expert. He established the club to bridge the gap between classroom theory and real-world industrial engineering.</p>
             </div>
 
-            <!-- Project Manager -->
-            <div class="member-card" data-aos="zoom-in" data-aos-delay="100" style="border: 2px solid var(--secondary);">
+            <!-- PM -->
+            <div class="member-card" data-aos="fade-up" data-aos-delay="100" style="border: 2px solid var(--secondary);">
                 <span class="m-role">Project Manager / Lead Dev</span>
                 <span class="m-name">Sixte (Y11)</span>
-                <p class="m-bio">Managing the neural center of the project. Sixte handles the workflow, schedule integrity, and coordinates the programming team with the mechanical designers to ensure 100% system stability.</p>
+                <p class="m-bio">Architect of the global workflow. Sixte oversees programming, mechanical design, and system integration for Team 27935.</p>
             </div>
 
-            <!-- Members -->
-            <div class="member-card" data-aos="fade-up">
+            <!-- Team Members -->
+            <div class="member-card" data-aos="fade-up" data-aos-delay="200">
                 <span class="m-role">Drivetrain Engineer</span>
                 <span class="m-name">Mélanie (Y13)</span>
-                <p class="m-bio">Mechanical lead for drivetrain and manipulation. Her expertise ensures the robot's physical interactions are efficient and reliable under competitive stress.</p>
+                <p class="m-bio">Expert in drivetrain dynamics and ball manipulation hardware.</p>
             </div>
 
             <div class="member-card" data-aos="fade-up">
-                <span class="m-role">Structural Design</span>
+                <span class="m-role">Building & Design</span>
                 <span class="m-name">Axel (Y10)</span>
-                <p class="m-bio">Fusing aesthetics with functionality. Axel oversees robot building and ensures the design meets both performance and style criteria.</p>
+                <p class="m-bio">Specialized in mechanical assembly and structural aesthetics.</p>
             </div>
 
             <div class="member-card" data-aos="fade-up">
-                <span class="m-role">Strategy & Code</span>
+                <span class="m-role">Innovation Specialist</span>
                 <span class="m-name">Leopold (Y12)</span>
-                <p class="m-bio">Innovative thinker contributing to the construction and logic loops. His background in childhood programming brings a fresh perspective to problem-solving.</p>
+                <p class="m-bio">Focuses on creative problem-solving and software logic loops.</p>
             </div>
 
             <div class="member-card" data-aos="fade-up">
-                <span class="m-role">Hardware Systems</span>
+                <span class="m-role">Hardware Engineering</span>
                 <span class="m-name">Noelle (Y12)</span>
-                <p class="m-bio">Mechanical engineer specializing in hardware tech. She ensures that every screw and motor is optimized for durability on the playing field.</p>
+                <p class="m-bio">Technical lead for hardware components and mechanical durability.</p>
             </div>
 
             <div class="member-card" data-aos="fade-up">
                 <span class="m-role">Strategic Intelligence</span>
                 <span class="m-name">Leo (Y10)</span>
-                <p class="m-bio">The team's strategy scout. Leo analyzes game rules and competitor behaviors to find the most efficient path to scoring maximum points.</p>
+                <p class="m-bio">Scouts competition rules and optimizes game-winning strategies.</p>
             </div>
 
             <div class="member-card" data-aos="fade-up">
-                <span class="m-role">Assembly Specialist</span>
+                <span class="m-role">Hardware Assembly</span>
                 <span class="m-name">Amira (Y11)</span>
-                <p class="m-bio">Bringing dynamic energy to the hardware team. Amira supports technical development and robot assembly with growing precision.</p>
+                <p class="m-bio">Supports the mechanical team in high-precision assembly.</p>
             </div>
         </div>
     </section>
 
-    <!-- PROTOCOLS (TABS) -->
-    <section id="protocols">
-        <span class="tagline" data-aos="fade-up">// ENGINEERING LAB</span>
-        <h2 class="section-h" data-aos="fade-up">Design <span>Evolution</span></h2>
-        
-        <div class="protocol-tabs">
-            <div class="tab-nav" data-aos="fade-up">
-                <button class="tab-trigger active" onclick="openTab(event, 'v1')">PROTOCOL_01: WHEEL</button>
-                <button class="tab-trigger" onclick="openTab(event, 'v2')">PROTOCOL_02: SWING</button>
-                <button class="tab-trigger" onclick="openTab(event, 'v3')">PROTOCOL_03: RAMP</button>
-            </div>
-
-            <div id="v1" class="tab-panel active">
-                <div>
-                    <h3>V1: Motorized Centrifugation</h3>
-                    <p>Initial design utilized a high-speed orbital wheel. Simulation results showed 40% drift in ball trajectory. The system was abandoned to ensure maximum competitive accuracy.</p>
-                </div>
-                <div style="background: rgba(255,0,0,0.05); padding: 30px; border-radius: 20px; font-family: var(--font-code);">
-                    > TRAJECTORY_STABILITY: FAILED <br>
-                    > POWER_OUTPUT: OVER_LIMIT <br>
-                    > DECISION: DECOMMISSIONED
+    <!-- CONTACT FORM -->
+    <section id="contact">
+        <div class="contact-container">
+            <div class="contact-info" data-aos="fade-right">
+                <span class="section-tag">// CONNECT</span>
+                <h2>Contact <span>Us</span></h2>
+                <p>Have questions about Team 27935 or want to partner with our robotics division? Send us a direct message through our neural link.</p>
+                <div class="terminal-box">
+                    <p class="terminal-line">> lfcg_robotics --status</p>
+                    <p class="terminal-text">> READY_TO_RECEIVE_DATA</p>
+                    <p class="terminal-line">> contact_email</p>
+                    <p class="terminal-text">> lfcg.robotics@gmail.com</p>
                 </div>
             </div>
 
-            <div id="v2" class="tab-panel">
-                <div>
-                    <h3>V2: Geared Swing Mechanism</h3>
-                    <p>Used a lever-based catapult. While mechanically sound, the building time and footprint (18" limit) were too restrictive for the current season theme.</p>
-                </div>
-                <div style="background: rgba(255,255,0,0.05); padding: 30px; border-radius: 20px; font-family: var(--font-code);">
-                    > SIZE_COMPLIANCE: WARNING <br>
-                    > COMPLEXITY: HIGH <br>
-                    > DECISION: ARCHIVED
-                </div>
-            </div>
-
-            <div id="v3" class="tab-panel">
-                <div>
-                    <h3>V3: Precision Ramp & Rod</h3>
-                    <p>Current Active Protocol. Combines a fixed trajectory ramp with a rotating rod propulsion. Provides 95% repeatable scoring accuracy in both manual and autonomous modes.</p>
-                </div>
-                <div style="background: rgba(0,255,255,0.05); padding: 30px; border-radius: 20px; font-family: var(--font-code);">
-                    > ACCURACY: 95% <br>
-                    > BUILD_RELIABILITY: OPTIMAL <br>
-                    > STATUS: ACTIVE_DEPLOYMENT
-                </div>
+            <div class="contact-form" data-aos="fade-left">
+                <!-- IMPORTANT: Replace 'YOUR_KEY_HERE' with a Formspree ID or your backend endpoint -->
+                <form action="https://formspree.io" method="POST">
+                    <div class="form-group">
+                        <label>FULL NAME</label>
+                        <input type="text" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>EMAIL ADDRESS</label>
+                        <input type="email" name="email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>TRANSMISSION MESSAGE</label>
+                        <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- TIMELINE -->
-    <section id="timeline">
-        <span class="tagline" data-aos="fade-up">// ROADMAP</span>
-        <h2 class="section-h" data-aos="fade-up">2025-2026 <span>Season</span></h2>
-        
-        <div class="timeline-box">
-            <div class="time-point" data-aos="fade-left">
-                <span class="time-date">SEPTEMBER</span>
-                <h3>System Audit</h3>
-                <p>Post-season review of 2024. Inventory management and Game Manual analysis. Sub-team formation and role allocation.</p>
-            </div>
-            <div class="time-point" data-aos="fade-left" data-aos-delay="100">
-                <span class="time-date">OCTOBER - NOVEMBER</span>
-                <h3>Prototyping Phase</h3>
-                <p>Selecting the core robot concept. Building the first drivetrain prototype. Deploying initial Java control code.</p>
-            </div>
-            <div class="timeline-box" style="padding: 0; border: none; margin: 0;">
-                <!-- Expanding for lines -->
-                <div class="time-point" data-aos="fade-left">
-                    <span class="time-date">DECEMBER</span>
-                    <h3>Strategic Strategy</h3>
-                    <p>Watching global match videos to optimize scoring loops. Portfolio creation started with technical documentation.</p>
-                </div>
-            </div>
-            <div class="time-point" data-aos="fade-left" data-aos-delay="200">
-                <span class="time-date">JANUARY - MARCH</span>
-                <h3>Competition Ready</h3>
-                <p>Finalizing the ramp system and power output. Perfecting autonomous mode using vision sensors. Ready for podium qualification.</p>
-            </div>
+    <!-- FOOTER -->
+    <footer>
+        <a href="#" class="footer-logo">LFCG<span>ROBOTICS</span></a>
+        <div class="btn-group" style="margin-bottom: 40px;">
+            <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn" style="padding: 10px 20px; font-size: 0.7rem;">YOUTUBE</a>
+            <a href="#" target="_blank" class="social-btn ig-btn" style="padding: 10px 20px; font-size: 0.7rem;">INSTAGRAM</a>
         </div>
-    </section>
-
-    <!-- TERMINAL FOOTER -->
-    <footer class="terminal-footer">
-        <div class="term-box">
-            <div class="term-head">
-                <div class="term-dot" style="background: #ff5f56;"></div>
-                <div class="term-dot" style="background: #ffbd2e;"></div>
-                <div class="term-dot" style="background: #27c93f;"></div>
-            </div>
-            <p>> initializing_lfcg_robotics_outro.sh</p>
-            <p>> [SUCCESS] Handshake with London Server 27935 completed.</p>
-            <p>> status: READY_FOR_COMPETITION</p>
-            <p>> contact: robotics@lfcg.org.uk</p>
-        </div>
-
-        <a href="#" class="f-logo">LFCG<span>ROBOTICS</span></a>
-        
-        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 50px;">
-            <a href="https://www.youtube.com" target="_blank" style="color: var(--text-2); text-decoration: none;"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="#" style="color: var(--text-2); text-decoration: none;"><i class="fab fa-instagram"></i> Instagram</a>
-            <a href="#mission" style="color: var(--text-2); text-decoration: none;">Core Mission</a>
-        </div>
-
-        <p class="copyright">© 2026 Lycée Français Charles de Gaulle Robotics Division. All rights reserved. Designed for Excellence.</p>
+        <p>Lycée Français Charles de Gaulle // Team 27935 // South Kensington, London</p>
+        <p class="copyright">© 2026 Elite Robotics Engineering. Developed for FTC Competition.</p>
     </footer>
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com"></script>
     <script>
-        // 1. Initialize Animations
         AOS.init({ duration: 1000, once: true });
 
-        // 2. Navbar Scroll Effect
         window.onscroll = function() {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 60) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         };
 
-        // 3. Tabs System
-        function openTab(evt, tabName) {
-            let i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-panel");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove("active");
+        // Particle Background Logic (Canvas Animation)
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for(let i=0; i<80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2,
+                    speedX: Math.random() * 0.5 - 0.25,
+                    speedY: Math.random() * 0.5 - 0.25
+                });
             }
-            tablinks = document.getElementsByClassName("tab-trigger");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.fillStyle = '#00f2ff';
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if(p.x > canvas.width) p.x = 0;
+                if(p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+        window.addEventListener('resize', () => { particles = []; initParticles(); });
+    </script>
+</body>
+</html>
