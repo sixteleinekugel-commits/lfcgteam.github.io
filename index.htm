@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LFCGteam robotic | NEURAL INTERFACE 27935</title>
+    <title>LFCGteam robotic | TEAM 27935</title>
 
     <!-- 
         ============================================================
@@ -16,11 +16,6 @@
     <link href="https://unpkg.com" rel="stylesheet">
 
     <style>
-        /* 
-           ============================================================
-           1. DESIGN SYSTEM VARIABLES
-           ============================================================
-        */
         :root {
             --bg: #010204;
             --primary: #00f2ff;
@@ -37,224 +32,86 @@
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* 
-           ============================================================
-           2. GLOBAL CORE STYLES
-           ============================================================
-        */
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
-        body {
-            background: var(--bg);
-            color: var(--text-1);
-            font-family: var(--font-main);
-            overflow-x: hidden;
-            line-height: 1.7;
-        }
+        body { background: var(--bg); color: var(--text-1); font-family: var(--font-main); overflow-x: hidden; line-height: 1.7; }
 
-        #particle-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.4;
-        }
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.4; }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(var(--secondary), var(--primary)); 
-            border-radius: 5px;
-        }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--secondary), var(--primary)); border-radius: 5px; }
 
-        /* 
-           ============================================================
-           3. NAVIGATION
-           ============================================================
-        */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 30px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; transition: 0.6s var(--ease);
-        }
-        nav.scrolled {
-            background: rgba(1, 2, 4, 0.95);
-            backdrop-filter: blur(25px);
-            padding: 15px 8%;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        .logo { 
-            font-family: var(--font-tech); font-weight: 900; font-size: 1.7rem; 
-            color: #fff; text-decoration: none; letter-spacing: 1px;
-        }
+        /* NAVIGATION */
+        nav { position: fixed; top: 0; width: 100%; padding: 30px 8%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: 0.6s var(--ease); }
+        nav.scrolled { background: rgba(1, 2, 4, 0.95); backdrop-filter: blur(25px); padding: 15px 8%; border-bottom: 1px solid var(--glass-border); }
+        .logo { font-family: var(--font-tech); font-weight: 900; font-size: 1.7rem; color: #fff; text-decoration: none; letter-spacing: 1px; }
         .logo span { color: var(--primary); }
-        
         .nav-links { display: flex; gap: 35px; list-style: none; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-2); font-family: var(--font-tech);
-            font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s;
-        }
+        .nav-links a { text-decoration: none; color: var(--text-2); font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
-        /* 
-           ============================================================
-           4. HERO SECTION
-           ============================================================
-        */
-        .hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 0 10%; position: relative;
-        }
+        /* HERO */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 10%; position: relative; }
         .hero-inner { z-index: 10; max-width: 1100px; }
-        .hero-badge {
-            display: inline-block; padding: 12px 30px; border-radius: 50px;
-            background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary);
-            color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem;
-            margin-bottom: 40px; letter-spacing: 4px;
-        }
-        .hero h1 {
-            font-family: var(--font-tech); font-size: clamp(3rem, 10vw, 7.5rem);
-            font-weight: 900; line-height: 0.85; margin-bottom: 40px;
-            background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -4px;
-        }
+        .hero-badge { display: inline-block; padding: 12px 30px; border-radius: 50px; background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary); color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; margin-bottom: 40px; letter-spacing: 4px; }
+        .hero h1 { font-family: var(--font-tech); font-size: clamp(3rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.85; margin-bottom: 40px; background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -4px; text-transform: uppercase; }
 
         .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        .social-btn {
-            padding: 18px 40px; border-radius: 12px; font-weight: bold;
-            text-decoration: none; color: white; display: flex; align-items: center; gap: 12px;
-            transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem;
-        }
+        .social-btn { padding: 18px 40px; border-radius: 12px; font-weight: bold; text-decoration: none; color: white; display: flex; align-items: center; gap: 12px; transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem; }
         .yt-btn { background: #ff0000; box-shadow: 0 8px 25px rgba(255,0,0,0.3); }
         .ig-btn { background: linear-gradient(45deg,#f09433,#e1306c,#bc1888); box-shadow: 0 8px 25px rgba(225,48,108,0.3); }
         .social-btn:hover { transform: translateY(-7px) scale(1.05); }
 
-        /* 
-           ============================================================
-           5. TELEMETRY BAR
-           ============================================================
-        */
-        .telemetry {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px; padding: 70px 10%; background: rgba(0, 242, 255, 0.02);
-            border-top: 1px solid var(--glass-border);
-        }
-        .stat-card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 45px; border-radius: 25px; text-align: center;
-        }
+        /* TELEMETRY */
+        .telemetry { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; padding: 70px 10%; background: rgba(0, 242, 255, 0.02); border-top: 1px solid var(--glass-border); }
+        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 45px; border-radius: 25px; text-align: center; }
         .stat-num { font-family: var(--font-tech); font-size: 3.2rem; color: var(--primary); display: block; }
         .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 3px; }
 
-        /* 
-           ============================================================
-           6. SECTIONS COMMON
-           ============================================================
-        */
+        /* SECTIONS */
         section { padding: 140px 10%; position: relative; }
         .section-tag { color: var(--secondary); font-family: var(--font-tech); font-size: 0.85rem; letter-spacing: 5px; display: block; margin-bottom: 25px; }
         .section-title { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 80px; }
         .section-title span { color: var(--primary); }
 
-        /* 
-           ============================================================
-           7. TEAM CARDS
-           ============================================================
-        */
+        /* TEAM CARDS */
         .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
-        .m-card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 50px; border-radius: 35px; transition: 0.5s var(--ease);
-        }
+        .m-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 50px; border-radius: 35px; transition: 0.5s var(--ease); }
         .m-card:hover { border-color: var(--secondary); transform: translateY(-15px); background: rgba(112, 0, 255, 0.05); }
         .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; }
         .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
         .m-bio { color: var(--text-2); font-size: 0.95rem; line-height: 1.8; font-weight: 300; }
 
-        /* 
-           ============================================================
-           8. TIMELINE / ROADMAP
-           ============================================================
-        */
+        /* ROADMAP */
         .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 40px 0; }
-        .timeline-box::before {
-            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
-            background: linear-gradient(transparent, var(--primary), transparent);
-        }
-        .time-point { 
-            padding: 40px; background: var(--glass); border-radius: 25px; 
-            margin-left: 80px; position: relative; border: 1px solid var(--glass-border); 
-            margin-bottom: 40px; transition: 0.4s;
-        }
-        .time-point::before { 
-            content: ''; position: absolute; left: -61px; top: 50px; 
-            width: 22px; height: 22px; background: var(--bg); 
-            border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); 
-        }
+        .timeline-box::before { content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%; background: linear-gradient(transparent, var(--primary), transparent); }
+        .time-point { padding: 40px; background: var(--glass); border-radius: 25px; margin-left: 80px; position: relative; border: 1px solid var(--glass-border); margin-bottom: 40px; transition: 0.4s; }
+        .time-point::before { content: ''; position: absolute; left: -61px; top: 50px; width: 22px; height: 22px; background: var(--bg); border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); }
         .time-date { font-family: var(--font-tech); color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
-        .time-point:hover { transform: translateX(15px); border-color: var(--primary); }
 
-        /* 
-           ============================================================
-           9. MISSION FEED (COMM CENTER)
-           ============================================================
-        */
+        /* MISSION FEED */
         .feed-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
         @media (max-width: 1100px) { .feed-layout { grid-template-columns: 1fr; } }
-
-        .feed-window { 
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 35px; padding: 45px; height: 650px; display: flex; flex-direction: column;
-            backdrop-filter: blur(15px);
-        }
-        
-        #message-display { 
-            flex-grow: 1; overflow-y: auto; padding-right: 20px;
-            filter: blur(18px); pointer-events: none; transition: 0.8s var(--ease);
-        }
-        
-        .entry { 
-            background: rgba(255,255,255,0.04); padding: 25px; border-radius: 18px; 
-            margin-bottom: 20px; border-left: 4px solid var(--primary); font-family: var(--font-code);
-        }
+        .feed-window { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; padding: 45px; height: 650px; display: flex; flex-direction: column; backdrop-filter: blur(15px); }
+        #message-display { flex-grow: 1; overflow-y: auto; padding-right: 20px; filter: blur(18px); pointer-events: none; transition: 0.8s var(--ease); }
+        .entry { background: rgba(255,255,255,0.04); padding: 25px; border-radius: 18px; margin-bottom: 20px; border-left: 4px solid var(--primary); font-family: var(--font-code); }
         .entry-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; color: var(--primary); }
-
-        .auth-zone {
-            margin-bottom: 30px; padding: 35px; background: rgba(255, 95, 86, 0.05);
-            border-radius: 20px; border: 1px dashed var(--accent); text-align: center;
-        }
-        .pass-input {
-            width: 65%; padding: 18px; background: #000; border: 1px solid var(--glass-border);
-            border-radius: 12px; color: #fff; font-family: var(--font-tech); margin-right: 10px;
-        }
-        .unlock-btn {
-            padding: 18px 30px; background: var(--primary); border: none; border-radius: 12px;
-            font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s;
-        }
-        .unlock-btn:hover { box-shadow: 0 0 20px var(--primary); transform: scale(1.05); }
+        .auth-zone { margin-bottom: 30px; padding: 35px; background: rgba(255, 95, 86, 0.05); border-radius: 20px; border: 1px dashed var(--accent); text-align: center; }
+        .pass-input { width: 65%; padding: 18px; background: #000; border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-family: var(--font-tech); margin-right: 10px; }
+        .unlock-btn { padding: 18px 30px; background: var(--primary); border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s; }
 
         .post-box { padding: 40px; background: var(--glass); border-radius: 35px; border: 1px solid var(--glass-border); }
         .input-grp { margin-bottom: 25px; }
         .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.75rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
-        .input-grp input, .input-grp textarea {
-            width: 100%; padding: 18px; background: rgba(255,255,255,0.04);
-            border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem;
-        }
-        .broadcast-btn {
-            width: 100%; padding: 22px; background: var(--secondary); color: #fff;
-            border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900;
-            cursor: pointer; transition: 0.4s; letter-spacing: 3px;
-        }
+        .input-grp input, .input-grp textarea { width: 100%; padding: 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem; }
+        .broadcast-btn { width: 100%; padding: 22px; background: var(--secondary); color: #fff; border: none; border-radius: 12px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.4s; letter-spacing: 3px; }
 
-        /* 
-           ============================================================
-           10. MAP & FOOTER
-           ============================================================
-        */
         .map-frame { border-radius: 35px; overflow: hidden; border: 1px solid var(--glass-border); height: 450px; margin-top: 50px; }
         footer { padding: 120px 10% 60px; border-top: 1px solid var(--glass-border); text-align: center; }
         .f-logo { font-family: var(--font-tech); font-size: 2.2rem; color: #fff; text-decoration: none; margin-bottom: 40px; display: block; }
         .f-logo span { color: var(--primary); }
         .copy { color: #334155; font-size: 0.85rem; margin-top: 80px; letter-spacing: 2px; }
-
     </style>
 </head>
 <body>
@@ -277,7 +134,7 @@
     <section class="hero" id="home">
         <div class="hero-inner" data-aos="zoom-out">
             <span class="hero-badge">LONDON // TEAM 27935 // ELITE DIVISION</span>
-            <h1>NEURAL <br><span>INTERFACE</span></h1>
+            <h1>CODING <br><span>THE FUTURE</span></h1>
             <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto; font-weight: 300;">
                 Welcome to the LFCGteam robotic official hub. Engineering the next generation of autonomous precision at Lycée Français Charles de Gaulle.
             </p>
@@ -300,10 +157,10 @@
         <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">2026 Goal</span></div>
     </div>
 
-    <!-- ENGINEERING -->
+    <!-- SPECS -->
     <section id="about">
-        <span class="section-tag" data-aos="fade-right">// SYSTEM ARCHITECTURE</span>
-        <h2 class="section-title" data-aos="fade-right">Technical <span>Specs</span></h2>
+        <span class="section-tag" data-aos="fade-right">// ARCHITECTURE</span>
+        <h2 class="section-title">Technical <span>Specs</span></h2>
         <div class="member-grid">
             <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Neural Software</span>
@@ -323,37 +180,47 @@
     <!-- TEAM -->
     <section id="team" style="background: rgba(112, 0, 255, 0.015);">
         <span class="section-tag" data-aos="fade-up">// THE CREW</span>
-        <h2 class="section-title" data-aos="fade-up">Engineering <span>Elite</span></h2>
+        <h2 class="section-title">Engineering <span>Elite</span></h2>
         <div class="member-grid">
             <div class="m-card" data-aos="fade-up" style="border: 1px solid var(--primary);">
                 <span class="m-role">Founder & Mentor</span>
                 <h3 class="m-name">Mr. Gbessi</h3>
-                <p class="m-bio">Physics & Chemistry expert. He founded the club to provide a professional environment for mastering real-world industrial engineering.</p>
+                <p class="m-bio">Physics & Chemistry teacher. He founded the club to provide a professional environment for mastering real-world industrial engineering and hardware technology.</p>
             </div>
             <div class="m-card" data-aos="fade-up" data-aos-delay="100" style="border: 1px solid var(--secondary);">
                 <span class="m-role">Project Manager / Lead Dev</span>
                 <h3 class="m-name">Sixte (Y11)</h3>
-                <p class="m-bio">Architect of the global development lifecycle. Sixte leads programming, mechanical design, and system integration workflow.</p>
+                <p class="m-bio">Architect of the global development lifecycle. Sixte leads programming, mechanical design, and system integration workflow, bringing creative ideas to life through precision.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Mechanical Lead</span>
                 <h3 class="m-name">Mélanie (Y13)</h3>
-                <p class="m-bio">Specializing in drivetrain dynamics and hardware manipulation to ensure peak physical performance on the field.</p>
+                <p class="m-bio">Drivetrain and manipulation engineer. Passionate about robotics, she ensures peak physical performance and consistent hardware reliability on the field.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
                 <span class="m-role">Structural Design</span>
                 <h3 class="m-name">Axel (Y10)</h3>
-                <p class="m-bio">Axel focuses on chassis integrity and translating complex CAD models into high-precision functional reality.</p>
+                <p class="m-bio">Expert in robot building and design conception. Axel translates aesthetic ideas into high-precision functional reality.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Logic loops Specialist</span>
+                <span class="m-role">Software Logic</span>
                 <h3 class="m-name">Leopold (Y12)</h3>
-                <p class="m-bio">Bringing lifelong coding experience to refine robot behavior and strategic autonomous navigation paths.</p>
+                <p class="m-bio">Bringing lifelong coding experience to refine robot behavior, brainstorm innovative ideas, and optimize autonomous navigation paths.</p>
             </div>
             <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Hardware Lead</span>
+                <span class="m-role">Mechanical Engineer</span>
                 <h3 class="m-name">Noelle (Y12)</h3>
-                <p class="m-bio">Manages mechanical durability and component optimization to withstand intense competition pressure.</p>
+                <p class="m-bio">Specializing in hardware technology and design engineering. She manages mechanical durability and component optimization.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Strategic Officer</span>
+                <h3 class="m-name">Leo (Y10)</h3>
+                <p class="m-bio">Scout and tech analyst. Leo optimizes game-winning strategies and manages the team's social presence and technological discovery.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Hardware Assembly</span>
+                <h3 class="m-name">Amira (Y11)</h3>
+                <p class="m-bio">A rising talent in robotics, Amira contributes to the assembly and technical development of the hardware systems.</p>
             </div>
         </div>
     </section>
@@ -361,35 +228,33 @@
     <!-- ROADMAP -->
     <section id="timeline">
         <span class="section-tag" data-aos="fade-up">// PIPELINE</span>
-        <h2 class="section-title" data-aos="fade-up">Season <span>Roadmap</span></h2>
+        <h2 class="section-title">Season <span>Roadmap</span></h2>
         <div class="timeline-box">
             <div class="time-point" data-aos="fade-left">
                 <span class="time-date">SEPTEMBER</span>
-                <p class="m-bio">Post-season audit, inventory management, and game manual analysis. Sub-team formation.</p>
+                <p class="m-bio">Post-season audit, identifying strengths/weaknesses, inventory management, and game manual analysis.</p>
             </div>
             <div class="time-point" data-aos="fade-left" data-aos-delay="100">
                 <span class="time-date">OCTOBER - NOVEMBER</span>
-                <p class="m-bio">Prototyping phase: selecting the ramp concept and building the primary drivetrain chassis.</p>
+                <p class="m-bio">Prototyping phase: selecting the ramp concept and building the primary drivetrain chassis. Portfolio initialization.</p>
             </div>
             <div class="time-point" data-aos="fade-left" data-aos-delay="200">
                 <span class="time-date">JANUARY - MARCH</span>
-                <p class="m-bio">Optimization: perfecting autonomous routines and finalizing the technical portfolio for entry.</p>
+                <p class="m-bio">Optimization: perfecting autonomous routines, projectile power, and finalizing the technical portfolio.</p>
             </div>
         </div>
     </section>
 
-    <!-- COMM CENTER (MISSION FEED) -->
+    <!-- COMM CENTER -->
     <section id="contact">
         <span class="section-tag" data-aos="fade-right">// NEURAL FEED</span>
         <h2 class="section-title">Comm <span>Center</span></h2>
-        
         <div class="feed-layout">
             <div class="feed-window" data-aos="fade-right">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 30px; align-items:center;">
-                    <h3 style="font-family: var(--font-tech); color: var(--primary);">LIVE_FEED</h3>
-                    <span id="lock-indicator" style="color: var(--accent); font-family: var(--font-code); font-size: 0.8rem;"><i class="fas fa-lock"></i> ENCRYPTED</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+                    <h3 style="font-family:var(--font-tech); color:var(--primary);">LIVE_FEED</h3>
+                    <span id="lock-indicator" style="color:var(--accent); font-family:var(--font-code); font-size:0.8rem;"><i class="fas fa-lock"></i> ENCRYPTED</span>
                 </div>
-
                 <div id="auth-box" class="auth-zone">
                     <p style="margin-bottom:15px; color:#fff; font-size:0.8rem;">[SECURITY] ENTER #teammember TO DECRYPT</p>
                     <div style="display:flex; justify-content:center;">
@@ -397,24 +262,13 @@
                         <button onclick="unlock()" class="unlock-btn">DECRYPT</button>
                     </div>
                 </div>
-
-                <div id="message-display">
-                    <!-- Messages will render here -->
-                </div>
+                <div id="message-display"></div>
             </div>
-
             <div class="post-box" data-aos="fade-left">
-                <h3 style="font-family: var(--font-tech); margin-bottom: 25px;">BROADCAST <span>UPDATE</span></h3>
-                <div class="input-grp">
-                    <label>IDENTIFIER</label>
-                    <input type="text" id="post-name" placeholder="Name...">
-                </div>
-                <div class="input-grp">
-                    <label>MESSAGE STREAM</label>
-                    <textarea id="post-msg" rows="4" placeholder="Transmit status..."></textarea>
-                </div>
+                <h3 style="font-family:var(--font-tech); margin-bottom:25px;">BROADCAST <span>UPDATE</span></h3>
+                <div class="input-grp"><label>IDENTIFIER</label><input type="text" id="post-name" placeholder="Name..."></div>
+                <div class="input-grp"><label>MESSAGE STREAM</label><textarea id="post-msg" rows="4" placeholder="Transmit status..."></textarea></div>
                 <button onclick="publish()" class="broadcast-btn">POST TO FEED <i class="fas fa-satellite-dish"></i></button>
-                
                 <div class="map-frame">
                     <iframe src="https://www.google.com" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
                 </div>
@@ -430,16 +284,13 @@
     <!-- SCRIPTS -->
     <script src="https://unpkg.com"></script>
     <script>
-        // --- 1. CORE INIT ---
         const MASTER_KEY = "#teammember";
-        
         window.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 1200, once: true });
             initParticles();
             renderFeed();
         });
 
-        // --- 2. PASSWORD SYSTEM (FIXED) ---
         function unlock() {
             const inputVal = document.getElementById('input-key').value;
             const display = document.getElementById('message-display');
@@ -454,25 +305,17 @@
                 authBox.style.display = "none";
             } else {
                 alert("ACCESS DENIED: Invalid Key.");
-                document.getElementById('input-key').value = "";
             }
         }
 
-        // --- 3. FEED SYSTEM ---
         function publish() {
             const name = document.getElementById('post-name').value;
             const msg = document.getElementById('post-msg').value;
-
-            if(!name || !msg) {
-                alert("Metadata missing.");
-                return;
-            }
-
+            if(!name || !msg) return;
             const payload = { name: name.toUpperCase(), message: msg, time: new Date().toLocaleTimeString() };
             let data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
             data.unshift(payload);
             localStorage.setItem('lfcg_feed', JSON.stringify(data));
-
             document.getElementById('post-name').value = "";
             document.getElementById('post-msg').value = "";
             renderFeed();
@@ -481,43 +324,29 @@
         function renderFeed() {
             const container = document.getElementById('message-display');
             const data = JSON.parse(localStorage.getItem('lfcg_feed') || "[]");
-            
             if(data.length === 0) {
                 container.innerHTML = '<p style="color:#444; font-family:var(--font-code); text-align:center; padding-top:50px;">NO DATA DETECTED.</p>';
                 return;
             }
-
             container.innerHTML = data.map(item => `
                 <div class="entry">
-                    <div class="entry-header">
-                        <span>> ${item.name}</span>
-                        <span>[${item.time}]</span>
-                    </div>
+                    <div class="entry-header"><span>> ${item.name}</span><span>[${item.time}]</span></div>
                     <div class="entry-body">${item.message}</div>
                 </div>
             `).join('');
         }
 
-        // --- 4. PARTICLES ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
         function initParticles() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             for (let i = 0; i < 100; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 2
-                });
+                particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, size: Math.random() * 2 });
             }
             animate();
         }
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#00f2ff';
@@ -529,7 +358,6 @@
             });
             requestAnimationFrame(animate);
         }
-
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 100) nav.classList.add('scrolled');
