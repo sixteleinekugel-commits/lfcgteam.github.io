@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link href="https://unpkg.com" rel="stylesheet">
 
     <style>
         /* 
@@ -122,7 +123,7 @@
             text-decoration: none; color: white; display: flex; align-items: center; gap: 12px;
             transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem;
         }
-        .yt-btn { background: #ff0000; box-shadow: 0 8px 25px rgba(255,0,0,0.3); border:none; cursor:pointer;}
+        .yt-btn { background: #ff0000; box-shadow: 0 8px 25px rgba(255,0,0,0.3); }
         .ig-btn { background: linear-gradient(45deg,#f09433,#e1306c,#bc1888); box-shadow: 0 8px 25px rgba(225,48,108,0.3); }
         .social-btn:hover { transform: translateY(-7px) scale(1.05); }
 
@@ -168,98 +169,217 @@
         .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
         .m-bio { color: var(--text-2); font-size: 0.95rem; line-height: 1.8; font-weight: 300; }
 
-        /* Form styling */
-        .contact-form {
-            display: flex; flex-direction: column; gap: 20px; text-align: left;
+        /* 
+           ============================================================
+           8. TIMELINE / ROADMAP
+           ============================================================
+        */
+        .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 40px 0; }
+        .timeline-box::before {
+            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
+            background: linear-gradient(transparent, var(--primary), transparent);
         }
-        .contact-form input, .contact-form textarea {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            padding: 15px; border-radius: 12px; color: white; font-family: var(--font-main);
+        .time-point { 
+            padding: 40px; background: var(--glass); border-radius: 25px; 
+            margin-left: 80px; position: relative; border: 1px solid var(--glass-border); 
+            margin-bottom: 40px; transition: 0.4s;
         }
-        .contact-form label { font-family: var(--font-tech); font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; }
+        .time-point::before { 
+            content: ''; position: absolute; left: -61px; top: 50px; 
+            width: 22px; height: 22px; background: var(--bg); 
+            border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); 
+        }
+        .time-date { font-family: var(--font-tech); color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
 
+        /* 
+           ============================================================
+           9. CONTACT FORM (GMAIL)
+           ============================================================
+        */
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: flex-start; }
+        @media (max-width: 1000px) { .contact-container { grid-template-columns: 1fr; } }
+
+        .form-box { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; padding: 50px; }
+        .input-grp { margin-bottom: 25px; }
+        .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.7rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
+        .input-grp input, .input-grp textarea { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; font-family: var(--font-main); }
+        .submit-btn { width: 100%; padding: 20px; background: var(--primary); color: #000; border: none; border-radius: 10px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s; letter-spacing: 2px; }
+        .submit-btn:hover { box-shadow: 0 0 20px var(--primary); transform: translateY(-3px); }
+
+        footer { padding: 100px 10% 50px; border-top: 1px solid var(--glass-border); text-align: center; }
     </style>
 </head>
 <body>
 
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- NAVIGATION -->
     <nav id="navbar">
-        <a href="#" class="logo">LFCG<span>ROBOTICS</span></a>
+        <a href="#" class="logo">LFCGteam<span> robotic</span></a>
         <ul class="nav-links">
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#team">TEAM</a></li>
-            <li><a href="#contact">CONTACT</a></li>
+            <li><a href="#about">Specs</a></li>
+            <li><a href="#team">Engineers</a></li>
+            <li><a href="#timeline">Season</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
+    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="hero-inner">
-            <div class="hero-badge">TEAM 27935 • FIRST TECH CHALLENGE</div>
-            <h1>INNOVATE.<br>BUILD. <span>EXCEL.</span></h1>
+        <div class="hero-inner" data-aos="zoom-out">
+            <span class="hero-badge">LONDON // TEAM 27935 // 2025-2026</span>
+            <h1>CODING <br><span>THE FUTURE</span></h1>
+            <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto;">
+                Welcome to the LFCGteam robotic official hub. Engineering the next generation of autonomous precision at Lycée Français Charles de Gaulle.
+            </p>
             <div class="btn-group">
-                <a href="#" class="social-btn yt-btn"><i class="fab fa-youtube"></i> YOUTUBE</a>
-                <a href="#" class="social-btn ig-btn"><i class="fab fa-instagram"></i> INSTAGRAM</a>
+                <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
         </div>
     </section>
 
+    <!-- TELEMETRY -->
     <div class="telemetry">
-        <div class="stat-card">
-            <span class="stat-num">12</span>
-            <span class="stat-label">Members</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-num">27935</span>
-            <span class="stat-label">Team ID</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-num">95%</span>
-            <span class="stat-label">Efficiency</span>
-        </div>
+        <div class="stat-card" data-aos="fade-up"><span class="stat-num">27935</span><span class="stat-label">Team ID</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="100"><span class="stat-num">95%</span><span class="stat-label">Shot Accuracy</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><span class="stat-num">02</span><span class="stat-label">Season</span></div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">Goal</span></div>
     </div>
 
-    <section id="team">
-        <span class="section-tag">// OUR CREW</span>
-        <h2 class="section-title">Meet the <span>Engineers</span></h2>
+    <!-- SPECS -->
+    <section id="about">
+        <span class="section-tag">// ARCHITECTURE</span>
+        <h2 class="section-title">Technical <span>Specs</span></h2>
         <div class="member-grid">
-            <div class="m-card">
-                <span class="m-role">Lead Hardware</span>
-                <h3 class="m-name">Nom Prénom</h3>
-                <p class="m-bio">Expert en conception CAO et mécanismes de précision.</p>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Neural Software</span>
+                <p class="m-bio">Advanced Java loops using PID algorithms and OpenCV vision processing for zero-fault autonomous execution.</p>
             </div>
-            <!-- Ajoute d'autres cartes ici -->
+            <div class="m-card" data-aos="fade-up" data-aos-delay="100">
+                <span class="m-role">Mechanical Build</span>
+                <p class="m-bio">Custom alloy chassis featuring a 15-degree precision ramp propulsion system designed for high-velocity cycles.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="200">
+                <span class="m-role">Power Systems</span>
+                <p class="m-bio">Integrated 12V high-output network optimized for Mecanum wheel torque and battery endurance.</p>
+            </div>
         </div>
     </section>
 
-    <!-- SECTION CONTACT AJOUTÉE -->
+    <!-- TEAM (FULL MEMBERS) -->
+    <section id="team" style="background: rgba(112, 0, 255, 0.015);">
+        <span class="section-tag">// THE CREW</span>
+        <h2 class="section-title">Engineering <span>Elite</span></h2>
+        <div class="member-grid">
+            <div class="m-card" data-aos="fade-up" style="border: 1px solid var(--primary);">
+                <span class="m-role">Founder & Mentor</span>
+                <h3 class="m-name">Mr. Gbessi</h3>
+                <p class="m-bio">Physics teacher. Founded the club to bridge theory with hands-on industrial engineering.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="100" style="border: 1px solid var(--secondary);">
+                <span class="m-role">Project Manager / Lead Dev</span>
+                <h3 class="m-name">Sixte (Y11)</h3>
+                <p class="m-bio">Architect of the workflow. Leads programming, mechanical design, and system integration.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Mechanical Lead</span>
+                <h3 class="m-name">Mélanie (Y13)</h3>
+                <p class="m-bio">Drivetrain and manipulation engineer. Passionate about robot building and performance.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Structural Design</span>
+                <h3 class="m-name">Axel (Y10)</h3>
+                <p class="m-bio">Expert in robot building and design conception. Translates ideas into functional reality.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Logic loops Specialist</span>
+                <h3 class="m-name">Leopold (Y12)</h3>
+                <p class="m-bio">Bringing coding experience to refine robot behavior and strategic autonomous paths.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Hardware Lead</span>
+                <h3 class="m-name">Noelle (Y12)</h3>
+                <p class="m-bio">Mechanical engineer managing mechanical durability and component optimization.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Strategic DJ</span>
+                <h3 class="m-name">Leo (Y10)</h3>
+                <p class="m-bio">Strategic officer analyzing technological discovery and optimizing team social DJ presence.</p>
+            </div>
+            <div class="m-card" data-aos="fade-up">
+                <span class="m-role">Hardware Assembly</span>
+                <h3 class="m-name">Amira (Y11)</h3>
+                <p class="m-bio">Contributing to the assembly and technical development of the hardware systems.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="timeline">
+        <span class="section-tag">// PIPELINE</span>
+        <h2 class="section-title">Season <span>Roadmap</span></h2>
+        <div class="timeline-box">
+            <div class="time-point" data-aos="fade-left">
+                <span class="time-date">SEPTEMBER</span>
+                <p class="m-bio">Inventory, previous year review, and game manual analysis.</p>
+            </div>
+            <div class="time-point" data-aos="fade-left" data-aos-delay="100">
+                <span class="time-date">OCTOBER - NOVEMBER</span>
+                <p class="m-bio">Prototyping: selecting the ramp concept and building the chassis.</p>
+            </div>
+            <div class="time-point" data-aos="fade-left" data-aos-delay="200">
+                <span class="time-date">JANUARY - MARCH</span>
+                <p class="m-bio">Optimization: perfecting autonomous routines and the technical portfolio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
     <section id="contact">
-        <span class="section-tag">// CONTACT_SYSTEM</span>
-        <h2 class="section-title">Send a <span>Message</span></h2>
-        
-        <div class="m-card" style="max-width: 700px; margin: 0 auto;">
-            <form action="https://formspree.io" method="POST" class="contact-form">
-                <div style="display: flex; flex-direction: column;">
-                    <label>EMAIL ADDRESS</label>
-                    <input type="email" name="email" placeholder="robotics@example.com" required>
+        <span class="section-tag">// CONNECT</span>
+        <h2 class="section-title">Get in <span>Touch</span></h2>
+        <div class="contact-container">
+            <div class="form-box" data-aos="fade-right">
+                <form action="https://formspree.io" method="POST">
+                    <div class="input-grp"><label>IDENTIFIER</label><input type="text" name="name" placeholder="Name..." required></div>
+                    <div class="input-grp"><label>EMAIL</label><input type="email" name="email" placeholder="email@example.com" required></div>
+                    <div class="input-grp"><label>MESSAGE</label><textarea name="message" rows="5" placeholder="Your message..." required></textarea></div>
+                    <button type="submit" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+            <div style="height: 100%;" data-aos="fade-left">
+                <div style="border-radius:35px; overflow:hidden; border:1px solid var(--glass-border); height: 100%; min-height: 400px;">
+                    <iframe src="https://www.google.com" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
                 </div>
-                
-                <div style="display: flex; flex-direction: column;">
-                    <label>TRANSMISSION DATA</label>
-                    <textarea name="message" rows="5" placeholder="Enter your message here..." required></textarea>
-                </div>
-
-                <button type="submit" class="social-btn yt-btn" style="background: var(--primary); color: black; font-weight: 900; width: 100%; justify-content: center;">
-                    SEND REQUEST
-                </button>
-            </form>
+            </div>
         </div>
     </section>
 
+    <footer>
+        <a href="#" class="f-logo">LFCGteam<span> robotic</span></a>
+        <p style="color:var(--text-2);">© 2026 LFCGteam robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
+    </footer>
+
+    <script src="https://unpkg.com"></script>
     <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        });
+        AOS.init({ duration: 1200, once: true });
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let pts = [];
+        function initCanvas() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            pts = []; for(let i=0; i<100; i++) pts.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, sx:Math.random()-0.5, sy:Math.random()-0.5});
+        }
+        function draw() {
+            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = '#00f2ff';
+            pts.forEach(p => {
+                p.x+=p.sx; p.y+=p.sy; if(p.x<0||p.x>canvas.width) p.sx*=-1; if(p.y<0||p.y>canvas.height) p.sy*=-1;
+                ctx.fillRect(p.x, p.y, 2, 2);
+            }); requestAnimationFrame(draw);
+        }
+        initCanvas(); draw();
+        window.onscroll = () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); };
     </script>
 </body>
 </html>
