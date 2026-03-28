@@ -18,6 +18,9 @@
     --border:rgba(0,242,255,0.2);
 }
 
+/* BASE */
+html { scroll-behavior:smooth; }
+
 body {
     margin:0;
     background:var(--bg);
@@ -29,11 +32,29 @@ body {
 .hero {
     height:100vh;
     display:flex;
-    flex-direction:column;
     justify-content:center;
     align-items:center;
     text-align:center;
+    position:relative;
+    overflow:hidden;
     background: radial-gradient(circle,#0f112a,#010204);
+}
+
+/* glow effect */
+.hero::before {
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    background: radial-gradient(circle, rgba(0,242,255,0.15), transparent);
+    top:-200px;
+    right:-200px;
+    filter:blur(100px);
+}
+
+/* TEXT */
+.hero-content {
+    z-index:2;
 }
 
 .hero h1 {
@@ -57,7 +78,9 @@ body {
 /* SOCIAL */
 .socials {
     display:flex;
+    justify-content:center;
     gap:15px;
+    margin-top:20px;
 }
 
 .socials a {
@@ -69,10 +92,34 @@ body {
     display:flex;
     align-items:center;
     gap:10px;
+    transition:0.3s;
+}
+
+.socials a:hover {
+    transform:scale(1.05);
 }
 
 .yt { background:#ff0000; }
 .ig { background:linear-gradient(45deg,#f09433,#e1306c,#bc1888); }
+
+/* HERO IMAGE */
+.hero-img {
+    position:absolute;
+    right:40px;
+    bottom:40px;
+}
+
+.hero-img img {
+    width:260px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    box-shadow:0 0 30px rgba(0,242,255,0.2);
+    transition:0.4s;
+}
+
+.hero-img img:hover {
+    transform:scale(1.08) rotate(-2deg);
+}
 
 /* CONTAINER */
 .container {
@@ -102,19 +149,20 @@ h2 {
     padding:25px;
     border-radius:15px;
     transition:0.3s;
+    backdrop-filter:blur(10px);
 }
 
 .card:hover {
     border-color:var(--primary);
-    transform:translateY(-5px);
+    transform:translateY(-6px);
 }
 
 .card b { color:var(--primary); }
 
-/* LEADER */
+/* LEADERS */
 .leader {
     border:1px solid var(--secondary);
-    background:rgba(112,0,255,0.08);
+    background:rgba(112,0,255,0.1);
 }
 
 /* TECH */
@@ -125,24 +173,19 @@ h2 {
     border-radius:15px;
 }
 
-/* IMAGE */
-.robot-img {
-    margin-top:30px;
-    text-align:center;
-}
-
-.robot-img img {
-    width:100%;
-    max-width:500px;
-    border-radius:15px;
-    border:1px solid var(--border);
-}
-
 /* FOOTER */
 footer {
     text-align:center;
     padding:50px;
     color:#555;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .hero-img {
+        position:static;
+        margin-top:20px;
+    }
 }
 </style>
 </head>
@@ -151,103 +194,64 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-    <div class="subtitle">INNOVATION & TEAMWORK</div>
-    <h1>LFCG ROBOTICS</h1>
-    <div class="team-number">TEAM 27935 // FTC 2025-2026</div>
 
-    <div class="socials">
-        <a href="https://www.youtube.com/@LFCGteam" target="_blank" class="yt">
-            <i class="fab fa-youtube"></i> YouTube
-        </a>
-        <a href="https://www.instagram.com" target="_blank" class="ig">
-            <i class="fab fa-instagram"></i> Instagram
-        </a>
+    <div class="hero-content">
+        <div class="subtitle">INNOVATION & TEAMWORK</div>
+        <h1>LFCG ROBOTICS</h1>
+        <div class="team-number">TEAM 27935 // FTC 2025-2026</div>
+
+        <div class="socials">
+            <a href="https://www.youtube.com/@LFCGteam" target="_blank" class="yt">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="ig">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+        </div>
     </div>
+
+    <!-- IMAGE -->
+    <div class="hero-img">
+        <img src="https://first-resources-pdx-prod-uploads-cdn.ftclive.org/upload/6f38e49e-8cd2-46e2-8885-c872aee20eaa?Expires=1774783304&Signature=cJ9FwqYSfSpjAh8YVDBfbrGUR3MARrTEB8Gr39~W99-JKf--fcrTYTyfevsmLOEgyFKmtZVUQgsA~iiZJ7QY5lRDjGjBal8BkKTGSybo5DenT8vdgQwscfkGnYBBstMWWVZXgYkY1zG-1UILOmJjsGxmXq4unTZ3ceVi1edOm66OoUMjlCAK7JT3iC6C5Tz6MllhpX9OViAoZzo~TwlxNy3HXQaDUNxx0~DngUDb2SFCFRYDM238VfM9f9MMQn5MPHknAz06bKxfIgmcWqVG0gzlCKKfEobj0h--6V-VdGCUoGdAAJR3-uusMGQaJ2TR3~Jmapa5oq4qtL86tKDauw__&Key-Pair-Id=K213VYTK1JYMIA">
+    </div>
+
 </section>
 
 <div class="container">
 
-<!-- MISSION -->
-<section>
-    <h2>// OUR MISSION</h2>
-    <p style="text-align:center; max-width:800px; margin:auto; color:#aaa;">
-        Team 27935 is composed of students from Year 10 to Year 13.
-        After finishing 7th last season, our goal is to reach the podium
-        by building a reliable and high-performance robot.
-    </p>
-</section>
-
 <!-- LEADERSHIP -->
-<section style="margin-top:80px;">
+<section>
     <h2>// CORE LEADERSHIP</h2>
     <div class="grid">
-
         <div class="card leader">
-            <b>Mr Gbessi — Mentor & Founder</b>
-            <p>
-                Physics and Chemistry teacher, Mr Gbessi founded the robotics club
-                to give students real engineering experience. He guides the team
-                through technical challenges and competition strategy.
-            </p>
+            <b>Mr Gbessi — Mentor</b>
+            <p>Founder of the club, guiding the team through engineering challenges.</p>
         </div>
 
         <div class="card leader">
-            <b>Sixte — Project Manager & Lead Developer</b>
-            <p>
-                Sixte manages the entire project, ensuring deadlines are met and
-                all systems work together. He leads programming, contributes to
-                mechanical design and coordinates the team.
-            </p>
+            <b>Sixte — Project Manager</b>
+            <p>Leads development, programming and system integration.</p>
         </div>
-
     </div>
 </section>
 
 <!-- TEAM -->
 <section style="margin-top:80px;">
-    <h2>// OUR TEAM</h2>
+    <h2>// TEAM</h2>
     <div class="grid">
-
-        <div class="card"><b>Mélanie</b><p>Drivetrain & manipulation engineer.</p></div>
-        <div class="card"><b>Noelle</b><p>Mechanical engineer.</p></div>
-        <div class="card"><b>Leopold</b><p>Builder & ideas.</p></div>
-        <div class="card"><b>Amira</b><p>Hardware team.</p></div>
-        <div class="card"><b>Axel</b><p>Design & construction.</p></div>
-        <div class="card"><b>Leo</b><p>Strategy officer.</p></div>
-
-    </div>
-</section>
-
-<!-- ROBOT -->
-<section style="margin-top:80px;">
-    <h2>// OUR ROBOT</h2>
-
-    <div class="tech">
-        <p>
-            Our robot "Iggy" was designed to maximize efficiency and precision.
-            Its ramp system allows accurate shots and reliable performance.
-        </p>
-    </div>
-
-    <div class="robot-img">
-        <img src="https://first-resources-pdx-prod-uploads-cdn.ftclive.org/upload/6f38e49e-8cd2-46e2-8885-c872aee20eaa?Expires=1774783304&Signature=cJ9FwqYSfSpjAh8YVDBfbrGUR3MARrTEB8Gr39~W99-JKf--fcrTYTyfevsmLOEgyFKmtZVUQgsA~iiZJ7QY5lRDjGjBal8BkKTGSybo5DenT8vdgQwscfkGnYBBstMWWVZXgYkY1zG-1UILOmJjsGxmXq4unTZ3ceVi1edOm66OoUMjlCAK7JT3iC6C5Tz6MllhpX9OViAoZzo~TwlxNy3HXQaDUNxx0~DngUDb2SFCFRYDM238VfM9f9MMQn5MPHknAz06bKxfIgmcWqVG0gzlCKKfEobj0h--6V-VdGCUoGdAAJR3-uusMGQaJ2TR3~Jmapa5oq4qtL86tKDauw__&Key-Pair-Id=K213VYTK1JYMIA">
-    </div>
-</section>
-
-<!-- STRATEGY -->
-<section style="margin-top:80px;">
-    <h2>// STRATEGY</h2>
-    <div class="grid">
-        <div class="card"><b>Autonomous</b><p>Score 2 balls</p></div>
-        <div class="card"><b>Main Phase</b><p>Collect 15 balls</p></div>
-        <div class="card"><b>End Game</b><p>Position in scoring zone</p></div>
+        <div class="card"><b>Mélanie</b><p>Drivetrain engineer</p></div>
+        <div class="card"><b>Noelle</b><p>Mechanical engineer</p></div>
+        <div class="card"><b>Leopold</b><p>Builder</p></div>
+        <div class="card"><b>Amira</b><p>Hardware</p></div>
+        <div class="card"><b>Axel</b><p>Design</p></div>
+        <div class="card"><b>Leo</b><p>Strategy</p></div>
     </div>
 </section>
 
 </div>
 
 <footer>
-    LFCG ROBOTICS — TEAM 27935  
+    LFCG ROBOTICS — TEAM 27935
 </footer>
 
 </body>
