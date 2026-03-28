@@ -7,8 +7,6 @@
 <title>LFCG Robotics | Team 27935</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-<!-- ICONS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
@@ -19,8 +17,6 @@
     --card:rgba(255,255,255,0.05);
     --border:rgba(0,242,255,0.2);
 }
-
-html { scroll-behavior:smooth; }
 
 body {
     margin:0;
@@ -51,19 +47,17 @@ body {
 .subtitle {
     color:var(--primary);
     letter-spacing:3px;
-    margin-bottom:10px;
 }
 
 .team-number {
     color:#777;
-    margin-bottom:20px;
+    margin:10px 0 20px;
 }
 
 /* SOCIAL */
 .socials {
     display:flex;
     gap:15px;
-    margin-top:20px;
 }
 
 .socials a {
@@ -108,7 +102,6 @@ h2 {
     padding:25px;
     border-radius:15px;
     transition:0.3s;
-    backdrop-filter:blur(10px);
 }
 
 .card:hover {
@@ -118,7 +111,7 @@ h2 {
 
 .card b { color:var(--primary); }
 
-/* LEADERSHIP */
+/* LEADER */
 .leader {
     border:1px solid var(--secondary);
     background:rgba(112,0,255,0.08);
@@ -130,6 +123,19 @@ h2 {
     border-left:4px solid var(--secondary);
     padding:30px;
     border-radius:15px;
+}
+
+/* IMAGE */
+.robot-img {
+    margin-top:30px;
+    text-align:center;
+}
+
+.robot-img img {
+    width:100%;
+    max-width:500px;
+    border-radius:15px;
+    border:1px solid var(--border);
 }
 
 /* FOOTER */
@@ -166,8 +172,8 @@ footer {
     <h2>// OUR MISSION</h2>
     <p style="text-align:center; max-width:800px; margin:auto; color:#aaa;">
         Team 27935 is composed of students from Year 10 to Year 13.
-        After our first season, we aim to reach the podium by building a reliable,
-        innovative and efficient robot while strengthening our teamwork and technical skills.
+        After finishing 7th last season, our goal is to reach the podium
+        by building a reliable and high-performance robot.
     </p>
 </section>
 
@@ -179,18 +185,18 @@ footer {
         <div class="card leader">
             <b>Mr Gbessi — Mentor & Founder</b>
             <p>
-                Physics and Chemistry teacher, Mr Gbessi founded the robotics club to give students
-                a hands-on engineering experience. He supports the team technically and strategically,
-                helping us overcome challenges and continuously improve.
+                Physics and Chemistry teacher, Mr Gbessi founded the robotics club
+                to give students real engineering experience. He guides the team
+                through technical challenges and competition strategy.
             </p>
         </div>
 
         <div class="card leader">
             <b>Sixte — Project Manager & Lead Developer</b>
             <p>
-                Sixte manages the entire project, ensuring deadlines are respected and the robot
-                functions as a complete system. He leads programming, contributes to mechanical design,
-                and coordinates all technical aspects of the robot.
+                Sixte manages the entire project, ensuring deadlines are met and
+                all systems work together. He leads programming, contributes to
+                mechanical design and coordinates the team.
             </p>
         </div>
 
@@ -202,17 +208,12 @@ footer {
     <h2>// OUR TEAM</h2>
     <div class="grid">
 
-        <div class="card"><b>Mélanie</b><p>Drivetrain & manipulation engineer. Ensures mobility and precision.</p></div>
-
-        <div class="card"><b>Noelle</b><p>Mechanical engineer focused on structure and reliability.</p></div>
-
-        <div class="card"><b>Leopold</b><p>Builder and idea contributor with strong robotics background.</p></div>
-
-        <div class="card"><b>Amira</b><p>Hardware team member bringing new perspectives.</p></div>
-
-        <div class="card"><b>Axel</b><p>Design and construction, passionate about robotics.</p></div>
-
-        <div class="card"><b>Leo</b><p>Strategic officer analyzing performance and gameplay.</p></div>
+        <div class="card"><b>Mélanie</b><p>Drivetrain & manipulation engineer.</p></div>
+        <div class="card"><b>Noelle</b><p>Mechanical engineer.</p></div>
+        <div class="card"><b>Leopold</b><p>Builder & ideas.</p></div>
+        <div class="card"><b>Amira</b><p>Hardware team.</p></div>
+        <div class="card"><b>Axel</b><p>Design & construction.</p></div>
+        <div class="card"><b>Leo</b><p>Strategy officer.</p></div>
 
     </div>
 </section>
@@ -220,12 +221,16 @@ footer {
 <!-- ROBOT -->
 <section style="margin-top:80px;">
     <h2>// OUR ROBOT</h2>
+
     <div class="tech">
         <p>
             Our robot "Iggy" was designed to maximize efficiency and precision.
-            Its ramp system ensures controlled and accurate shooting, while its
-            structure allows fast and reliable gameplay.
+            Its ramp system allows accurate shots and reliable performance.
         </p>
+    </div>
+
+    <div class="robot-img">
+        <img src="https://first-resources-pdx-prod-uploads-cdn.ftclive.org/upload/6f38e49e-8cd2-46e2-8885-c872aee20eaa?Expires=1774783304&Signature=cJ9FwqYSfSpjAh8YVDBfbrGUR3MARrTEB8Gr39~W99-JKf--fcrTYTyfevsmLOEgyFKmtZVUQgsA~iiZJ7QY5lRDjGjBal8BkKTGSybo5DenT8vdgQwscfkGnYBBstMWWVZXgYkY1zG-1UILOmJjsGxmXq4unTZ3ceVi1edOm66OoUMjlCAK7JT3iC6C5Tz6MllhpX9OViAoZzo~TwlxNy3HXQaDUNxx0~DngUDb2SFCFRYDM238VfM9f9MMQn5MPHknAz06bKxfIgmcWqVG0gzlCKKfEobj0h--6V-VdGCUoGdAAJR3-uusMGQaJ2TR3~Jmapa5oq4qtL86tKDauw__&Key-Pair-Id=K213VYTK1JYMIA">
     </div>
 </section>
 
