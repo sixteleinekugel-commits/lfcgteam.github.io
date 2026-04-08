@@ -3,383 +3,775 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LFCGteam robotic | TEAM 27935</title>
-
-    <!-- 
-        ============================================================
-        EXTENDED ASSETS & FONTS
-        ============================================================
-    -->
+    <title>LFCGteam Robotic | TEAM 27935</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
-    <link href="https://unpkg.com" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* 
-           ============================================================
-           1. DESIGN SYSTEM VARIABLES
-           ============================================================
-        */
         :root {
-            --bg: #010204;
-            --primary: #00f2ff;
-            --primary-rgb: 0, 242, 255;
-            --secondary: #7000ff;
-            --accent: #ff5f56;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-1: #ffffff;
-            --text-2: #94a3b8;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --bg: #020408;
+            --bg2: #050b12;
+            --primary: #00e5ff;
+            --primary-dim: rgba(0, 229, 255, 0.15);
+            --secondary: #6c00ff;
+            --accent: #ff3c5a;
+            --gold: #f5c518;
+            --glass: rgba(255,255,255,0.03);
+            --glass-b: rgba(255,255,255,0.07);
+            --text-1: #f0f4ff;
+            --text-2: #7a8ba0;
             --font-tech: 'Orbitron', sans-serif;
-            --font-code: 'JetBrains Mono', monospace;
-            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --radius: 20px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;outline:none;}
+        html{scroll-behavior:smooth;overflow-x:hidden;}
+        body{background:var(--bg);color:var(--text-1);font-family:var(--font-body);line-height:1.7;overflow-x:hidden;}
+
+        /* ===================== SCROLLBAR ===================== */
+        ::-webkit-scrollbar{width:6px;}
+        ::-webkit-scrollbar-track{background:var(--bg);}
+        ::-webkit-scrollbar-thumb{background:linear-gradient(var(--secondary),var(--primary));border-radius:3px;}
+
+        /* ===================== BACKGROUND ===================== */
+        #particle-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+        .grid-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;
+            background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);
+            background-size:60px 60px;pointer-events:none;}
+
+        /* ===================== NAV ===================== */
+        nav{position:fixed;top:0;width:100%;padding:28px 8%;display:flex;justify-content:space-between;align-items:center;z-index:1000;transition:.5s var(--ease);}
+        nav.scrolled{background:rgba(2,4,8,0.92);backdrop-filter:blur(20px);padding:16px 8%;border-bottom:1px solid var(--glass-b);}
+        .logo{font-family:var(--font-tech);font-weight:900;font-size:1.4rem;color:#fff;text-decoration:none;letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+        .logo-icon{width:36px;height:36px;border:2px solid var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:.9rem;}
+        .logo span{color:var(--primary);}
+        .nav-links{display:flex;gap:30px;list-style:none;align-items:center;}
+        .nav-links a{text-decoration:none;color:var(--text-2);font-family:var(--font-tech);font-size:.68rem;letter-spacing:2.5px;font-weight:700;transition:.3s;text-transform:uppercase;}
+        .nav-links a:hover{color:var(--primary);}
+        .nav-cta{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)!important;padding:10px 22px;border-radius:8px;}
+        .nav-cta:hover{background:var(--primary)!important;color:#000!important;}
+
+        /* MOBILE MENU */
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
+        .hamburger span{width:24px;height:2px;background:var(--text-1);transition:.3s;border-radius:2px;}
+        .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+        .hamburger.open span:nth-child(2){opacity:0;}
+        .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+        .mobile-menu{display:none;position:fixed;top:0;right:-100%;width:75%;max-width:300px;height:100vh;background:rgba(5,11,18,0.98);backdrop-filter:blur(20px);border-left:1px solid var(--glass-b);z-index:999;flex-direction:column;padding:100px 40px;gap:30px;transition:.4s var(--ease);}
+        .mobile-menu.open{right:0;}
+        .mobile-menu a{text-decoration:none;color:var(--text-2);font-family:var(--font-tech);font-size:.85rem;letter-spacing:2px;transition:.3s;}
+        .mobile-menu a:hover{color:var(--primary);}
+        @media(max-width:900px){
+            .nav-links{display:none;}
+            .hamburger{display:flex;}
+            .mobile-menu{display:flex;}
         }
 
-        /* 
-           ============================================================
-           2. GLOBAL CORE STYLES
-           ============================================================
-        */
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        html { scroll-behavior: smooth; overflow-x: hidden; }
-        body {
-            background: var(--bg);
-            color: var(--text-1);
-            font-family: var(--font-main);
-            overflow-x: hidden;
-            line-height: 1.7;
+        /* ===================== HERO ===================== */
+        .hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 8%;position:relative;overflow:hidden;}
+        .hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,transparent 70%);pointer-events:none;}
+        .hero-inner{z-index:10;max-width:1000px;}
+        .hero-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 26px;border-radius:50px;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.3);color:var(--primary);font-family:var(--font-mono);font-size:.7rem;margin-bottom:40px;letter-spacing:3px;}
+        .badge-dot{width:6px;height:6px;background:var(--primary);border-radius:50%;animation:pulse 2s infinite;}
+        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,229,255,.4)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
+        .hero h1{font-family:var(--font-tech);font-size:clamp(2.8rem,9vw,7rem);font-weight:900;line-height:.88;margin-bottom:30px;color:#fff;letter-spacing:-3px;}
+        .hero h1 .line-glow{color:var(--primary);text-shadow:0 0 40px rgba(0,229,255,.4);}
+        .hero-sub{font-size:1.1rem;color:var(--text-2);max-width:700px;margin:0 auto 50px;font-weight:300;}
+        .btn-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+        .btn{padding:15px 35px;border-radius:12px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:.4s var(--ease);font-family:var(--font-tech);font-size:.78rem;letter-spacing:1.5px;}
+        .btn-yt{background:#ff0000;color:#fff;box-shadow:0 8px 30px rgba(255,0,0,.25);}
+        .btn-ig{background:linear-gradient(45deg,#f09433,#e1306c,#bc1888);color:#fff;box-shadow:0 8px 30px rgba(225,48,108,.25);}
+        .btn-outline{background:transparent;color:var(--primary);border:1px solid var(--primary);}
+        .btn:hover{transform:translateY(-5px) scale(1.04);filter:brightness(1.15);}
+
+        /* SCROLL INDICATOR */
+        .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.5;animation:scrollBounce 2s infinite;}
+        @keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+        .scroll-hint span{font-size:.65rem;letter-spacing:3px;font-family:var(--font-mono);color:var(--text-2);}
+        .scroll-hint i{color:var(--primary);font-size:.8rem;}
+
+        /* ===================== STATS ===================== */
+        .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--glass-b);border-top:1px solid var(--glass-b);border-bottom:1px solid var(--glass-b);}
+        .stat-card{padding:50px 40px;text-align:center;background:var(--bg);transition:.4s;}
+        .stat-card:hover{background:var(--bg2);}
+        .stat-num{font-family:var(--font-tech);font-size:2.8rem;font-weight:900;color:var(--primary);display:block;line-height:1;}
+        .stat-label{font-size:.68rem;text-transform:uppercase;color:var(--text-2);letter-spacing:3px;margin-top:10px;display:block;font-family:var(--font-mono);}
+        .stat-sub{font-size:.75rem;color:var(--text-2);margin-top:5px;}
+
+        /* ===================== SECTIONS ===================== */
+        section{padding:120px 8%;position:relative;}
+        .section-tag{color:var(--primary);font-family:var(--font-mono);font-size:.72rem;letter-spacing:4px;display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+        .section-tag::after{content:'';flex:1;max-width:80px;height:1px;background:var(--primary);opacity:.4;}
+        .section-title{font-family:var(--font-tech);font-size:clamp(2rem,4.5vw,3.5rem);margin-bottom:70px;font-weight:900;letter-spacing:-1px;}
+        .section-title .accent{color:var(--primary);}
+
+        /* ===================== ABOUT / ROBOT TAB ===================== */
+        .tab-nav{display:flex;gap:4px;margin-bottom:50px;background:var(--glass);border:1px solid var(--glass-b);border-radius:12px;padding:5px;width:fit-content;}
+        .tab-btn{padding:12px 28px;border:none;background:transparent;color:var(--text-2);font-family:var(--font-tech);font-size:.68rem;letter-spacing:2px;cursor:pointer;border-radius:9px;transition:.3s;}
+        .tab-btn.active{background:var(--primary);color:#000;font-weight:700;}
+        .tab-panel{display:none;}
+        .tab-panel.active{display:block;animation:fadeIn .4s ease;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+        .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}
+        .spec-card{background:var(--glass);border:1px solid var(--glass-b);padding:40px;border-radius:var(--radius);transition:.5s var(--ease);position:relative;overflow:hidden;}
+        .spec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--secondary));transform:scaleX(0);transform-origin:left;transition:.4s;}
+        .spec-card:hover::before{transform:scaleX(1);}
+        .spec-card:hover{border-color:rgba(0,229,255,.3);transform:translateY(-8px);}
+        .spec-icon{width:50px;height:50px;border-radius:12px;background:var(--primary-dim);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.3rem;margin-bottom:25px;}
+        .spec-title{font-family:var(--font-tech);font-size:.85rem;color:var(--primary);letter-spacing:2px;margin-bottom:12px;}
+        .spec-body{color:var(--text-2);font-size:.92rem;line-height:1.8;}
+        .spec-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+        .tag{background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.2);color:var(--primary);font-size:.65rem;font-family:var(--font-mono);padding:4px 12px;border-radius:50px;letter-spacing:1px;}
+
+        /* ===================== ROBOT 3D VIEW ===================== */
+        .robot-showcase{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
+        @media(max-width:900px){.robot-showcase{grid-template-columns:1fr;}}
+        .robot-visual{position:relative;border-radius:25px;overflow:hidden;background:var(--bg2);border:1px solid var(--glass-b);aspect-ratio:1;display:flex;align-items:center;justify-content:center;}
+        .robot-placeholder{text-align:center;padding:40px;}
+        .robot-placeholder i{font-size:5rem;color:var(--primary);opacity:.3;margin-bottom:20px;display:block;}
+        .robot-placeholder p{color:var(--text-2);font-size:.85rem;font-family:var(--font-mono);}
+        .robot-stats{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+        .r-stat{background:var(--glass);border:1px solid var(--glass-b);padding:20px;border-radius:14px;}
+        .r-stat-val{font-family:var(--font-tech);font-size:1.4rem;color:var(--primary);display:block;}
+        .r-stat-lbl{font-size:.7rem;color:var(--text-2);font-family:var(--font-mono);letter-spacing:2px;margin-top:4px;}
+
+        /* ===================== PROGRESS BARS ===================== */
+        .progress-section{margin-top:30px;}
+        .progress-item{margin-bottom:22px;}
+        .progress-header{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.78rem;}
+        .progress-name{font-family:var(--font-mono);color:var(--text-2);}
+        .progress-val{font-family:var(--font-tech);color:var(--primary);}
+        .progress-bar{height:4px;background:var(--glass-b);border-radius:4px;overflow:hidden;}
+        .progress-fill{height:100%;background:linear-gradient(90deg,var(--secondary),var(--primary));border-radius:4px;width:0;transition:width 1.5s var(--ease);}
+
+        /* ===================== TEAM ===================== */
+        .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:25px;}
+        .m-card{background:var(--glass);border:1px solid var(--glass-b);padding:40px;border-radius:var(--radius);transition:.5s var(--ease);position:relative;overflow:hidden;}
+        .m-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(108,0,255,.1),transparent 60%);opacity:0;transition:.4s;}
+        .m-card:hover{border-color:rgba(108,0,255,.4);transform:translateY(-10px);}
+        .m-card:hover::after{opacity:1;}
+        .m-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),var(--primary));display:flex;align-items:center;justify-content:center;font-family:var(--font-tech);font-weight:900;font-size:1.2rem;color:#fff;margin-bottom:22px;position:relative;}
+        .m-badge{position:absolute;bottom:-4px;right:-4px;width:22px;height:22px;border-radius:50%;border:2px solid var(--bg);background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#000;}
+        .m-role{color:var(--primary);font-family:var(--font-mono);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:block;}
+        .m-name{font-size:1.5rem;font-weight:700;margin-bottom:14px;color:var(--text-1);}
+        .m-bio{color:var(--text-2);font-size:.88rem;line-height:1.8;}
+        .m-card.highlight-primary{border-color:rgba(0,229,255,.5);}
+        .m-card.highlight-secondary{border-color:rgba(108,0,255,.5);}
+        .m-skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+        .m-skill{background:rgba(255,255,255,.04);color:var(--text-2);font-size:.62rem;font-family:var(--font-mono);padding:3px 10px;border-radius:50px;border:1px solid var(--glass-b);}
+
+        /* ===================== TIMELINE ===================== */
+        .timeline-wrap{max-width:900px;margin:auto;position:relative;padding:20px 0;}
+        .tl-line{position:absolute;left:24px;top:0;bottom:0;width:2px;background:linear-gradient(transparent,var(--primary) 20%,var(--secondary) 80%,transparent);}
+        .tl-item{margin-left:70px;margin-bottom:35px;position:relative;}
+        .tl-item::before{content:'';position:absolute;left:-56px;top:22px;width:18px;height:18px;border-radius:50%;border:3px solid var(--primary);background:var(--bg);box-shadow:0 0 0 4px rgba(0,229,255,.1);}
+        .tl-item.done::before{background:var(--primary);}
+        .tl-card{background:var(--glass);border:1px solid var(--glass-b);padding:35px 40px;border-radius:var(--radius);transition:.4s var(--ease);}
+        .tl-card:hover{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.03);}
+        .tl-date{font-family:var(--font-tech);color:var(--primary);font-size:.75rem;letter-spacing:3px;margin-bottom:8px;display:block;}
+        .tl-title{font-size:1.1rem;font-weight:600;margin-bottom:10px;color:var(--text-1);}
+        .tl-desc{color:var(--text-2);font-size:.9rem;line-height:1.8;}
+        .tl-status{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:.68rem;font-family:var(--font-mono);padding:4px 12px;border-radius:50px;}
+        .status-done{background:rgba(0,229,255,.1);color:var(--primary);border:1px solid rgba(0,229,255,.3);}
+        .status-active{background:rgba(245,197,24,.1);color:var(--gold);border:1px solid rgba(245,197,24,.3);}
+        .status-coming{background:rgba(255,255,255,.04);color:var(--text-2);border:1px solid var(--glass-b);}
+
+        /* ===================== GALLERY ===================== */
+        .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:15px;}
+        .gallery-item{border-radius:15px;overflow:hidden;background:var(--bg2);border:1px solid var(--glass-b);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;transition:.4s;position:relative;cursor:pointer;}
+        .gallery-item:first-child{grid-column:span 2;}
+        .gallery-item:hover{border-color:rgba(0,229,255,.3);transform:scale(1.02);}
+        .gallery-placeholder{text-align:center;}
+        .gallery-placeholder i{font-size:2rem;color:var(--primary);opacity:.2;display:block;margin-bottom:10px;}
+        .gallery-placeholder p{font-size:.7rem;color:var(--text-2);font-family:var(--font-mono);}
+        .gallery-overlay{position:absolute;inset:0;background:rgba(0,229,255,.05);opacity:0;transition:.3s;display:flex;align-items:center;justify-content:center;}
+        .gallery-item:hover .gallery-overlay{opacity:1;}
+        .gallery-overlay i{color:var(--primary);font-size:2rem;}
+
+        /* ===================== COUNTER ANIMATION ===================== */
+        .counter-num{display:inline-block;}
+
+        /* ===================== CONTACT ===================== */
+        .contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:50px;align-items:start;}
+        @media(max-width:1000px){.contact-wrap{grid-template-columns:1fr;}}
+        .contact-info{display:flex;flex-direction:column;gap:20px;}
+        .contact-block{background:var(--glass);border:1px solid var(--glass-b);padding:30px;border-radius:16px;display:flex;align-items:center;gap:20px;transition:.3s;}
+        .contact-block:hover{border-color:rgba(0,229,255,.3);}
+        .contact-icon{width:48px;height:48px;border-radius:12px;background:var(--primary-dim);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.1rem;flex-shrink:0;}
+        .contact-detail h4{font-size:.75rem;font-family:var(--font-mono);color:var(--text-2);letter-spacing:2px;margin-bottom:4px;}
+        .contact-detail p{color:var(--text-1);font-size:.95rem;}
+        .form-box{background:var(--glass);border:1px solid var(--glass-b);padding:50px;border-radius:25px;}
+        .input-grp{margin-bottom:22px;}
+        .input-grp label{display:block;font-family:var(--font-mono);font-size:.65rem;color:var(--primary);margin-bottom:10px;letter-spacing:2px;}
+        .input-grp input,.input-grp textarea{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--glass-b);border-radius:10px;color:var(--text-1);font-family:var(--font-body);font-size:.95rem;transition:.3s;}
+        .input-grp input:focus,.input-grp textarea:focus{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.03);}
+        .input-grp textarea{resize:vertical;min-height:130px;}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+        @media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+        .submit-btn{width:100%;padding:18px;background:var(--primary);color:#000;border:none;border-radius:10px;font-family:var(--font-tech);font-weight:900;font-size:.85rem;cursor:pointer;transition:.3s var(--ease);letter-spacing:2px;display:flex;align-items:center;justify-content:center;gap:10px;}
+        .submit-btn:hover{box-shadow:0 0 30px rgba(0,229,255,.3);transform:translateY(-3px);}
+        .form-success{display:none;padding:20px;border-radius:10px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);color:var(--primary);font-family:var(--font-mono);font-size:.8rem;text-align:center;margin-top:20px;}
+
+        /* ===================== FOOTER ===================== */
+        footer{padding:80px 8% 40px;border-top:1px solid var(--glass-b);}
+        .footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px;margin-bottom:60px;}
+        @media(max-width:800px){.footer-inner{grid-template-columns:1fr;gap:40px;}}
+        .footer-brand p{color:var(--text-2);font-size:.9rem;margin-top:15px;max-width:280px;line-height:1.7;}
+        .footer-col h4{font-family:var(--font-tech);font-size:.7rem;letter-spacing:3px;color:var(--primary);margin-bottom:20px;}
+        .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+        .footer-col ul a{text-decoration:none;color:var(--text-2);font-size:.88rem;transition:.3s;}
+        .footer-col ul a:hover{color:var(--primary);}
+        .footer-bottom{border-top:1px solid var(--glass-b);padding-top:30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;}
+        .footer-bottom p{color:var(--text-2);font-size:.78rem;font-family:var(--font-mono);}
+        .social-links{display:flex;gap:12px;}
+        .social-link{width:38px;height:38px;border-radius:9px;background:var(--glass);border:1px solid var(--glass-b);display:flex;align-items:center;justify-content:center;color:var(--text-2);text-decoration:none;transition:.3s;}
+        .social-link:hover{border-color:var(--primary);color:var(--primary);}
+
+        /* ===================== RESPONSIVE ===================== */
+        @media(max-width:700px){
+            section{padding:80px 6%;}
+            .gallery-grid{grid-template-columns:1fr 1fr;}
+            .gallery-item:first-child{grid-column:span 2;}
+            .stats-bar{grid-template-columns:1fr 1fr;}
         }
 
-        #particle-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.4;
-        }
-
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(var(--secondary), var(--primary)); 
-            border-radius: 5px;
-        }
-
-        /* 
-           ============================================================
-           3. NAVIGATION
-           ============================================================
-        */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 30px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; transition: 0.6s var(--ease);
-        }
-        nav.scrolled {
-            background: rgba(1, 2, 4, 0.95);
-            backdrop-filter: blur(25px);
-            padding: 15px 8%;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        .logo { 
-            font-family: var(--font-tech); font-weight: 900; font-size: 1.7rem; 
-            color: #fff; text-decoration: none; letter-spacing: 1px;
-        }
-        .logo span { color: var(--primary); }
-        
-        .nav-links { display: flex; gap: 35px; list-style: none; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-2); font-family: var(--font-tech);
-            font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s;
-        }
-        .nav-links a:hover { color: var(--primary); }
-
-        /* 
-           ============================================================
-           4. HERO SECTION
-           ============================================================
-        */
-        .hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 0 10%; position: relative;
-        }
-        .hero-inner { z-index: 10; max-width: 1100px; }
-        .hero-badge {
-            display: inline-block; padding: 12px 30px; border-radius: 50px;
-            background: rgba(var(--primary-rgb), 0.1); border: 1px solid var(--primary);
-            color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem;
-            margin-bottom: 40px; letter-spacing: 4px;
-        }
-        .hero h1 {
-            font-family: var(--font-tech); font-size: clamp(3rem, 10vw, 7.5rem);
-            font-weight: 900; line-height: 0.85; margin-bottom: 40px;
-            background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -4px;
-        }
-
-        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        .social-btn {
-            padding: 18px 40px; border-radius: 12px; font-weight: bold;
-            text-decoration: none; color: white; display: flex; align-items: center; gap: 12px;
-            transition: 0.4s var(--ease); font-family: var(--font-tech); font-size: 0.85rem;
-        }
-        .yt-btn { background: #ff0000; box-shadow: 0 8px 25px rgba(255,0,0,0.3); }
-        .ig-btn { background: linear-gradient(45deg,#f09433,#e1306c,#bc1888); box-shadow: 0 8px 25px rgba(225,48,108,0.3); }
-        .social-btn:hover { transform: translateY(-7px) scale(1.05); }
-
-        /* 
-           ============================================================
-           5. TELEMETRY BAR
-           ============================================================
-        */
-        .telemetry {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px; padding: 70px 10%; background: rgba(0, 242, 255, 0.02);
-            border-top: 1px solid var(--glass-border);
-        }
-        .stat-card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 45px; border-radius: 25px; text-align: center;
-        }
-        .stat-num { font-family: var(--font-tech); font-size: 3.2rem; color: var(--primary); display: block; }
-        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-2); letter-spacing: 3px; }
-
-        /* 
-           ============================================================
-           6. SECTIONS COMMON
-           ============================================================
-        */
-        section { padding: 140px 10%; position: relative; }
-        .section-tag { color: var(--secondary); font-family: var(--font-tech); font-size: 0.85rem; letter-spacing: 5px; display: block; margin-bottom: 25px; }
-        .section-title { font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 80px; }
-        .section-title span { color: var(--primary); }
-
-        /* 
-           ============================================================
-           7. TEAM CARDS
-           ============================================================
-        */
-        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
-        .m-card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 50px; border-radius: 35px; transition: 0.5s var(--ease);
-        }
-        .m-card:hover { border-color: var(--secondary); transform: translateY(-15px); background: rgba(112, 0, 255, 0.05); }
-        .m-role { color: var(--primary); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        .m-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
-        .m-bio { color: var(--text-2); font-size: 0.95rem; line-height: 1.8; font-weight: 300; }
-
-        /* 
-           ============================================================
-           8. TIMELINE / ROADMAP
-           ============================================================
-        */
-        .timeline-box { position: relative; max-width: 1000px; margin: auto; padding: 40px 0; }
-        .timeline-box::before {
-            content: ''; position: absolute; left: 30px; top: 0; width: 2px; height: 100%;
-            background: linear-gradient(transparent, var(--primary), transparent);
-        }
-        .time-point { 
-            padding: 40px; background: var(--glass); border-radius: 25px; 
-            margin-left: 80px; position: relative; border: 1px solid var(--glass-border); 
-            margin-bottom: 40px; transition: 0.4s;
-        }
-        .time-point::before { 
-            content: ''; position: absolute; left: -61px; top: 50px; 
-            width: 22px; height: 22px; background: var(--bg); 
-            border: 4px solid var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); 
-        }
-        .time-date { font-family: var(--font-tech); color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
-
-        /* 
-           ============================================================
-           9. CONTACT FORM (GMAIL)
-           ============================================================
-        */
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: flex-start; }
-        @media (max-width: 1000px) { .contact-container { grid-template-columns: 1fr; } }
-
-        .form-box { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; padding: 50px; }
-        .input-grp { margin-bottom: 25px; }
-        .input-grp label { display: block; font-family: var(--font-tech); font-size: 0.7rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
-        .input-grp input, .input-grp textarea { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; font-family: var(--font-main); }
-        .submit-btn { width: 100%; padding: 20px; background: var(--primary); color: #000; border: none; border-radius: 10px; font-family: var(--font-tech); font-weight: 900; cursor: pointer; transition: 0.3s; letter-spacing: 2px; }
-        .submit-btn:hover { box-shadow: 0 0 20px var(--primary); transform: translateY(-3px); }
-
-        footer { padding: 100px 10% 50px; border-top: 1px solid var(--glass-border); text-align: center; }
+        /* ===================== REVEAL ===================== */
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+        .reveal.visible{opacity:1;transform:none;}
+        .reveal-delay-1{transition-delay:.1s;}
+        .reveal-delay-2{transition-delay:.2s;}
+        .reveal-delay-3{transition-delay:.3s;}
+        .reveal-delay-4{transition-delay:.4s;}
     </style>
 </head>
 <body>
 
-    <canvas id="particle-canvas"></canvas>
+<div class="grid-overlay"></div>
+<canvas id="particle-canvas"></canvas>
 
-    <!-- NAVIGATION -->
-    <nav id="navbar">
-        <a href="#" class="logo">LFCGteam<span> robotic</span></a>
-        <ul class="nav-links">
-            <li><a href="#about">Specs</a></li>
-            <li><a href="#team">Engineers</a></li>
-            <li><a href="#timeline">Season</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">Specs</a>
+    <a href="#team">Team</a>
+    <a href="#timeline">Season</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+</div>
 
-    <!-- HERO -->
-    <section class="hero" id="home">
-        <div class="hero-inner" data-aos="zoom-out">
-            <span class="hero-badge">LONDON // TEAM 27935 // 2025-2026</span>
-            <h1>CODING <br><span>THE FUTURE</span></h1>
-            <p style="font-size: 1.4rem; color: var(--text-2); margin-bottom: 50px; max-width: 850px; margin-inline: auto;">
-                Welcome to the LFCGteam robotic official hub. Engineering the next generation of autonomous precision at Lycée Français Charles de Gaulle.
-            </p>
-            <div class="btn-group">
-                <a href="https://www.youtube.com" target="_blank" class="social-btn yt-btn"><i class="fab fa-youtube"></i> YouTube</a>
-                <a href="https://www.instagram.com" target="_blank" class="social-btn ig-btn"><i class="fab fa-instagram"></i> Instagram</a>
-            </div>
+<!-- NAV -->
+<nav id="navbar">
+    <a href="#home" class="logo">
+        <div class="logo-icon"><i class="fas fa-robot"></i></div>
+        LFCG<span>team</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#about">Specs</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#timeline">Season</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-inner">
+        <div class="hero-badge"><span class="badge-dot"></span>LONDON // LYCÉE FRANÇAIS CDG // TEAM 27935</div>
+        <h1>CODING<br><span class="line-glow">THE FUTURE</span></h1>
+        <p class="hero-sub">Engineering the next generation of autonomous robots at Lycée Français Charles de Gaulle. Building precision. Building tomorrow.</p>
+        <div class="btn-group">
+            <a href="https://www.youtube.com" target="_blank" class="btn btn-yt"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="https://www.instagram.com" target="_blank" class="btn btn-ig"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#about" class="btn btn-outline"><i class="fas fa-arrow-down"></i> Discover</a>
         </div>
-    </section>
+    </div>
+    <div class="scroll-hint"><span>SCROLL</span><i class="fas fa-chevron-down"></i></div>
+</section>
 
-    <!-- TELEMETRY -->
-    <div class="telemetry">
-        <div class="stat-card" data-aos="fade-up"><span class="stat-num">27935</span><span class="stat-label">Team ID</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="100"><span class="stat-num">95%</span><span class="stat-label">Shot Accuracy</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><span class="stat-num">02</span><span class="stat-label">Season</span></div>
-        <div class="stat-card" data-aos="fade-up" data-aos-delay="300"><span class="stat-num">PODIUM</span><span class="stat-label">Goal</span></div>
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat-card reveal">
+        <span class="stat-num" data-target="27935">0</span>
+        <span class="stat-label">Team Number</span>
+    </div>
+    <div class="stat-card reveal reveal-delay-1">
+        <span class="stat-num" data-target="95" data-suffix="%">0%</span>
+        <span class="stat-label">Shot Accuracy</span>
+    </div>
+    <div class="stat-card reveal reveal-delay-2">
+        <span class="stat-num" data-target="2">0</span>
+        <span class="stat-label">Season</span>
+        <span class="stat-sub">2025 — 2026</span>
+    </div>
+    <div class="stat-card reveal reveal-delay-3">
+        <span class="stat-num" style="font-size:1.8rem;">PODIUM</span>
+        <span class="stat-label">Season Goal</span>
+    </div>
+    <div class="stat-card reveal reveal-delay-4">
+        <span class="stat-num" data-target="8">0</span>
+        <span class="stat-label">Team Members</span>
+    </div>
+</div>
+
+<!-- ABOUT / SPECS -->
+<section id="about">
+    <div class="section-tag">// ARCHITECTURE</div>
+    <h2 class="section-title">Technical <span class="accent">Specs</span></h2>
+
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('systems')">SYSTEMS</button>
+        <button class="tab-btn" onclick="switchTab('robot')">ROBOT DATA</button>
+        <button class="tab-btn" onclick="switchTab('software')">SOFTWARE</button>
     </div>
 
-    <!-- SPECS -->
-    <section id="about">
-        <span class="section-tag">// ARCHITECTURE</span>
-        <h2 class="section-title">Technical <span>Specs</span></h2>
-        <div class="member-grid">
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Neural Software</span>
-                <p class="m-bio">Advanced Java loops using PID algorithms and OpenCV vision processing for zero-fault autonomous execution.</p>
+    <div id="tab-systems" class="tab-panel active">
+        <div class="specs-grid">
+            <div class="spec-card reveal">
+                <div class="spec-icon"><i class="fas fa-brain"></i></div>
+                <div class="spec-title">Neural Software</div>
+                <p class="spec-body">Advanced Java control loops using PID algorithms and OpenCV vision processing for zero-fault autonomous execution.</p>
+                <div class="spec-tags"><span class="tag">JAVA</span><span class="tag">PID</span><span class="tag">OpenCV</span><span class="tag">Autonomous</span></div>
             </div>
-            <div class="m-card" data-aos="fade-up" data-aos-delay="100">
-                <span class="m-role">Mechanical Build</span>
-                <p class="m-bio">Custom alloy chassis featuring a 15-degree precision ramp propulsion system designed for high-velocity cycles.</p>
+            <div class="spec-card reveal reveal-delay-1">
+                <div class="spec-icon"><i class="fas fa-cogs"></i></div>
+                <div class="spec-title">Mechanical Build</div>
+                <p class="spec-body">Custom alloy chassis with a 15° precision ramp propulsion system engineered for high-velocity scoring cycles.</p>
+                <div class="spec-tags"><span class="tag">Alloy Frame</span><span class="tag">15° Ramp</span><span class="tag">Mecanum</span></div>
             </div>
-            <div class="m-card" data-aos="fade-up" data-aos-delay="200">
-                <span class="m-role">Power Systems</span>
-                <p class="m-bio">Integrated 12V high-output network optimized for Mecanum wheel torque and battery endurance.</p>
+            <div class="spec-card reveal reveal-delay-2">
+                <div class="spec-icon"><i class="fas fa-bolt"></i></div>
+                <div class="spec-title">Power Systems</div>
+                <p class="spec-body">Integrated 12V high-output network optimized for Mecanum wheel torque, speed control, and battery endurance.</p>
+                <div class="spec-tags"><span class="tag">12V</span><span class="tag">Torque Optimized</span><span class="tag">High Endurance</span></div>
             </div>
-        </div>
-    </section>
-
-    <!-- TEAM (FULL MEMBERS) -->
-    <section id="team" style="background: rgba(112, 0, 255, 0.015);">
-        <span class="section-tag">// THE CREW</span>
-        <h2 class="section-title">Engineering <span>Elite</span></h2>
-        <div class="member-grid">
-            <div class="m-card" data-aos="fade-up" style="border: 1px solid var(--primary);">
-                <span class="m-role">Founder & Mentor</span>
-                <h3 class="m-name">Mr. Gbessi</h3>
-                <p class="m-bio">Physics teacher. Founded the club to bridge theory with hands-on industrial engineering.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up" data-aos-delay="100" style="border: 1px solid var(--secondary);">
-                <span class="m-role">Project Manager / Lead Dev</span>
-                <h3 class="m-name">Sixte (Y11)</h3>
-                <p class="m-bio">Architect of the workflow. Leads programming, mechanical design, and system integration.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Mechanical Lead</span>
-                <h3 class="m-name">Mélanie (Y13)</h3>
-                <p class="m-bio">Drivetrain and manipulation engineer. Passionate about robot building and performance.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Structural Design</span>
-                <h3 class="m-name">Axel (Y10)</h3>
-                <p class="m-bio">Expert in robot building and design conception. Translates ideas into functional reality.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Logic loops Specialist</span>
-                <h3 class="m-name">Leopold (Y12)</h3>
-                <p class="m-bio">Bringing coding experience to refine robot behavior and strategic autonomous paths.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Hardware Lead</span>
-                <h3 class="m-name">Noelle (Y12)</h3>
-                <p class="m-bio">Mechanical engineer managing mechanical durability and component optimization.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Strategic DJ</span>
-                <h3 class="m-name">Leo (Y10)</h3>
-                <p class="m-bio">Strategic officer analyzing technological discovery and optimizing team social DJ presence.</p>
-            </div>
-            <div class="m-card" data-aos="fade-up">
-                <span class="m-role">Hardware Assembly</span>
-                <h3 class="m-name">Amira (Y11)</h3>
-                <p class="m-bio">Contributing to the assembly and technical development of the hardware systems.</p>
+            <div class="spec-card reveal reveal-delay-3">
+                <div class="spec-icon"><i class="fas fa-eye"></i></div>
+                <div class="spec-title">Vision & Sensing</div>
+                <p class="spec-body">Multi-camera setup with real-time image processing for object detection, target alignment, and field navigation.</p>
+                <div class="spec-tags"><span class="tag">Camera</span><span class="tag">IMU</span><span class="tag">Odometry</span></div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- ROADMAP -->
-    <section id="timeline">
-        <span class="section-tag">// PIPELINE</span>
-        <h2 class="section-title">Season <span>Roadmap</span></h2>
-        <div class="timeline-box">
-            <div class="time-point" data-aos="fade-left">
-                <span class="time-date">SEPTEMBER</span>
-                <p class="m-bio">Inventory, previous year review, and game manual analysis.</p>
+    <div id="tab-robot" class="tab-panel">
+        <div class="robot-showcase">
+            <div class="robot-visual">
+                <div class="robot-placeholder">
+                    <i class="fas fa-robot"></i>
+                    <p>[ Robot Photo Coming Soon ]</p>
+                    <p style="margin-top:8px;opacity:.5;">Upload your robot image here</p>
+                </div>
             </div>
-            <div class="time-point" data-aos="fade-left" data-aos-delay="100">
-                <span class="time-date">OCTOBER - NOVEMBER</span>
-                <p class="m-bio">Prototyping: selecting the ramp concept and building the chassis.</p>
-            </div>
-            <div class="time-point" data-aos="fade-left" data-aos-delay="200">
-                <span class="time-date">JANUARY - MARCH</span>
-                <p class="m-bio">Optimization: perfecting autonomous routines and the technical portfolio.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-        <span class="section-tag">// CONNECT</span>
-        <h2 class="section-title">Get in <span>Touch</span></h2>
-        <div class="contact-container">
-            <div class="form-box" data-aos="fade-right">
-                <form action="https://formspree.io" method="POST">
-                    <div class="input-grp"><label>IDENTIFIER</label><input type="text" name="name" placeholder="Name..." required></div>
-                    <div class="input-grp"><label>EMAIL</label><input type="email" name="email" placeholder="email@example.com" required></div>
-                    <div class="input-grp"><label>MESSAGE</label><textarea name="message" rows="5" placeholder="Your message..." required></textarea></div>
-                    <button type="submit" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></button>
-                </form>
-            </div>
-            <div style="height: 100%;" data-aos="fade-left">
-                <div style="border-radius:35px; overflow:hidden; border:1px solid var(--glass-border); height: 100%; min-height: 400px;">
-                    <iframe src="https://www.google.com" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
+            <div>
+                <div class="robot-stats">
+                    <div class="r-stat reveal"><span class="r-stat-val">15°</span><span class="r-stat-lbl">Ramp Angle</span></div>
+                    <div class="r-stat reveal reveal-delay-1"><span class="r-stat-val">12V</span><span class="r-stat-lbl">Power</span></div>
+                    <div class="r-stat reveal reveal-delay-2"><span class="r-stat-val">4×</span><span class="r-stat-lbl">Mecanum Wheels</span></div>
+                    <div class="r-stat reveal reveal-delay-3"><span class="r-stat-val">30fps</span><span class="r-stat-lbl">Vision Rate</span></div>
+                </div>
+                <div class="progress-section">
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-name">Autonomous accuracy</span><span class="progress-val">95%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-name">Mechanical reliability</span><span class="progress-val">88%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="88"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-name">Software stability</span><span class="progress-val">92%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="92"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-name">Driver control speed</span><span class="progress-val">79%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="79"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer>
-        <a href="#" class="f-logo">LFCGteam<span> robotic</span></a>
-        <p style="color:var(--text-2);">© 2026 LFCGteam robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
-    </footer>
+    <div id="tab-software" class="tab-panel">
+        <div class="specs-grid">
+            <div class="spec-card reveal">
+                <div class="spec-icon"><i class="fab fa-java"></i></div>
+                <div class="spec-title">Java / FTC SDK</div>
+                <p class="spec-body">All robot logic written in Java using the official FTC SDK. Clean, modular architecture for easy debugging and team collaboration.</p>
+                <div class="spec-tags"><span class="tag">Java 11</span><span class="tag">FTC SDK</span><span class="tag">OpMode</span></div>
+            </div>
+            <div class="spec-card reveal reveal-delay-1">
+                <div class="spec-icon"><i class="fas fa-route"></i></div>
+                <div class="spec-title">PID Control</div>
+                <p class="spec-body">Custom PID loops for precise motor and arm control. Tuned for the FTC Into the Deep game environment with real-time adjustment.</p>
+                <div class="spec-tags"><span class="tag">PID</span><span class="tag">Motor Encoder</span><span class="tag">Feedback Loop</span></div>
+            </div>
+            <div class="spec-card reveal reveal-delay-2">
+                <div class="spec-icon"><i class="fas fa-camera"></i></div>
+                <div class="spec-title">OpenCV Vision</div>
+                <p class="spec-body">Computer vision pipeline detecting AprilTags and game elements for fully autonomous navigation during the 30-second auto period.</p>
+                <div class="spec-tags"><span class="tag">OpenCV</span><span class="tag">AprilTag</span><span class="tag">Color Detection</span></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <script src="https://unpkg.com"></script>
-    <script>
-        AOS.init({ duration: 1200, once: true });
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let pts = [];
-        function initCanvas() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            pts = []; for(let i=0; i<100; i++) pts.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, sx:Math.random()-0.5, sy:Math.random()-0.5});
+<!-- TEAM -->
+<section id="team" style="background:rgba(108,0,255,0.02);">
+    <div class="section-tag">// THE CREW</div>
+    <h2 class="section-title">Engineering <span class="accent">Elite</span></h2>
+    <div class="team-grid">
+        <div class="m-card highlight-primary reveal">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#003a40,var(--primary));">G<div class="m-badge"><i class="fas fa-star"></i></div></div>
+            <span class="m-role">Founder & Mentor</span>
+            <h3 class="m-name">Mr. Gbessi</h3>
+            <p class="m-bio">Physics teacher who founded the club to bridge academic theory with real-world industrial engineering challenges.</p>
+            <div class="m-skills"><span class="m-skill">Physics</span><span class="m-skill">Mentoring</span><span class="m-skill">Engineering</span></div>
+        </div>
+        <div class="m-card highlight-secondary reveal reveal-delay-1">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#2d0070,var(--secondary));">S<div class="m-badge"><i class="fas fa-code"></i></div></div>
+            <span class="m-role">Project Manager / Lead Dev</span>
+            <h3 class="m-name">Sixte <span style="color:var(--text-2);font-size:.8rem;">(Y11)</span></h3>
+            <p class="m-bio">Architect of the workflow. Leads programming, mechanical design, and full system integration across all robot subsystems.</p>
+            <div class="m-skills"><span class="m-skill">Java</span><span class="m-skill">CAD</span><span class="m-skill">Leadership</span></div>
+        </div>
+        <div class="m-card reveal">
+            <div class="m-avatar">M</div>
+            <span class="m-role">Mechanical Lead</span>
+            <h3 class="m-name">Mélanie <span style="color:var(--text-2);font-size:.8rem;">(Y13)</span></h3>
+            <p class="m-bio">Drivetrain and manipulation engineer. Passionate about robot building and extracting peak mechanical performance.</p>
+            <div class="m-skills"><span class="m-skill">Drivetrain</span><span class="m-skill">Manipulation</span></div>
+        </div>
+        <div class="m-card reveal reveal-delay-1">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#1a1a40,#534AB7);">A</div>
+            <span class="m-role">Structural Design</span>
+            <h3 class="m-name">Axel <span style="color:var(--text-2);font-size:.8rem;">(Y10)</span></h3>
+            <p class="m-bio">Expert in robot building and design conception. Translates abstract ideas into functional, optimized mechanical reality.</p>
+            <div class="m-skills"><span class="m-skill">CAD</span><span class="m-skill">3D Print</span><span class="m-skill">Assembly</span></div>
+        </div>
+        <div class="m-card reveal reveal-delay-2">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#003030,#1D9E75);">L</div>
+            <span class="m-role">Logic Loops Specialist</span>
+            <h3 class="m-name">Leopold <span style="color:var(--text-2);font-size:.8rem;">(Y12)</span></h3>
+            <p class="m-bio">Brings extensive coding experience to refine robot behavior, state machines, and strategic autonomous path planning.</p>
+            <div class="m-skills"><span class="m-skill">Java</span><span class="m-skill">State Machine</span><span class="m-skill">Autonomous</span></div>
+        </div>
+        <div class="m-card reveal reveal-delay-3">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#400020,#D4537E);">N</div>
+            <span class="m-role">Hardware Lead</span>
+            <h3 class="m-name">Noelle <span style="color:var(--text-2);font-size:.8rem;">(Y12)</span></h3>
+            <p class="m-bio">Mechanical engineer managing durability, component optimization, and hardware reliability under match conditions.</p>
+            <div class="m-skills"><span class="m-skill">Hardware</span><span class="m-skill">Wiring</span><span class="m-skill">Testing</span></div>
+        </div>
+        <div class="m-card reveal">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#1a0a00,var(--gold));">L</div>
+            <span class="m-role">Strategy & Media</span>
+            <h3 class="m-name">Leo <span style="color:var(--text-2);font-size:.8rem;">(Y10)</span></h3>
+            <p class="m-bio">Strategic officer analyzing competition data, scouting opponents, and managing the team's social media presence.</p>
+            <div class="m-skills"><span class="m-skill">Scouting</span><span class="m-skill">Social Media</span><span class="m-skill">Strategy</span></div>
+        </div>
+        <div class="m-card reveal reveal-delay-1">
+            <div class="m-avatar" style="background:linear-gradient(135deg,#00203a,var(--secondary));">A</div>
+            <span class="m-role">Hardware Assembly</span>
+            <h3 class="m-name">Amira <span style="color:var(--text-2);font-size:.8rem;">(Y11)</span></h3>
+            <p class="m-bio">Contributing to hardware assembly, subsystem integration, and technical development of all physical robot systems.</p>
+            <div class="m-skills"><span class="m-skill">Assembly</span><span class="m-skill">Electronics</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+    <div class="section-tag">// SEASON PIPELINE</div>
+    <h2 class="section-title">Season <span class="accent">Roadmap</span></h2>
+    <div class="timeline-wrap">
+        <div class="tl-line"></div>
+        <div class="tl-item done reveal">
+            <div class="tl-card">
+                <span class="tl-date">SEPTEMBER 2025</span>
+                <h3 class="tl-title">Game Analysis & Inventory</h3>
+                <p class="tl-desc">Full inventory review from the previous season, team formation, and deep analysis of the FTC "Into the Deep" game manual to identify winning strategies.</p>
+                <span class="tl-status status-done"><i class="fas fa-check"></i> Completed</span>
+            </div>
+        </div>
+        <div class="tl-item done reveal">
+            <div class="tl-card">
+                <span class="tl-date">OCTOBER — NOVEMBER 2025</span>
+                <h3 class="tl-title">Prototyping & Build Phase</h3>
+                <p class="tl-desc">Concept selection, prototyping of the ramp mechanism, chassis construction, and initial drivetrain assembly. First robot iterations and field testing.</p>
+                <span class="tl-status status-done"><i class="fas fa-check"></i> Completed</span>
+            </div>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-card">
+                <span class="tl-date">DECEMBER 2025 — JANUARY 2026</span>
+                <h3 class="tl-title">Code Iteration & Integration</h3>
+                <p class="tl-desc">Full software stack development: autonomous routines, driver control modes, PID tuning, and OpenCV vision pipeline integration and testing.</p>
+                <span class="tl-status status-active"><i class="fas fa-spinner fa-spin"></i> In Progress</span>
+            </div>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-card">
+                <span class="tl-date">FEBRUARY — MARCH 2026</span>
+                <h3 class="tl-title">Optimization & Portfolio</h3>
+                <p class="tl-desc">Final robot optimization, practice matches, engineering portfolio finalization, and preparation for the UK regional qualifier competition.</p>
+                <span class="tl-status status-coming"><i class="fas fa-clock"></i> Upcoming</span>
+            </div>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-card">
+                <span class="tl-date">APRIL 2026</span>
+                <h3 class="tl-title">Competition Day</h3>
+                <p class="tl-desc">UK Regional Qualifier. Target: podium finish and qualification for the Super-Regional. Full team mobilization.</p>
+                <span class="tl-status status-coming"><i class="fas fa-trophy"></i> Target</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="background:rgba(0,229,255,0.01);">
+    <div class="section-tag">// MEDIA HUB</div>
+    <h2 class="section-title">Build <span class="accent">Gallery</span></h2>
+    <div class="gallery-grid">
+        <div class="gallery-item reveal">
+            <div class="gallery-placeholder"><i class="fas fa-image"></i><p>Robot Build — Main Photo</p></div>
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1">
+            <div class="gallery-placeholder"><i class="fas fa-cog"></i><p>Drivetrain Detail</p></div>
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2">
+            <div class="gallery-placeholder"><i class="fas fa-code"></i><p>Code Session</p></div>
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3">
+            <div class="gallery-placeholder"><i class="fas fa-users"></i><p>Team at Work</p></div>
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-4">
+            <div class="gallery-placeholder"><i class="fas fa-trophy"></i><p>Competition Field</p></div>
+            <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+    </div>
+    <p style="text-align:center;margin-top:30px;color:var(--text-2);font-size:.8rem;font-family:var(--font-mono);">// Replace placeholders with real images — add <code style="color:var(--primary);">src</code> to each gallery item</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-tag">// CONNECT</div>
+    <h2 class="section-title">Get in <span class="accent">Touch</span></h2>
+    <div class="contact-wrap">
+        <div class="contact-info reveal">
+            <div class="contact-block">
+                <div class="contact-icon"><i class="fas fa-school"></i></div>
+                <div class="contact-detail">
+                    <h4>School</h4>
+                    <p>Lycée Français Charles de Gaulle, London</p>
+                </div>
+            </div>
+            <div class="contact-block">
+                <div class="contact-icon"><i class="fab fa-youtube"></i></div>
+                <div class="contact-detail">
+                    <h4>YouTube Channel</h4>
+                    <p>LFCGteam Robotic — watch our builds</p>
+                </div>
+            </div>
+            <div class="contact-block">
+                <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+                <div class="contact-detail">
+                    <h4>Instagram</h4>
+                    <p>Follow our season journey</p>
+                </div>
+            </div>
+            <div class="contact-block">
+                <div class="contact-icon"><i class="fas fa-hashtag"></i></div>
+                <div class="contact-detail">
+                    <h4>FTC Team Number</h4>
+                    <p>#27935 — FTC Into the Deep</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-box reveal reveal-delay-1">
+            <form id="contactForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+                <div class="form-row">
+                    <div class="input-grp"><label>YOUR NAME</label><input type="text" name="name" placeholder="First Last" required></div>
+                    <div class="input-grp"><label>EMAIL</label><input type="email" name="email" placeholder="you@example.com" required></div>
+                </div>
+                <div class="input-grp"><label>SUBJECT</label><input type="text" name="subject" placeholder="Sponsorship / Partnership / Question..."></div>
+                <div class="input-grp"><label>MESSAGE</label><textarea name="message" placeholder="Tell us what's on your mind..." required></textarea></div>
+                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> SEND MESSAGE</button>
+                <div class="form-success" id="formSuccess"><i class="fas fa-check-circle"></i> Message sent! We'll get back to you soon.</div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="#home" class="logo" style="display:inline-flex;margin-bottom:15px;">
+                <div class="logo-icon"><i class="fas fa-robot"></i></div>
+                LFCG<span>team</span>
+            </a>
+            <p>FTC robotics team from Lycée Français Charles de Gaulle, London. Coding the future, one match at a time.</p>
+        </div>
+        <div class="footer-col">
+            <h4>NAVIGATION</h4>
+            <ul>
+                <li><a href="#about">Technical Specs</a></li>
+                <li><a href="#team">Engineering Team</a></li>
+                <li><a href="#timeline">Season Roadmap</a></li>
+                <li><a href="#gallery">Media Gallery</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>CONNECT</h4>
+            <ul>
+                <li><a href="https://youtube.com" target="_blank"><i class="fab fa-youtube" style="margin-right:8px;color:#ff0000;"></i>YouTube</a></li>
+                <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram" style="margin-right:8px;color:#e1306c;"></i>Instagram</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope" style="margin-right:8px;color:var(--primary);"></i>Email Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 LFCGteam Robotic // TEAM 27935 // ALL SYSTEMS OPERATIONAL</p>
+        <div class="social-links">
+            <a href="https://youtube.com" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="https://instagram.com" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ---- PARTICLES ---- */
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let pts = [], W, H;
+function initCanvas() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    pts = [];
+    for (let i = 0; i < 80; i++) {
+        pts.push({ x: Math.random()*W, y: Math.random()*H, sx: (Math.random()-.5)*.4, sy: (Math.random()-.5)*.4, r: Math.random()*1.5+.5 });
+    }
+}
+function drawParticles() {
+    ctx.clearRect(0,0,W,H);
+    pts.forEach((p,i) => {
+        p.x += p.sx; p.y += p.sy;
+        if(p.x < 0 || p.x > W) p.sx *= -1;
+        if(p.y < 0 || p.y > H) p.sy *= -1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(0,229,255,0.5)'; ctx.fill();
+        pts.forEach((q,j) => {
+            if(j <= i) return;
+            const dx = p.x-q.x, dy = p.y-q.y, d = Math.sqrt(dx*dx+dy*dy);
+            if(d < 120) {
+                ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
+                ctx.strokeStyle = `rgba(0,229,255,${.3*(1-d/120)})`;
+                ctx.lineWidth = .5; ctx.stroke();
+            }
+        });
+    });
+    requestAnimationFrame(drawParticles);
+}
+initCanvas(); drawParticles();
+window.addEventListener('resize', initCanvas);
+
+/* ---- NAV SCROLL ---- */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+    revealElements();
+    animateCounters();
+    animateProgressBars();
+});
+
+/* ---- HAMBURGER ---- */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+}));
+
+/* ---- TABS ---- */
+function switchTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active');
+    event.target.classList.add('active');
+    animateProgressBars();
+}
+
+/* ---- REVEAL ---- */
+function revealElements() {
+    document.querySelectorAll('.reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 80) el.classList.add('visible');
+    });
+}
+revealElements();
+
+/* ---- COUNTERS ---- */
+let countersRan = false;
+function animateCounters() {
+    if(countersRan) return;
+    const first = document.querySelector('.stat-card');
+    if(!first) return;
+    const rect = first.getBoundingClientRect();
+    if(rect.top > window.innerHeight) return;
+    countersRan = true;
+    document.querySelectorAll('[data-target]').forEach(el => {
+        const target = +el.dataset.target;
+        const suffix = el.dataset.suffix || '';
+        let start = 0;
+        const duration = 2000;
+        const startTime = performance.now();
+        function update(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target) + suffix;
+            if(progress < 1) requestAnimationFrame(update);
         }
-        function draw() {
-            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = '#00f2ff';
-            pts.forEach(p => {
-                p.x+=p.sx; p.y+=p.sy; if(p.x<0||p.x>canvas.width) p.sx*=-1; if(p.y<0||p.y>canvas.height) p.sy*=-1;
-                ctx.fillRect(p.x, p.y, 2, 2);
-            }); requestAnimationFrame(draw);
+        requestAnimationFrame(update);
+    });
+}
+
+/* ---- PROGRESS BARS ---- */
+let progressRan = false;
+function animateProgressBars() {
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+        const rect = bar.getBoundingClientRect();
+        if(rect.top < window.innerHeight && bar.style.width === '') {
+            bar.style.width = bar.dataset.width + '%';
         }
-        initCanvas(); draw();
-        window.onscroll = () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); };
-    </script>
+    });
+}
+
+/* ---- FORM ---- */
+const form = document.getElementById('contactForm');
+if(form) {
+    form.addEventListener('submit', function(e) {
+        const btn = form.querySelector('.submit-btn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
+        btn.style.opacity = '.7';
+    });
+}
+</script>
 </body>
 </html>
